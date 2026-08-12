@@ -1,0 +1,248 @@
+.afc-narrative-block {
+  position: relative;
+  width: 100%;
+  background-color: var(--color-paper);
+  overflow: hidden;
+}
+
+/* Decorative corner line-art: matches the real block's
+   .afc-content-block__bg-line rules exactly (position/size/opacity/z-index) —
+   pinned to the block's own top-left / bottom-right corners at full opacity,
+   sized off the viewport with the same caps as the source, sitting behind
+   the content (z-index 0 vs. the inner content's z-index 1). */
+.afc-narrative-block__lines {
+  position: absolute;
+  height: auto;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 0;
+}
+
+.afc-narrative-block__lines--top {
+  top: 0;
+  left: 0;
+  width: min(880px, 82vw);
+}
+
+.afc-narrative-block__lines--bottom {
+  bottom: -100px;
+  right: -43px;
+  /* Single-column cap; widened below at desktop since this block always
+     renders with a right column, matching the real two-column rule. */
+  width: min(640px, 44vw);
+}
+
+@media (min-width: 768px) {
+  .afc-narrative-block__lines--bottom {
+    width: min(1042px, 62vw);
+  }
+}
+
+.afc-narrative-block__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  /* Header → columns gap; matches the real block's clamp(32px, 3.3vw, 48px). */
+  gap: clamp(32px, 3.3vw, 48px);
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.afc-narrative-block__header {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.2vw, 32px);
+}
+
+.afc-narrative-block__header h2 {
+  margin: 0;
+}
+
+/* Large heading-style subheading — only rendered when there's no right
+   column (see NarrativeBlock.jsx). Real source: 48px clamp, structure blue,
+   uppercase — a bigger, bolder treatment than the small ink-colored variant
+   used alongside a checklist elsewhere on the site. */
+.afc-narrative-block__subheading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 0.875rem + 2.3vw, 3rem);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-structure);
+}
+
+.afc-narrative-block__header strong {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-narrative-block__columns {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .afc-narrative-block__columns {
+    flex-direction: row;
+    align-items: flex-start;
+    /* Matches the real column gap: clamp(40px, 9.6vw, 138px). */
+    gap: clamp(40px, 9.6vw, 138px);
+  }
+}
+
+.afc-narrative-block__col--left {
+  /* Matches the real left column: 50.5% of the content area, capped at 721px. */
+  max-width: 1052px;
+}
+
+@media (min-width: 768px) {
+  .afc-narrative-block__col--left {
+    flex: 0 0 50.5%;
+    max-width: 721px;
+  }
+}
+
+.afc-narrative-block__lead {
+  font-family: var(--font-body);
+  /* Real source (content-block/style.scss .afc-content-block__subheading,
+     has-right-col variant): clamp(17px, 1.7vw, 22px) — a plain viewport-based
+     clamp, not the same curve as --font-size-lead (clamp(18px, 15.2px+0.55vw,
+     22px)), so it doesn't match that token closely enough to reuse. */
+  font-size: clamp(17px, 1.7vw, 22px);
+  color: var(--color-ink);
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.afc-narrative-block__col--left p:not(.afc-narrative-block__lead) {
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.afc-narrative-block__col--left p:last-child {
+  margin-bottom: 0;
+}
+
+/* No-right-column variant: left column spans the full content width instead
+   of shrinking to 50.5%, and body paragraphs bump up to the same Body-LG
+   clamp the lead already uses (real source: intro text is 22px clamp with
+   no right column vs. a fixed 17px alongside a checklist). */
+@media (min-width: 768px) {
+  .afc-narrative-block--single-col .afc-narrative-block__col--left {
+    flex: 1 1 auto;
+    max-width: 1052px;
+  }
+}
+
+.afc-narrative-block--single-col .afc-narrative-block__col--left p {
+  font-size: clamp(1.0625rem, 1.7vw, 1.375rem);
+}
+
+.afc-narrative-block__col--right {
+  align-self: start;
+}
+
+@media (min-width: 768px) {
+  .afc-narrative-block__col--right {
+    /* Matches the real right column: 27.8% of the content area. */
+    flex: 0 0 27.8%;
+    min-width: 0;
+  }
+}
+
+.afc-narrative-block__intro {
+  /* Real source: .afc-content-block__right-intro — always the full
+     clamp(17px, 1.7vw, 22px), unlike the left-column intro which locks to a
+     fixed 17px in the has-right-col layout. */
+  font-size: clamp(17px, 1.7vw, 22px);
+  color: var(--color-ink);
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.afc-narrative-block__checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.afc-narrative-block__checklist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.afc-narrative-block__checklist li span {
+  /* Real source: .afc-content-block__check-text sets line-height: 1.5;
+     color/weight/font-size already match via inherited body defaults
+     (--color-ink, 400, --font-size-body). */
+  line-height: 1.5;
+}
+
+.afc-narrative-block__check-icon {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.afc-narrative-block__check-icon svg {
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .afc-narrative-block__col--right {
+    align-self: stretch;
+  }
+}
+
+/* Two-column checklist variant (AFC-89): header + intro stack full-width
+   above the checklist, which then spans that width in 2 CSS columns instead
+   of the side-by-side layout. */
+@media (min-width: 768px) {
+  .afc-narrative-block--checklist-cols-2 .afc-narrative-block__columns {
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .afc-narrative-block--checklist-cols-2 .afc-narrative-block__col--left,
+  .afc-narrative-block--checklist-cols-2 .afc-narrative-block__col--right {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+
+  .afc-narrative-block--checklist-cols-2 .afc-narrative-block__checklist {
+    display: block;
+    columns: 2;
+    column-gap: 48px;
+  }
+
+  .afc-narrative-block--checklist-cols-2 .afc-narrative-block__checklist li {
+    break-inside: avoid;
+    margin-bottom: 30px;
+  }
+
+  .afc-narrative-block--checklist-cols-2 .afc-narrative-block__checklist li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Stacked layout reads as the single-column variant: left-column body
+   copy bumps up to the same Body-LG clamp the single-col variant uses,
+   rather than staying at the flat has-right-col size. */
+.afc-narrative-block--checklist-cols-2 .afc-narrative-block__col--left p {
+  font-size: clamp(1.0625rem, 1.7vw, 1.375rem);
+}
+
+@media (max-width: 600px) {
+  .afc-narrative-block__inner {
+    padding-block: clamp(2.5rem, 10vw, 4rem);
+  }
+}

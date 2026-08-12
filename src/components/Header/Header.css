@@ -1,0 +1,244 @@
+.afc-header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--color-paper);
+}
+
+.afc-utility-row {
+  padding-top: 0.75rem;
+}
+
+.afc-utility-row__inner {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.afc-utility-nav {
+  display: flex;
+  padding-bottom: 12px;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.afc-utility-nav__link {
+  color: var(--color-structure);
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.afc-utility-nav__link:hover {
+  color: var(--color-action);
+  text-decoration: none;
+}
+
+.afc-utility-nav__divider {
+  width: 1px;
+  height: 15px;
+  background: #000;
+  flex-shrink: 0;
+}
+
+@media (max-width: 980px) {
+  .afc-utility-row {
+    display: none;
+  }
+}
+
+.afc-header {
+  position: relative;
+  padding-bottom: 2rem;
+  transition: padding 0.35s ease;
+}
+
+.afc-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 2.5rem;
+}
+
+.afc-site-logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.afc-site-logo img {
+  width: clamp(220px, 22vw, 314px);
+  height: auto;
+  display: block;
+  transition: width 0.35s ease;
+}
+
+@media (min-width: 980px) {
+  .afc-header.is-scrolled {
+    padding-bottom: 1em;
+  }
+
+  .afc-header.is-scrolled .afc-site-logo img {
+    width: clamp(176px, 17.6vw, 251px);
+  }
+
+  .afc-header.is-scrolled .afc-nav-cta {
+    transform: scale(0.8);
+  }
+}
+
+.afc-main-nav {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+}
+
+.afc-main-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Nav row gets tight at narrower desktop widths before the mobile hamburger
+ * breakpoint (980px) kicks in. Shrink the gaps (matching the live site's own
+ * .wp-block-navigation__container overrides) so nav items keep to one line
+ * instead of wrapping. */
+@media (max-width: 1460px) {
+  .afc-main-nav {
+    gap: 2.5rem;
+  }
+
+  .afc-main-nav__list {
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .afc-main-nav {
+    gap: 1.75rem;
+  }
+
+  .afc-main-nav__list {
+    gap: 1.75rem;
+  }
+
+  .afc-main-nav__list a {
+    font-size: 0.9rem;
+  }
+
+  .afc-nav-cta {
+    font-size: 0.9rem;
+  }
+}
+
+.afc-main-nav__list a {
+  color: var(--color-structure);
+  font-family: var(--font-body);
+  font-size: var(--font-size-nav);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.afc-main-nav__list a:hover {
+  color: var(--color-action);
+  text-decoration: underline;
+}
+
+.afc-nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 20px;
+  border: 2px solid var(--color-structure);
+  border-radius: 10px;
+  color: var(--color-structure);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transform-origin: right center;
+  text-decoration: none;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.35s ease;
+}
+
+/* Now a real <Link>, not a <button> — text-decoration:none here overrides
+   the global a:hover rule's underline (typography.css), which would
+   otherwise paint through since this class doesn't declare that property
+   anywhere else. */
+.afc-nav-cta:hover {
+  background-color: var(--color-structure);
+  color: var(--color-paper);
+  text-decoration: none;
+}
+
+.afc-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.afc-hamburger span {
+  display: block;
+  height: 2px;
+  background: var(--color-structure);
+  border-radius: 1px;
+}
+
+@media (max-width: 980px) {
+  .afc-main-nav--desktop {
+    display: none;
+  }
+
+  .afc-hamburger {
+    display: flex;
+  }
+}
+
+.afc-mobile-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem clamp(1.25rem, 5vw, 5rem) 2rem;
+  background: var(--color-paper);
+  border-top: 1px solid #eee;
+}
+
+.afc-mobile-panel .afc-main-nav--mobile {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.afc-mobile-panel .afc-main-nav__list {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.afc-mobile-panel .afc-utility-nav--mobile {
+  justify-content: flex-start;
+  padding-bottom: 0;
+}
+
+.afc-mobile-panel .afc-nav-cta {
+  width: auto;
+}

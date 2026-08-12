@@ -1,0 +1,172 @@
+/**
+ * AFC More To Explore
+ *
+ * Ground truth: the real afc/story-listing block (confirmed live on
+ * /how-the-eftc-works/) — same .afc-section__header / .afc-content-grid--4 /
+ * .afc-card chrome as every other editorial grid, but with only a heading
+ * (no intro/CTA button in the header) and an .afc-listing__pagination bar
+ * added below the grid. Pagination values confirmed via getComputedStyle:
+ * ink-colored 48px square arrows (0.35 opacity when disabled), a 64x48px
+ * page-number input, Inter 14px/600 throughout, 12px gap, 24px margin-top.
+ */
+.afc-explore {
+  width: 100%;
+  background-color: var(--color-paper);
+  padding-block: clamp(3.5rem, 7vw, 6.25rem);
+}
+
+.afc-explore__header {
+  margin-bottom: 2.75rem;
+}
+
+.afc-explore__heading {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-explore__heading strong {
+  font-weight: 700;
+}
+
+.afc-explore__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.afc-explore__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.afc-explore__card:hover {
+  text-decoration: none;
+}
+
+.afc-explore__card:hover .afc-explore__headline {
+  color: var(--color-link-hover);
+}
+
+.afc-explore__image-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.afc-explore__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.afc-explore__card:hover .afc-explore__image {
+  transform: scale(1.04);
+}
+
+.afc-explore__headline {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1rem + 1.05vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-action);
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+.afc-explore__snippet {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.afc-explore__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.afc-explore__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-ink);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-ink);
+  font-size: 1.125rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.afc-explore__arrow:hover:not(:disabled),
+.afc-explore__arrow:focus-visible:not(:disabled) {
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.afc-explore__arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.afc-explore__page-input {
+  width: 64px;
+  height: 48px;
+  padding: 0 0.5rem;
+  text-align: center;
+  border: 1px solid var(--color-ink);
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+@media (max-width: 1023px) {
+  .afc-explore__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .afc-explore {
+    padding-block: 1.5rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .afc-explore__grid {
+    grid-template-columns: 1fr;
+  }
+}

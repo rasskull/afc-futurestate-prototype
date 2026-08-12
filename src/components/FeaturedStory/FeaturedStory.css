@@ -1,0 +1,192 @@
+/**
+ * AFC Featured Story
+ *
+ * Full-bleed textured background sits directly behind the content — there is
+ * NO card/box background behind the photo or text (confirmed against the
+ * live site's rendered styles: .wp-block-afc-featured-story__content has
+ * `background: transparent`, just a 3px solid white border + 8px radius;
+ * the photo sits on the texture with no container of its own beyond the
+ * circular clip). The content box overlaps the circular photo via a
+ * negative margin, matching the real block's layered-but-borderless look.
+ */
+
+.afc-featured-story {
+  width: 100%;
+  background-color: var(--color-structure);
+  background-image: var(--featured-story-bg, none);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--color-paper);
+  overflow: hidden;
+}
+
+/* box-sizing: content-box (overriding this app's global border-box reset)
+   matches the real site's default: this block is WP align:full, and its
+   `max-width: 1220px` is a pure CONTENT width with padding added outside it
+   — confirmed live at a 1920px viewport, rendered box = 1220 + 2×80.96 ≈
+   1382px. Same fix as EligibilityPromo's __inner. Padding values below are
+   the real block's own literal spacing-preset values (spacing-50/60/70/80),
+   NOT the shared page gutter — a previous pass had this using var(--gutter)
+   here, which is a different (fluid) scale and didn't match at any width. */
+.afc-featured-story__wrap {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  max-width: 1220px;
+  margin-inline: auto;
+  padding: 2.25rem 1.5rem; /* spacing-60 spacing-50 — confirmed live at 768px and 390px */
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (min-width: 1024px) {
+  .afc-featured-story__wrap {
+    flex-direction: row;
+    align-items: center;
+    /* User-requested increase to the vertical padding (was following the
+       clamp below on the outer section; real live top/bottom is spacing-70
+       /54px). 5.0625rem also happens to equal the real block's horizontal
+       spacing-80 value, so this now reads as uniform padding on all four
+       sides at desktop. */
+    padding: 5.0625rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .afc-featured-story__wrap {
+    padding: 2.25rem; /* spacing-60, confirmed live at 1024-1200px */
+  }
+}
+
+/* Circular photo — no card, no shadow, no border-radius on the section's
+   edge; it sits flush on the textured background. */
+.afc-featured-story__photo {
+  position: relative;
+  z-index: 2;
+  width: min(510px, 80vw);
+  height: min(510px, 80vw);
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.afc-featured-story__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Content box: transparent background — only a border, so the textured
+   background shows through. Overlaps the photo via negative margin. */
+.afc-featured-story__content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  padding: 5.0625rem 2.25rem 1.5rem; /* spacing-80 spacing-60 spacing-50 */
+  border: 3px solid var(--color-paper);
+  border-radius: 8px;
+  margin-top: -3.375rem; /* -spacing-70 */
+}
+
+.afc-featured-story__eyebrow {
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.afc-featured-story--light .afc-featured-story__eyebrow {
+  color: var(--color-paper);
+}
+
+.afc-featured-story__heading {
+  margin: 0.5rem 0 0;
+  color: var(--color-structure);
+  font-weight: 500;
+}
+
+.afc-featured-story--light .afc-featured-story__heading {
+  color: var(--color-paper);
+}
+
+/* Brand arrow beneath the heading text — ported from the real block's
+   `__arrow` (afc_core_arrow_icon()), not present in a prior pass. Icon fill
+   tracks `color` via currentColor so the copyTheme variant below re-colors
+   it along with the rest of the text. */
+.afc-featured-story__arrow {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.6667rem; /* spacing-30 */
+  color: var(--color-structure);
+}
+
+.afc-featured-story--light .afc-featured-story__arrow {
+  color: var(--color-paper);
+}
+
+.afc-featured-story__arrow svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+  .afc-featured-story__content {
+    padding: 5.0625rem; /* spacing-80, all sides */
+    margin-top: 0;
+    /* Real formula: calc(var(--wp--preset--spacing--70) * -0.6) — pulls the
+       content box left, under the circular photo. */
+    margin-left: calc(3.375rem * -0.6);
+  }
+
+  .afc-featured-story__arrow {
+    margin-top: 1rem; /* spacing-40 */
+  }
+
+  .afc-featured-story__arrow svg {
+    width: 28px;
+    height: 24px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .afc-featured-story__content {
+    padding: 2.25rem 2.25rem 2.25rem 3.375rem; /* spacing-60 spacing-60 spacing-60 spacing-70 */
+  }
+}
+
+/* Hover: mousing over the linked wrap scales the photo, underlines the
+   heading, and slides the arrow right — matching the live block's hover
+   treatment (no card to animate). */
+.afc-featured-story__wrap:hover .afc-featured-story__image {
+  transform: scale(1.05);
+}
+
+.afc-featured-story__wrap:hover .afc-featured-story__heading {
+  text-decoration: underline;
+}
+
+/* The wrap is itself an <a>, and this app's global `a:hover` default
+   underlines all its text — real site has no such blanket rule (confirmed:
+   no bare `a:hover{text-decoration:underline}` anywhere in its stylesheets),
+   and only the heading underlines on hover there. A plain `text-decoration:
+   none` on the eyebrow doesn't stop this: an ancestor's underline paints
+   across descendant text regardless of the descendant's own value unless
+   that descendant gets its own box — `display: inline-block` establishes
+   one, which reliably blocks the propagated line. */
+.afc-featured-story__eyebrow {
+  display: inline-block;
+}
+
+.afc-featured-story__wrap:hover .afc-featured-story__eyebrow {
+  text-decoration: none;
+}
+
+.afc-featured-story__wrap:hover .afc-featured-story__arrow svg {
+  transform: translateX(10px);
+}

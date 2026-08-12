@@ -1,0 +1,19 @@
+.afc-blank-page {
+  padding-block: clamp(4rem, 10vw, 8rem);
+  text-align: center;
+}
+
+.afc-blank-page__eyebrow {
+  margin-bottom: 0.75rem;
+}
+
+.afc-blank-page p {
+  margin-top: 1rem;
+  color: var(--color-ink);
+}
+
+.afc-blank-page a {
+  display: inline-block;
+  margin-top: 2rem;
+  font-weight: 600;
+}

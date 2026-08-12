@@ -1,0 +1,226 @@
+/**
+ * AFC Hero
+ *
+ * Full-bleed hero. The background photo is used as-is (no dark scrim
+ * layered on top — the real block's style.scss never composites an
+ * overlay gradient with the image, just `background-image: var(--afc-bg-image)`).
+ * Structure mirrors wp-block-afc-hero: an absolutely-positioned bg layer,
+ * a width-capped container (matches .afc-wide), and a narrower text column.
+ */
+
+.afc-hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--color-paper);
+}
+
+/* Floor + proportional desktop height, matching style.scss's
+   `min-height: clamp(440px, 39vw, 760px)` (~680/1728 of the comp),
+   verified against the live site: 546px measured at a 1400px viewport
+   (1400 * 0.39 = 546). */
+.afc-hero__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-block: 3.375rem; /* --wp--preset--spacing--70 */
+  min-height: 220px;
+}
+
+@media (min-width: 600px) {
+  .afc-hero__wrapper {
+    min-height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .afc-hero__wrapper {
+    box-sizing: border-box;
+    min-height: clamp(440px, 39vw, 760px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-hero__wrapper {
+    padding: 75% 0 1.5rem; /* --wp--preset--spacing--50 */
+  }
+}
+
+.afc-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--hero-bg-image, none);
+  background-size: cover;
+  background-position: 100% center;
+  background-color: var(--color-structure);
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .afc-hero__bg {
+    background-position: top right;
+    background-size: 180%;
+    background-repeat: no-repeat;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1500px) {
+  .afc-hero__bg {
+    background-position: right 55% center;
+  }
+}
+
+/* .afc-wide already caps at var(--wide-size) (1312px) with the same
+   padding-inline gutter as the real content-wrapper--container — just
+   need it above the bg layer here. The real block's
+   `.wp-block-afc-hero__content-wrapper--container` also sets `width: 100%`
+   (style.scss), which .afc-wide doesn't. That matters specifically here
+   because this container is a flex item of `.afc-hero__wrapper`
+   (display:flex): with no explicit width, a flex item's default
+   flex-basis:auto shrinks it to fit its content (590px content column +
+   140px padding = 730px) instead of filling the flex line, so
+   margin-inline:auto then centers that narrower box and pushes the text
+   ~335px in from the edge at 1400px instead of sitting at the ~70px
+   gutter offset the live site shows. Setting width:100% here restores
+   the fill-the-line sizing so the padding alone determines the offset,
+   matching the live site (confirmed via getBoundingClientRect at 1400px). */
+.afc-hero__container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/* Text column width steps straight from style.scss's breakpoints
+   (480 / 550 / 590 / 650) — confirmed 590px on the live site at 1400px. */
+.afc-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .afc-hero__content {
+    max-width: 480px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .afc-hero__content {
+    max-width: 550px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .afc-hero__content {
+    max-width: 590px;
+  }
+}
+
+@media (min-width: 1650px) {
+  .afc-hero__content {
+    max-width: 650px;
+  }
+}
+
+.afc-hero__content h1,
+.afc-hero__content h2,
+.afc-hero__content p {
+  color: var(--color-paper);
+}
+
+/* h1 uses the block's display-xxl size (per home-hero.php's
+   "fontSize":"display-xxl"), Plex Regular (weight 100) with the strong-wrapped
+   headline going bold — matches computed live styles: 90px / weight 100 /
+   line-height 1 / letter-spacing -3.6px (-0.04em) at 1400px viewport. */
+.afc-hero__content h1 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display-xxl);
+  font-weight: 100;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  margin: 0.5rem 0 0;
+}
+
+.afc-hero__content h1 strong {
+  font-weight: 700;
+}
+
+/* h2 uses the block's h-2 size (per home-hero.php's "fontSize":"h-2");
+   the hero block doesn't override h2's weight/margin, so it keeps the
+   global heading defaults (400 weight, 0.2em margin) — just forced to
+   paper for contrast, matching the live computed 41.6px / 400 / 8.32px margin.
+   Overrides the sitewide --font-size-h2 token directly (rather than
+   inheriting it) since that token has since changed independently of this
+   block's own h-2 value. */
+.afc-hero__content h2 {
+  font-size: clamp(1.625rem, 1.2rem + 1.6vw, 3.75rem);
+}
+
+.afc-hero__lead {
+  font-family: var(--font-body);
+  font-size: var(--font-size-lead);
+  font-weight: 100;
+  line-height: 1.5;
+  margin: 1rem 0; /* --wp--preset--spacing--40, both sides */
+}
+
+/* Wrapping the CTA in a block-level div (rather than styling the
+   inline-flex button directly) lets its 2rem top margin collapse with the
+   lead paragraph's margin the same way style.scss's `p + .wp-block-buttons`
+   rule collapses against the paragraph on the real site (32px gap
+   measured live, i.e. max(16px, 32px) — not the sum of both). */
+.afc-hero__actions {
+  margin-top: 2rem;
+}
+
+/* Dark-hero CTA: white pill, inverting to a blue pill on hover — matches
+   style.scss's dark-variant button override. The idle text colour matches
+   the live site's actual rendered button (action blue), which overrides the
+   scss's literal "color: structure" via the button's own explicit text-color
+   attribute in the live content. Scoped to --dark so the light theme falls
+   through to Button's own default blue-background style instead. */
+.afc-hero--dark .afc-hero__actions .afc-button--solid {
+  background: var(--color-paper);
+  color: var(--color-action);
+}
+
+.afc-hero--dark .afc-hero__actions .afc-button--solid:hover {
+  background: var(--color-structure);
+  color: var(--color-paper);
+}
+
+/* Light theme: gradient-text heading (same size as the dark theme's solid
+   white — only the fill changes; always weight 700 regardless of <strong>,
+   confirmed live — the light variant's h1 rule hardcodes bold, unlike the
+   dark variant which only bumps <strong> to 700 off a weight-100 base),
+   structure-blue subhead (NOT ink — confirmed live, h2 stays solid
+   structure blue, uppercase already inherited from the sitewide h1-h3
+   default), neutral ink body copy. The CTA needs no override here — with no
+   --dark-scoped button rule matching, it just uses Button's own default
+   blue-background solid style. */
+.afc-hero--light .afc-hero__content h1 {
+  font-weight: 700;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-hero--light .afc-hero__content h2 {
+  color: var(--color-structure);
+}
+
+.afc-hero--light .afc-hero__lead {
+  color: var(--color-ink);
+}
+
+.afc-hero--light .afc-hero__bg {
+  background-color: var(--color-paper);
+}
+
+@media (max-width: 600px) {
+  .afc-hero__actions .afc-button--solid {
+    font-size: 1rem;
+  }
+}

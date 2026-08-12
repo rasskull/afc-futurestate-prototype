@@ -1,0 +1,195 @@
+/**
+ * AFC Stats
+ *
+ * Ground truth: afc-core/blocks-src/about-stats/style.scss, copied 1:1 —
+ * four green circles (var(--color-emphasis)) holding bold white numbers,
+ * each with an uppercase structure-blue label below. Desktop: single row,
+ * evenly spread. Mobile: stacked column, centered; the decorative
+ * background graphic is desktop-only (hidden below 1024px).
+ */
+.afc-stats {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-paper);
+}
+
+.afc-stats__bg {
+  position: absolute;
+  inset: 0;
+  bottom: 100px;
+  background-image: var(--afc-stats-bg, none);
+  background-size: 124.2% auto; /* 108% + 15% */
+  /* --afc-stats-bg-offset-y lets a per-instance prop nudge the graphic
+     vertically without shifting the row/circles above it (a plain instance)
+     — 0px by default, so this is a no-op unless an instance opts in. */
+  background-position: center calc(50% + var(--afc-stats-bg-offset-y, 0px));
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .afc-stats__bg {
+    display: none;
+  }
+}
+
+/* Uses the shared .afc-wide sitewide container (applied in Stats.jsx) —
+   confirmed live: the "Here's What Happens Next" header sits in the normal
+   1312px wide-size column with NO additional cap on the heading/intro
+   themselves (measured 1312px wide at a 1920px viewport, maxWidth: none on
+   both h2 and p) — do not add a narrower max-width here. */
+.afc-stats__header {
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(3.5rem, 7vw, 6.25rem);
+}
+
+.afc-stats__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  line-height: 1.05;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-stats__heading strong {
+  font-weight: 700;
+}
+
+.afc-stats__intro {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+/* Real source: the stat row's own inner wrapper is NOT the sitewide
+   1312px wide-size — it's a narrower, block-specific 1200px content width
+   with fixed (non-fluid) padding: 32px below 1024px, 60px at/above it.
+   Confirmed live at 1280px (1160px content) and 1920px (1200px content,
+   1320px total box) — border-box-compensated here the same way .afc-wide
+   compensates the sitewide wide-size, just with this block's own numbers. */
+.afc-stats__row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding-block: clamp(3.5rem, 7vw, 6.25rem);
+  padding-inline: 32px;
+  max-width: calc(1200px + 2 * 32px);
+  margin-inline: auto;
+}
+
+/* When a header is present, its own padding-top already opens up the
+   section — the row only needs a modest gap below the header, not a
+   second full section-padding stacked on top of it. */
+.afc-stats__row--has-header {
+  padding-top: 2.75rem;
+}
+
+@media (min-width: 1024px) {
+  .afc-stats__row {
+    padding-inline: 60px;
+    max-width: calc(1200px + 2 * 60px);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+}
+
+.afc-stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 280px;
+}
+
+@media (min-width: 1024px) {
+  .afc-stats__item {
+    max-width: 260px;
+    /* Optional per-item top offset, set inline via --afc-stats-item-offset-top
+       (see Stats.jsx) — 0 by default, so items without one are unaffected.
+       Uses `transform`, not `margin-top`: a margin participates in layout
+       and grows the row's (and section's) box height, which then shifts
+       where the absolutely-positioned .afc-stats__bg layer's fixed
+       `bottom: 100px` cutoff lands — moving an item would visibly nudge the
+       background too. `transform` moves the item purely visually, so the
+       row/section height — and the background — never change. */
+    transform: translateY(var(--afc-stats-item-offset-top, 0px));
+  }
+}
+
+/* Staggered vertical offsets — a bespoke, user-requested tweak for the
+   About Us page's instance only. Confirmed live the real block never
+   staggers items (For Parents' own "Here's What Happens Next" instance has
+   all 4 items perfectly aligned) — gated behind this modifier so it doesn't
+   leak into other instances reusing this same component. Also uses
+   `transform` rather than `margin-top`, for the same background-stability
+   reason as the per-item offset above. */
+@media (min-width: 1024px) {
+  .afc-stats--staggered .afc-stats__item:nth-child(1) {
+    transform: translateY(40px);
+  }
+
+  .afc-stats--staggered .afc-stats__item:nth-child(3) {
+    transform: translateY(-50px);
+  }
+}
+
+/* Circle + text sized at 60% of the real spec's values (user-requested 40%
+   reduction) — 202px/200px -> 121px/120px, etc. */
+.afc-stats__circle {
+  width: 121px;
+  height: 121px;
+  border-radius: 50%;
+  background-color: var(--color-emphasis);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (min-width: 1024px) {
+  .afc-stats__circle {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.afc-stats__value {
+  color: var(--color-paper);
+  font-family: var(--font-heading);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .afc-stats__value {
+    font-size: 33px;
+  }
+}
+
+.afc-stats__label {
+  color: var(--color-structure);
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  margin: 0;
+}

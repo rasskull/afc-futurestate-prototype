@@ -1,0 +1,376 @@
+.afc-signup-modal {
+  border: none;
+  border-radius: var(--button-radius);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  max-width: 480px;
+  width: min(90vw, 480px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.afc-signup-modal::backdrop {
+  background: rgba(20, 30, 40, 0.6);
+}
+
+.afc-signup-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--color-structure);
+}
+
+.afc-signup-form__heading {
+  margin-bottom: 0.75rem;
+}
+
+/* `.afc-signup-form--compact-heading` (a per-instance opt-in via
+   SignupForm's `className` prop) shrinks the heading 20% — but the actual
+   font-size for any given caller comes from that caller's own CSS (e.g.
+   SignupInline.css's fluid --font-size-h1 desktop rule + its flat 42px
+   mobile override), not from this shared file. See SignupInline.css for
+   the real override, scoped there where those base values already live. */
+
+.afc-signup-form__support-copy {
+  margin-bottom: 1.5rem;
+}
+
+/* Progressive disclosure: only the email field shows until the visitor
+   engages (focus, or Enter while collapsed) — matches the real block's
+   view.js + `[data-afc-progressive] &__lead-wrap` collapse. The submit
+   button lives inside this wrap too, since the real markup's collapsed
+   range runs from the email field through the last field (including
+   submit), not just the individual inputs. */
+.afc-signup-form__lead-wrap {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.45s ease, opacity 0.3s ease 0.05s;
+}
+
+.afc-signup-form__lead-wrap--expanded {
+  max-height: 1400px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afc-signup-form__lead-wrap {
+    transition: none;
+  }
+}
+
+/* Field rhythm: the real block lays fields out with a flex `gap` (fieldset gap
+   30px for the email → lead-fields separation; the lead-wrap's own inter-field
+   gap is also 30px) — i.e. one consistent 30px rhythm between every field/row.
+   Reproduced here as a uniform margin-bottom since these fields aren't in a
+   flex column. */
+.afc-signup-field,
+.afc-signup-field-row > .afc-signup-field {
+  margin-bottom: 1.875rem;
+}
+
+/* The email field is always <form>'s first child, immediately followed by
+   the lead-wrap. A real flex `gap` (what the source uses) never adds space
+   trailing the last visible item — margin-bottom does, which was inflating
+   the card's bottom whitespace while collapsed (lead-wrap at max-height:0
+   still leaves the email field's own trailing margin behind). Zero it here
+   and move the email→lead-fields gap onto the lead-wrap's margin-top
+   instead, gated to the expanded state so it only exists once there's
+   actually something below it to space against. */
+form > .afc-signup-field:first-child {
+  margin-bottom: 0;
+}
+
+.afc-signup-form__lead-wrap--expanded {
+  margin-top: 1.875rem;
+}
+
+/* Row gap between paired cells (first/last name, state/phone): real value is
+   `gap: var(--wp--preset--spacing--30, 0.75rem)` on `.ff-t-container`. */
+.afc-signup-field-row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.afc-signup-field-row .afc-signup-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.afc-signup-field label {
+  display: block;
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.afc-signup-field input[type='email'],
+.afc-signup-field input[type='text'],
+.afc-signup-field select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid #c7c7c7;
+  border-radius: 6px;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.afc-signup-field select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.25rem;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23333333'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+}
+
+.afc-signup-field input:focus-visible,
+.afc-signup-field select:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}
+
+.afc-signup-field--checkbox label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: var(--font-size-caption);
+  font-weight: 400;
+}
+
+.afc-signup-field--checkbox input {
+  margin-top: 0.2rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--color-action);
+}
+
+.afc-signup-field__error {
+  color: var(--color-error);
+  font-size: var(--font-size-caption);
+  margin-top: 0.25rem;
+}
+
+.afc-signup-disclaimer {
+  font-size: 0.75rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.afc-signup-disclaimer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.afc-signup-form__submit {
+  width: 100%;
+}
+
+.afc-signup-form__success {
+  font-weight: 600;
+  color: var(--color-structure);
+  text-align: center;
+  padding-block: 2rem;
+}
+
+/* ============================================================================
+   INLINE LIGHT VARIANT (SignupInline, "Be the First to Know") — the embedded
+   form sits in a navy card, matching:
+     .wp-block-afc-email-signup--light .wp-block-afc-email-signup__form {
+       background-color: var(--wp--preset--color--structure);
+       border-radius: 12px;
+       padding: var(--wp--preset--spacing--50);
+     }
+   Scoped to --inline.--light only (not --modal.--light) since the popup form
+   keeps its plain white card look. Real spacing-50 is a flat 1.5rem with no
+   responsive growth — the previous clamp() here (up to 2.5rem) didn't match.
+   ============================================================================ */
+.afc-signup-form--inline.afc-signup-form--light form {
+  background-color: var(--color-structure);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field label {
+  color: var(--color-paper);
+}
+
+/* Email field (first field) gets a bigger label + looser label/input gap,
+   matching `fieldset > .ff-el-group:first-of-type { gap: 10px; }` and its
+   `.ff-el-input--label label { font-size: 1rem; }` sibling rule. */
+.afc-signup-form--inline.afc-signup-form--light form > .afc-signup-field:first-child label {
+  font-size: 1rem;
+  margin-bottom: 0.625rem;
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field input,
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field select {
+  background-color: var(--color-structure);
+  color: var(--color-paper);
+  border: 2px solid var(--color-paper);
+  border-radius: 6px;
+  height: 60px;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white'/%3E%3C/svg%3E");
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field input::placeholder {
+  color: var(--color-paper);
+  opacity: 0.85;
+}
+
+/* The email input is a touch taller / more padded, matching
+   `input[type="email"].ff-el-form-control { border-radius: 8px; padding: 18px 16px; }` */
+.afc-signup-form--inline.afc-signup-form--light form > .afc-signup-field:first-child input {
+  border-radius: 8px;
+  padding: 18px 16px;
+}
+
+/* Lead fields (first/last name, state, phone): softer 60%-white border + 1rem
+   text, matching `.wp-block-afc-email-signup__lead-wrap .ff-el-form-control`. */
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field-row input,
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field-row select {
+  border-color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field--checkbox span {
+  color: var(--color-paper);
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-field--checkbox input {
+  accent-color: var(--color-accent);
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-disclaimer {
+  color: var(--color-paper);
+  opacity: 0.75;
+}
+
+/* SIGN UP button — white bg, action-blue text; sized to content (not 100%
+   wide), matching `.frm-fluent-form .ff-btn-submit` (light variant). */
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-form__submit {
+  width: auto;
+  background-color: var(--color-paper);
+  color: var(--color-link-hover);
+}
+
+.afc-signup-form--inline.afc-signup-form--light .afc-signup-form__submit:hover {
+  background-color: #e6f5fb;
+  color: var(--color-link-hover);
+}
+
+@media (min-width: 1024px) {
+  .afc-signup-form--inline.afc-signup-form--light .afc-signup-field--checkbox span {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 130%;
+  }
+
+  .afc-signup-form--inline.afc-signup-form--light .afc-signup-disclaimer {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 150%;
+  }
+
+  /* Pill button, sized to content. */
+  .afc-signup-form--inline.afc-signup-form--light .afc-signup-form__submit {
+    display: inline-flex;
+    padding: 16px 24px;
+    border-radius: 10px;
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* ============================================================================
+   DARK VARIANT ("Be Ready on Day One") — style.scss DARK VARIANT.
+   ============================================================================ */
+.afc-signup-form--dark .afc-signup-form__heading,
+.afc-signup-form--dark h2 {
+  color: var(--color-paper);
+}
+
+.afc-signup-form--dark .afc-signup-form__support-copy {
+  color: var(--color-paper);
+}
+
+.afc-signup-form--dark .afc-signup-field label {
+  color: var(--color-paper);
+  font-size: 0.875rem;
+}
+
+/* `.frm-fluent-form .ff-el-form-control`: transparent fill (the section's navy
+   photo/scrim shows through), 2px paper border, 9px radius, 51px tall. */
+.afc-signup-form--dark .afc-signup-field input,
+.afc-signup-form--dark .afc-signup-field select {
+  background: transparent;
+  color: var(--color-paper);
+  border: 2px solid var(--color-paper);
+  border-radius: 9px;
+  height: 51px;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+}
+
+.afc-signup-form--dark .afc-signup-field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='white'/%3E%3C/svg%3E");
+}
+
+.afc-signup-form--dark .afc-signup-field input::placeholder {
+  color: var(--color-paper);
+  opacity: 0.65;
+}
+
+/* Lead fields: subtle white fill to separate from the navy/photo background,
+   softer border, tighter radius — matches `.wp-block-afc-email-signup__lead-wrap
+   .ff-el-form-control`. */
+.afc-signup-form--dark .afc-signup-field-row input,
+.afc-signup-form--dark .afc-signup-field-row select {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+}
+
+.afc-signup-form--dark .afc-signup-field-row input::placeholder {
+  opacity: 0.55;
+}
+
+.afc-signup-form--dark .afc-signup-field--checkbox span {
+  color: var(--color-paper);
+}
+
+.afc-signup-form--dark .afc-signup-disclaimer {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.afc-signup-form--dark .afc-signup-form__success {
+  color: var(--color-paper);
+}
+
+/* SIGN UP button — fixed 128×45, left-aligned (not full width), at every
+   breakpoint. Color already matches `.afc-button--solid` (action bg / paper
+   text, link-hover on hover), so only sizing needs overriding here. */
+.afc-signup-form--dark .afc-signup-form__submit {
+  width: 128px;
+  height: 45px;
+  padding: 0;
+}
+
+@media (max-width: 600px) {
+  .afc-signup-field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

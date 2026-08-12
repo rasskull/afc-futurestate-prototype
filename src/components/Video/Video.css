@@ -1,0 +1,66 @@
+/**
+ * AFC Video
+ *
+ * Ground truth: the real block is a plain WP core/video, alignwide, with no
+ * border-radius/shadow — a bare <video> with native controls, horizontally
+ * centered within the shared wide-size column (confirmed live: the wide
+ * constraint matches this app's .afc-wide utility exactly at every viewport
+ * checked).
+ *
+ * Top/bottom PADDING lives on the outer .afc-video-block wrapper (driven by
+ * CSS custom properties, set inline per instance via the paddingTop/
+ * paddingBottom props) so that an optional heading/intro sits INSIDE that
+ * padded space rather than floating above it — different placements need
+ * different amounts of surrounding space (e.g. no top gap when the video
+ * sits directly under another section's own bottom padding, or more room
+ * when a heading/intro is present). Default (no override) is 80px (5rem)
+ * top and bottom.
+ */
+.afc-video-block {
+  padding-top: var(--afc-video-padding-top, 5rem);
+  padding-bottom: var(--afc-video-padding-bottom, 5rem);
+}
+
+/* <figure> carries a default browser margin (UA stylesheet) — zero it out
+   now that this element no longer owns the block's own top/bottom spacing
+   (that moved to .afc-video-block's padding above). */
+.afc-video {
+  margin: 0;
+}
+
+.afc-video__el {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* Fixed internal gap between the intro text and the video itself — distinct
+   from the block's own outer padding above. Confirmed live (How the EFTC
+   Works' "VIDEO OVERVIEW"): body-to-video gap is spacing-40 (1.5rem); body
+   margin spacing-20 (~0.44rem) top, both left-aligned. */
+.afc-video__intro {
+  margin-bottom: 1.5rem;
+}
+
+.afc-video__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 600;
+  text-align: left;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-video__heading strong {
+  font-weight: 900;
+}
+
+.afc-video__body {
+  margin: 0.44rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+}

@@ -1,0 +1,343 @@
+/*
+ * Ground truth: wp-content/mu-plugins/afc-core/blocks-src/how-it-works/style.scss
+ * + render.php. Structure rewritten to match 1:1 (2026-08-11): the real DOM is
+ * a CSS grid with __col-text (number/heading/body) and __col-image as SIBLING
+ * grid cells — text always precedes its image in DOM order, and desktop grid
+ * placement puts every col-text in row 1, every col-image + the connector in
+ * row 2. A prior version stacked image-then-text in one flex column per step,
+ * which put images before text and forced the connector into an absolutely-
+ * positioned hack — replaced with the real grid so both match exactly.
+ */
+.afc-how-it-works {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--color-cream);
+}
+
+/*
+ * Dollar-sign background pattern layer. Driven by a --afc-hiw-bg custom
+ * property the real block sets inline when a background image attribute is
+ * configured; the homepage pattern never sets one, so this is a harmless,
+ * invisible 0-image layer here too — kept for structural parity.
+ */
+.afc-how-it-works__bg-layer {
+  position: absolute;
+  inset: 0;
+  background-image: var(--afc-hiw-bg);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.15;
+}
+
+/*
+ * __inner carries the shared .afc-wide width/gutter class, with the gutter
+ * reduced by each column's own inline padding (16/20/28px) so the combined
+ * inset still lands on the standard page gutter — matches the real block's
+ * own padding-inline math exactly.
+ */
+.afc-how-it-works__inner {
+  position: relative;
+  z-index: 1;
+  padding: 60px calc(var(--gutter) - 16px) 80px;
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__inner {
+    padding-block: 72px 100px;
+    padding-inline: calc(var(--gutter) - 20px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .afc-how-it-works__inner {
+    padding-inline: calc(var(--gutter) - 28px);
+  }
+}
+
+@media (min-width: 1400px) {
+  .afc-how-it-works__inner {
+    padding-block: clamp(3.5rem, 7vw, 6.25rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__inner {
+    padding: 48px 24px 60px;
+  }
+}
+
+.afc-how-it-works__title {
+  text-align: left;
+  margin: 0 0 48px;
+  padding-left: 16px;
+  line-height: 1;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+}
+
+.afc-how-it-works__title-light,
+.afc-how-it-works__title-bold {
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-how-it-works__title-light {
+  font-weight: 400;
+}
+
+.afc-how-it-works__title-bold {
+  font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__title {
+    margin-bottom: 56px;
+    padding-left: 20px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .afc-how-it-works__title {
+    padding-left: 28px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__title {
+    margin-bottom: 64px;
+    text-align: center;
+    padding-left: 0;
+  }
+}
+
+/*
+ * Grid: mobile is a single implicit column (text/image/text/image... in DOM
+ * order). Desktop (>=1024px) is an explicit 4-column x 2-row grid — row 1 is
+ * every col-text, row 2 is every col-image plus the connector (behind the
+ * images via z-index) — see the data-col placement rules below.
+ */
+.afc-how-it-works__grid {
+  display: grid;
+  gap: 32px 0;
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .afc-how-it-works__col-text[data-col='1'] { grid-column: 1; grid-row: 1; }
+  .afc-how-it-works__col-text[data-col='2'] { grid-column: 2; grid-row: 1; }
+  .afc-how-it-works__col-text[data-col='3'] { grid-column: 3; grid-row: 1; }
+  .afc-how-it-works__col-text[data-col='4'] { grid-column: 4; grid-row: 1; }
+
+  .afc-how-it-works__col-image[data-col='1'] { grid-column: 1; grid-row: 2; position: relative; z-index: 1; }
+  .afc-how-it-works__col-image[data-col='2'] { grid-column: 2; grid-row: 2; position: relative; z-index: 1; }
+  .afc-how-it-works__col-image[data-col='3'] { grid-column: 3; grid-row: 2; position: relative; z-index: 1; }
+  .afc-how-it-works__col-image[data-col='4'] { grid-column: 4; grid-row: 2; position: relative; z-index: 1; }
+
+  .afc-how-it-works__connector {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    position: relative;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.afc-how-it-works__col-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0 16px;
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__col-text {
+    padding: 0 20px;
+    min-height: 230px; /* normalizes row height so images align horizontally */
+  }
+}
+
+@media (min-width: 1200px) {
+  .afc-how-it-works__col-text {
+    padding: 0 28px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__col-text {
+    padding: 0;
+    align-items: center;
+  }
+}
+
+.afc-how-it-works__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--color-emphasis);
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--color-paper);
+  line-height: 1;
+}
+
+.afc-how-it-works__col-heading {
+  margin: 0 0 0.75rem;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__col-heading {
+    font-size: 2rem;
+    text-align: center;
+  }
+}
+
+.afc-how-it-works__col-body {
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__col-body {
+    text-align: center;
+  }
+}
+
+.afc-how-it-works__col-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__col-image {
+    padding: 0;
+    height: 250px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__col-image {
+    padding: 0;
+    margin-top: -8px; /* tightens the gap between text and image on mobile */
+  }
+}
+
+.afc-how-it-works__col-img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  width: clamp(160px, 20vw, 260px);
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__col-img {
+    width: 270px;
+    height: 250px;
+    object-fit: contain;
+    max-height: 100%;
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-how-it-works__col-img {
+    width: clamp(180px, 60vw, 280px);
+  }
+}
+
+/*
+ * Connector: desktop-only wavy SVG line + 3 dollar-sign circle nodes. The
+ * line's rendered height MUST be `auto` (its own intrinsic viewBox ratio),
+ * not stretched to the row's 250px height — forcing height:100% combined
+ * with preserveAspectRatio="none" scales the stroke non-uniformly (far more
+ * vertically than horizontally), which is what made the line render much
+ * thicker than the live site. `height: auto` matches the real block exactly.
+ */
+.afc-how-it-works__connector {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .afc-how-it-works__connector {
+    display: flex;
+  }
+}
+
+.afc-how-it-works__connector-line {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  /* Trim the line so it starts/ends at each column's centre — hidden behind
+     step images 1 and 4. 12.5% = half a column width (1/8 of the 4-column
+     grid). */
+  clip-path: inset(0 12.5%);
+}
+
+/* Dollar sign circles positioned along the wavy path, as percentages of the
+   connector box (which is centered within and shares the ~250px image row
+   height via grid placement). */
+.afc-how-it-works__dollar-node {
+  position: absolute;
+  width: 38px;
+  height: 37.731px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%) rotate(8.417deg);
+  z-index: 2;
+}
+
+.afc-how-it-works__dollar-node--1 {
+  left: 24%;
+  top: 66%;
+  transform: translate(-50%, -50%) rotate(8.417deg);
+}
+
+.afc-how-it-works__dollar-node--2 {
+  left: 48%;
+  top: 45%;
+  transform: translate(-50%, -50%) rotate(-13.045deg);
+}
+
+.afc-how-it-works__dollar-node--3 {
+  left: 74%;
+  top: 31%;
+  transform: translate(-50%, -50%) rotate(9.412deg);
+}

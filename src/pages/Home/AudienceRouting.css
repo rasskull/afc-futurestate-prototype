@@ -1,0 +1,122 @@
+/* Split white -> cream band. Matches the real .afc-section--split rule
+   (afc theme style.css, ~L861-873): the seam is NOT a percentage split — it's
+   a hard-stop gradient at a fixed calc() offset from the section top:
+     --afc-split-seam: calc(spacing-60 [2.25rem] + 2.75rem + clamp(150px, 13vw, 230px));
+   i.e. calc(5rem + clamp(150px, 13vw, 230px)). The offset is chosen so the
+   seam lands partway down the card photos; since the cards are opaque
+   (white background + full-bleed image) sitting on top of this band, the
+   seam only actually shows in the gutter between cards and the outer
+   margins, matching the real comp. */
+.afc-audience-routing {
+  width: 100%;
+  --afc-split-seam: calc(5rem + clamp(150px, 13vw, 230px));
+  background: linear-gradient(
+    to bottom,
+    var(--color-paper) 0,
+    var(--color-paper) var(--afc-split-seam),
+    var(--color-cream) var(--afc-split-seam),
+    var(--color-cream) 100%
+  );
+  padding-block: clamp(3.5rem, 7vw, 6.25rem);
+}
+
+/* The real .afc-section--split narrows .afc-section__inner to 1260px
+   (vs. the site's default 1312px wide-size) so the cards sit with more
+   breathing room than a standard wide section. */
+.afc-audience-routing .afc-wide {
+  max-width: calc(1260px + 2 * var(--gutter));
+}
+
+.afc-audience-routing__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Card shell: matches the real .afc-promo-card foundation (paper background,
+   0.75rem radius, soft shadow) plus the --split theme's roomier gap/foot
+   padding. The image bleeds flush to the card's top + side edges (see
+   .afc-audience-routing__image below) — the white/paper background is only
+   ever visible behind the text area, never around or behind the photo. */
+.afc-audience-routing__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow: hidden;
+  padding-top: 1rem;
+  background-color: var(--color-paper);
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Bleeds to the card's top + side edges by cancelling the card's own
+   top padding with a matching negative margin (the same trick the real
+   .afc-promo-card__image uses against .afc-promo-card's padding-top). The
+   2:1 aspect ratio matches the --split theme's image crop override. */
+.afc-audience-routing__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  margin-top: -1rem;
+}
+
+/* Text children are padded; the image above stays flush to the card edges.
+   flex:1 lets this fill the card's remaining height (the grid row already
+   stretches both cards to equal height) — needed so the button-wrap's
+   margin-top:auto below has somewhere to push against. */
+.afc-audience-routing__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-inline: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Real .afc-promo-card__title: IBM Plex Sans, uppercase, gradient text-fill
+   (structure→action), weight 400 base / 700 on the wrapped <strong> — was
+   completely unstyled before (plain inherited h2 defaults, no gradient).
+   font-size overridden directly to the real h-2 clamp rather than the
+   sitewide --font-size-h2 token, which has since diverged from it earlier
+   this session (same reasoning as the Hero h2 fix). */
+.afc-audience-routing__heading {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.625rem, 1.2rem + 1.6vw, 3.75rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-audience-routing__heading strong {
+  font-weight: 700;
+}
+
+.afc-audience-routing__body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+/* Escapes the content column's default align-items:stretch (which was
+   forcing the button to fill the card's full width) and pins the button to
+   the bottom of the now flex:1 content area — matches the real
+   `.wp-block-buttons{margin-top:auto}` inside `.afc-promo-card__body`, so
+   both cards' buttons land on the same line regardless of body copy length. */
+.afc-audience-routing__button-wrap {
+  display: flex;
+  margin-top: auto;
+}
+
+@media (max-width: 700px) {
+  .afc-audience-routing__grid {
+    grid-template-columns: 1fr;
+  }
+}

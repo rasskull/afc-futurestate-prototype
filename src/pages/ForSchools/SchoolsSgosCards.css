@@ -1,0 +1,90 @@
+/* ============================================================================
+   SCHOOLS/SGOS CARDS ("For Schools" / "For SGOs") — page-local copy of
+   Home/AudienceRouting's card shell, but: flat white section background
+   (.afc-section--light, not the paper→cream split), a per-card eyebrow
+   label, and cream (not paper) card backgrounds — confirmed live via
+   computed styles.
+   ============================================================================ */
+.afc-schools-cards {
+  width: 100%;
+  background-color: var(--color-paper);
+  padding-block: clamp(3.5rem, 7vw, 6.25rem);
+}
+
+.afc-schools-cards__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.afc-schools-cards__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow: hidden;
+  padding-top: 1rem;
+  background-color: var(--color-cream);
+  border-radius: 0.5rem;
+}
+
+.afc-schools-cards__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  margin-top: -1rem;
+}
+
+.afc-schools-cards__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-inline: 2rem;
+  padding-bottom: 2rem;
+}
+
+.afc-schools-cards__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.afc-schools-cards__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h3);
+  font-weight: 400;
+  line-height: 1.15;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-schools-cards__heading strong {
+  font-weight: 700;
+}
+
+.afc-schools-cards__body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.afc-schools-cards__button-wrap {
+  display: flex;
+  margin-top: auto;
+}
+
+@media (max-width: 700px) {
+  .afc-schools-cards__grid {
+    grid-template-columns: 1fr;
+  }
+}

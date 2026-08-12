@@ -1,0 +1,87 @@
+/**
+ * AFC How Scholarships Help Families
+ *
+ * Ground truth: confirmed live — a plain WP group layout, not a bespoke
+ * block. Gradient h2 + lead paragraph + an italicized supporting line
+ * (spacing-driven, no special box), then a 3-up grid of plain text columns
+ * (gradient h3 + paragraph, no background/border/image on any column).
+ */
+.afc-scholarships-help {
+  width: 100%;
+  background-color: var(--color-paper);
+  padding-block: clamp(4rem, 9vw, 8.75rem) clamp(3.5rem, 7vw, 6.25rem);
+}
+
+.afc-scholarships-help__header {
+  max-width: 78rem;
+}
+
+.afc-scholarships-help__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h1);
+  font-weight: 400;
+  line-height: 1.05;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-scholarships-help__heading strong {
+  font-weight: 700;
+}
+
+.afc-scholarships-help__lead {
+  margin: 1rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-lead);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.afc-scholarships-help__support-line {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-lead);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.afc-scholarships-help__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: 4rem;
+}
+
+.afc-scholarships-help__col-heading {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-scholarships-help__col-body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .afc-scholarships-help__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

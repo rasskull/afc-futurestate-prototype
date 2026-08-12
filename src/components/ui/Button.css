@@ -1,0 +1,42 @@
+.afc-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-button);
+  font-weight: var(--button-font-weight);
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: uppercase;
+  border-radius: var(--button-radius);
+  padding-block: var(--button-padding-block);
+  padding-inline: var(--button-padding-inline);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.afc-button:hover {
+  text-decoration: none;
+}
+
+.afc-button--solid {
+  background: var(--color-action);
+  color: var(--color-paper);
+}
+
+.afc-button--solid:hover {
+  background: var(--color-link-hover);
+  color: var(--color-paper);
+}
+
+.afc-button--outline {
+  background: transparent;
+  border-color: var(--color-structure);
+  color: var(--color-structure);
+}
+
+.afc-button--outline:hover {
+  background: var(--color-structure);
+  color: var(--color-paper);
+}

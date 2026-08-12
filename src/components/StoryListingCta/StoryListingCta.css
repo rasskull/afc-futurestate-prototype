@@ -1,0 +1,70 @@
+/**
+ * AFC Story Listing CTA
+ *
+ * Ground truth: theme style.css's .afc-listing-cta rules — a fielded card
+ * that reuses the shared .afc-card grid cell but replaces its flex/gap with
+ * a full-bleed background photo + scrim + centered content overlay.
+ */
+.afc-listing-cta {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+  border-radius: 0.5rem;
+  background-color: var(--color-structure);
+  background-image: var(--afc-listing-cta-bg, none);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+}
+
+/* Structure-blue scrim (45% opacity) so the white headline stays legible
+   while the background photo's texture still reads through. */
+.afc-listing-cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--color-structure) 45%, transparent);
+}
+
+.afc-listing-cta__content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 4rem 2rem;
+}
+
+.afc-listing-cta__headline {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+
+.afc-listing-cta__button {
+  align-self: flex-start;
+  display: inline-block;
+  background-color: var(--color-paper);
+  color: var(--color-link-hover);
+  font-family: var(--font-body);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  padding: 0.65rem 1rem;
+  border-radius: var(--button-radius);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.afc-listing-cta__button:hover,
+.afc-listing-cta__button:focus-visible {
+  background-color: transparent;
+  color: var(--color-paper);
+  outline: 2px solid var(--color-paper);
+  outline-offset: -2px;
+}

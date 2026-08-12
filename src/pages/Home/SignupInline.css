@@ -1,0 +1,192 @@
+/* ============================================================================
+   SIGNUP INLINE ("Be the First to Know") — LIGHT variant of afc/email-signup,
+   ground truth: afc-core/blocks-src/email-signup/{render.php,style.scss}.
+
+   This block is WP align:full — it spans the ENTIRE viewport width, not the
+   shared .afc-wide column. Confirmed live via getBoundingClientRect(): the
+   block's own rect is exactly the viewport width with zero outer margin, and
+   the 14.9%/28%/1.2%/36.1% figures below are computed against THAT full
+   width, not a centered max-width column. Dropped .afc-wide here for that
+   reason — every other section reuses it, this one deliberately doesn't.
+   ============================================================================ */
+.afc-signup-inline {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Decorative wavy lines (afc_core_email_swoosh_svg). Desktop: only the top
+   copy, full-bleed behind everything. Mobile: both copies, each clipped to a
+   band at the top/bottom of the section (bottom copy rotated 180deg). */
+.afc-signup-inline__decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.afc-signup-inline__decoration-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.afc-signup-inline__decoration--bottom {
+  display: none;
+}
+
+.afc-signup-inline__inner {
+  position: relative;
+  z-index: 1;
+  padding: 2.25rem 1.5rem; /* spacing-60 spacing-50 */
+}
+
+@media (min-width: 1024px) {
+  .afc-signup-inline__inner {
+    padding-inline: 0;
+    padding-top: clamp(149px, 14.9vw, 259px);
+    padding-bottom: 3.375rem; /* spacing-70 */
+    min-height: clamp(460px, 46vw, 800px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-signup-inline__inner {
+    padding: 1.5rem 25px; /* spacing-50, 25px */
+  }
+}
+
+.afc-signup-inline__inner .afc-signup-form {
+  text-align: left;
+}
+
+/* The email field's label duplicates its own placeholder text ("Email
+   Address" visible twice) — kept for accessibility but hidden visually.
+   Scoped to just the top-level email field (a direct child of <form>) so the
+   lead-wrap's first/last/state/phone labels, and the shared modal/dark-theme
+   variants, are untouched. */
+.afc-signup-inline__inner form > .afc-signup-field > label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Gradient headline (navy → action blue), matching the shared chrome +
+   light-variant heading rules. */
+.afc-signup-inline__inner .afc-signup-form__heading {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 100;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-size: var(--font-size-h1);
+  margin: 0;
+}
+
+/* `.afc-signup-form--compact-heading` (opt-in via SignupForm's `className`
+   prop — see ForParents.jsx's "Get Notified When Applications Open"
+   instance) shrinks this heading 20% relative to whatever it would
+   otherwise be at each breakpoint below. The extra class beats the plain
+   2-class base rules above/below on specificity, so it wins regardless of
+   source order. */
+.afc-signup-inline__inner .afc-signup-form--compact-heading .afc-signup-form__heading {
+  font-size: calc(var(--font-size-h1) * 0.8);
+}
+
+.afc-signup-inline__inner .afc-signup-form__heading strong {
+  font-weight: 700;
+}
+
+.afc-signup-inline__inner .afc-signup-form__support-copy {
+  max-width: 28rem;
+  margin: 0 0 1rem; /* spacing-40 */
+}
+
+@media (min-width: 1024px) {
+  .afc-signup-inline__inner .afc-signup-form__support-copy {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 150%;
+  }
+
+  .afc-signup-inline__inner .afc-signup-form form {
+    margin-top: 1.5rem; /* spacing-50 */
+  }
+
+  /* Real layout: a flex row with __text at a 14.9% left margin / 28% width
+     and __form-area at a 1.2% margin / 36.1% width — both against the full
+     section width (see the file-header note on align:full above).
+     Reproduced as grid tracks on SignupForm's flat markup (heading/copy/form
+     are siblings), computed against that same full width via percentage
+     column tracks — an exact match without needing extra wrapper divs. */
+  .afc-signup-inline__inner .afc-signup-form {
+    display: grid;
+    grid-template-columns: 14.9% 28% 1.2% 36.1% 1fr;
+    align-items: start;
+  }
+
+  .afc-signup-inline__inner .afc-signup-form__heading {
+    grid-column: 2;
+  }
+
+  .afc-signup-inline__inner .afc-signup-form__support-copy,
+  .afc-signup-inline__inner .afc-signup-form form {
+    grid-column: 4;
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-signup-inline__inner .afc-signup-form__heading {
+    font-size: 42px;
+    margin-bottom: 1rem; /* spacing-40 */
+  }
+
+  .afc-signup-inline__inner .afc-signup-form--compact-heading .afc-signup-form__heading {
+    font-size: calc(42px * 0.8);
+  }
+
+  .afc-signup-inline__inner .afc-signup-form__support-copy {
+    font-size: 18px;
+  }
+
+  .afc-signup-inline__inner .afc-signup-form form {
+    margin-top: 1.5rem; /* spacing-50 */
+  }
+
+  /* Decoration reserves a band at the top of the stacked layout; the
+     heading's margin-top clears it (matches the real __text rule). */
+  .afc-signup-inline {
+    --afc-decoration-height: clamp(140px, 38vw, 220px);
+  }
+
+  .afc-signup-inline__decoration {
+    inset: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--afc-decoration-height);
+    overflow: hidden;
+  }
+
+  .afc-signup-inline__decoration--bottom {
+    display: block;
+    top: auto;
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  .afc-signup-inline__inner .afc-signup-form__heading {
+    margin-top: var(--afc-decoration-height);
+  }
+}

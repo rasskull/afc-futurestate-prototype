@@ -1,0 +1,176 @@
+/**
+ * AFC Stories Grid
+ *
+ * Ground truth: this homepage section is the real `afc/card-grid` block
+ * (theme.json pattern `home-stories-grid`), sharing chrome with every other
+ * editorial grid on the site (`.afc-section__header` / `.afc-content-grid` /
+ * `.afc-card`, defined in wp-content/themes/afc/style.css — a cross-template
+ * stylesheet, not block-scoped). The header is a flex ROW: heading+intro on
+ * the left, the CTA button bottom-aligned on the right — NOT the centered
+ * heading + button-under-the-grid layout a prior pass had.
+ */
+
+.afc-stories {
+  width: 100%;
+  background-color: var(--color-paper);
+  padding-block: clamp(3.5rem, 7vw, 6.25rem); /* spacing-85 */
+}
+
+.afc-stories__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem; /* spacing-40 */
+  /* 44px intro→grid gap per the real comp — no spacing preset equals it. */
+  margin-bottom: 2.75rem;
+}
+
+.afc-stories__header-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.afc-stories__header-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Gradient, uppercase, weight 400 base — the <strong> (always wraps the
+   whole string for this block's real usage) bumps to 700. Was previously
+   unstyled plain text at the sitewide h2 default (400, solid color, no
+   gradient) — this override matches .afc-section__heading exactly. */
+.afc-stories__heading {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  margin: 0;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-stories__heading strong {
+  font-weight: 700;
+}
+
+.afc-stories__subheading {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  line-height: 1.55;
+  margin: 0.75rem 0 0;
+  max-width: 52rem;
+}
+
+/* Real .afc-section__cta is Inter/700/0.06em-tracked with its own padding —
+   distinct from the shared Button component's generic (heading-font/600)
+   defaults, so overridden here rather than in the shared tokens (which would
+   ripple to every button on the site). */
+.afc-stories__cta {
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.875rem 1.75rem;
+}
+
+.afc-stories__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.afc-stories__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.afc-stories__card:hover {
+  text-decoration: none;
+}
+
+.afc-stories__card:hover .afc-stories__headline {
+  color: var(--color-link-hover);
+}
+
+.afc-stories__image-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.afc-stories__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.afc-stories__card:hover .afc-stories__image {
+  transform: scale(1.04);
+}
+
+/* Real title style is a 4-up-grid-specific override (style.css's
+   `.afc-content-grid--4 .afc-card__title`), not the base .afc-card__title —
+   IBM Plex Sans SemiBold, a fluid clamp (not the base's fixed h-5/1.25rem),
+   and explicitly action-blue (not inherited ink) — confirmed live: 24px/600
+   at 1280px viewport, color rgb(0,153,206). Hover still goes to
+   --color-link-hover via the base .afc-card__link:hover rule. */
+.afc-stories__headline {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1rem + 1.05vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-action);
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+/* Real .afc-card__summary: inherits body defaults (Inter, --font-size-body)
+   — a prior pass had this at the smaller --font-size-caption. 3-line clamp
+   matches the real shared card styling exactly. */
+.afc-stories__snippet {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .afc-stories__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .afc-stories {
+    padding-block: 1.5rem; /* spacing-50 */
+  }
+}
+
+/* Real breakpoint: the header stays a side-by-side row down to 640px —
+   narrower than the grid's own 2-up/1-up breakpoints. */
+@media (max-width: 639px) {
+  .afc-stories__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .afc-stories__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,147 @@
+.afc-faq {
+  width: 100%;
+  background-color: var(--color-paper);
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+/* Two-column layout ≥1024px: sidebar (heading + intro) at left, accordion at
+   right — mirrors the real block's `1fr 2fr` grid so the section reads the
+   same as the live site instead of a single centered column. */
+.afc-faq__inner {
+  display: block;
+}
+
+@media (min-width: 1024px) {
+  .afc-faq__inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0 2.25rem;
+    align-items: start;
+  }
+}
+
+.afc-faq__sidebar {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+@media (min-width: 1024px) {
+  .afc-faq__sidebar {
+    margin-bottom: 0;
+    position: sticky;
+    top: 2.25rem;
+  }
+}
+
+/* Base weight 100 (ultralight) with "Frequently" bumped to 700 via <strong>
+   — was previously unset, inheriting the sitewide h2 default (400) for the
+   whole string, which doesn't match either weight the live site actually
+   uses. Confirmed live: heading 100 / strong 700. */
+.afc-faq__heading {
+  margin: 0 0 1rem;
+  font-weight: 100;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-faq__heading strong {
+  font-weight: 700;
+}
+
+.afc-faq__intro {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.afc-faq__list {
+  width: 100%;
+}
+
+.afc-faq__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.afc-faq__item:last-child {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.afc-faq__question {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 1rem 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-structure);
+  transition: color 0.15s ease;
+}
+
+.afc-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.afc-faq__question::marker {
+  content: '';
+}
+
+.afc-faq__question:hover {
+  color: var(--color-link-hover);
+}
+
+.afc-faq__question:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Open state: dark + bold, matching the source */
+.afc-faq__item[open] .afc-faq__question {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+/* Custom-drawn chevron (border-corner technique) standing in for the
+   source's inline SVG — inherits currentColor so it tracks the question's
+   text color, and rotates 180° open like the source rather than a +/x. */
+.afc-faq__question::after {
+  content: '';
+  flex-shrink: 0;
+  width: 9px;
+  height: 9px;
+  border-right: 1.75px solid currentColor;
+  border-bottom: 1.75px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.25s ease;
+}
+
+.afc-faq__item[open] .afc-faq__question::after {
+  transform: rotate(225deg);
+}
+
+.afc-faq__answer-wrap {
+  padding-bottom: 1.5rem;
+}
+
+.afc-faq__answer {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  line-height: 1.65;
+  margin: 0 0 1rem;
+}
+
+.afc-faq__answer:last-child {
+  margin-bottom: 0;
+}

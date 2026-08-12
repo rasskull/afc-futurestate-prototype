@@ -1,0 +1,159 @@
+/* ============================================================================
+   PROCESS STEPS ("Four Steps. We Do the Heavy Lifting.") — afc/process-steps,
+   ground truth: afc-core/blocks-src/process-steps/style.scss.
+
+   Four-step chevron band (desktop row) / vertical stack with downward
+   chevrons (mobile). Segment tints are Figma-local shades of blue — only
+   step 3 maps to a theme color (--color-structure).
+   ============================================================================ */
+.afc-process-steps {
+  width: 100%;
+  background-color: var(--color-paper);
+}
+
+.afc-process-steps__inner {
+  padding-bottom: clamp(3.5rem, 7vw, 6.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 3.3vw, 48px);
+}
+
+.afc-process-steps__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-process-steps__heading strong {
+  font-weight: 700;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@media (min-width: 768px) {
+  .afc-process-steps__heading {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .afc-process-steps__heading {
+    font-size: 48px;
+  }
+}
+
+.afc-process-steps__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .afc-process-steps__list {
+    flex-direction: row;
+  }
+}
+
+.afc-process-steps__step {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: clamp(32px, 4vw, 64px) clamp(20px, 2vw, 32px) clamp(32px, 4vw, 56px) clamp(24px, 4vw, 64px);
+}
+
+.afc-process-steps__step:nth-child(1) {
+  background-color: #4772a8;
+}
+
+.afc-process-steps__step:nth-child(2) {
+  background-color: #3b659a;
+}
+
+.afc-process-steps__step:nth-child(3) {
+  background-color: var(--color-structure);
+}
+
+.afc-process-steps__step:nth-child(4) {
+  background-color: #234b7c;
+}
+
+/* Divider: the PREVIOUS segment's color intrudes as a chevron pointing into
+   this segment. Mobile: downward chevron centered at the top of each
+   segment. */
+.afc-process-steps__step:not(:first-child) {
+  padding-top: 56px;
+}
+
+.afc-process-steps__step:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 88px;
+  height: 28px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.afc-process-steps__step:nth-child(2)::before {
+  background-color: #4772a8;
+}
+
+.afc-process-steps__step:nth-child(3)::before {
+  background-color: #3b659a;
+}
+
+.afc-process-steps__step:nth-child(4)::before {
+  background-color: var(--color-structure);
+}
+
+/* Desktop: rightward chevron at the left edge, full band height. */
+@media (min-width: 768px) {
+  .afc-process-steps__step:not(:first-child) {
+    padding-top: clamp(32px, 4vw, 64px);
+    padding-left: clamp(44px, 5.5vw, 86px);
+  }
+
+  .afc-process-steps__step:not(:first-child)::before {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: clamp(24px, 2.5vw, 40.5px);
+    height: auto;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+}
+
+.afc-process-steps__number {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 4.5vw, 78px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.afc-process-steps__body {
+  margin: clamp(6px, 0.6vw, 10px) 0 0;
+  max-width: 260px;
+  font-family: var(--font-heading);
+  font-size: clamp(17px, 1.3vw, 22px);
+  font-weight: 600;
+  line-height: 1.43;
+  color: var(--color-paper);
+}

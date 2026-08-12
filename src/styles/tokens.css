@@ -1,0 +1,56 @@
+:root {
+  /* Color palette (theme.json settings.color.palette) */
+  --color-action: #0099CE;
+  --color-structure: #315889;
+  --color-emphasis: #60AA41;
+  --color-accent: #BEE0ED;
+  --color-ink: #333333;
+  --color-paper: #FFFFFF;
+  --color-cream: #F7F3EC;
+  --color-link-hover: #006A98;
+  --color-error: #E31937;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #315889 0%, #0099CE 100%);
+  --gradient-primary-vertical: linear-gradient(180deg, #315889 0%, #0099CE 100%);
+  --gradient-text: linear-gradient(270deg, #315889 64.9%, #0099CE 98.86%);
+
+  /* Fonts */
+  --font-heading: 'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Fluid type scale (theme.json settings.typography.fontSizes) */
+  --font-size-eyebrow: 1.125rem;
+  --font-size-caption: 0.875rem;
+  --font-size-button: 1.15rem;
+  --font-size-body: 1.0625rem;
+  --font-size-nav: 1.15rem;
+  --font-size-lead: clamp(1.125rem, 0.95rem + 0.55vw, 1.375rem);
+  --font-size-h3: clamp(1.25rem, 1rem + 0.9vw, 2.25rem);
+  --font-size-h2: clamp(2rem, 5vw, 4.25rem);
+  --font-size-h1: clamp(2rem, 1.4rem + 2.6vw, 4.25rem);
+  --font-size-display: clamp(2rem, 1.25rem + 2.75vw, 4.25rem);
+  --font-size-display-xxl: clamp(3.5rem, 2.5rem + 4vw, 5.625rem);
+
+  /* Layout */
+  --content-size: 720px;
+  --wide-size: 1312px;
+  /* Root gutter (theme.json styles.spacing.padding left/right). WordPress applies
+     this padding OUTSIDE the contentSize/wideSize column (content-box math), so
+     content stays exactly --content-size/--wide-size wide with the gutter added
+     on top. Everything in this codebase is box-sizing:border-box (see reset.css),
+     so .afc-content/.afc-wide below compensate by widening max-width by 2x this
+     value — see the comment there before changing either value. */
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+
+  /* Buttons (theme.json styles.elements.button) */
+  --button-radius: 10px;
+  --button-letter-spacing: 0.04em;
+  --button-font-weight: 600;
+  --button-padding-block: 0.75rem;
+  --button-padding-inline: 1.5rem;
+
+  /* Breakpoints (reference only — CSS custom properties can't be used inside
+     @media queries, so these literal values are mirrored in each component's
+     own media queries): 600px, 639px, 767px, 980px, 1023px, 1200px, 1460px */
+}

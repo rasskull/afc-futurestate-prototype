@@ -1,0 +1,217 @@
+.afc-eligibility-promo {
+  width: 100%;
+  /* Real block has no background support/attribute set (see cta-promo/block.json
+     + patterns/cta-promo-eligibility.php) — it's transparent, letting the page's
+     white background (--wp--preset--color--paper) show through. Confirmed via
+     computed styles on the live site: section/inner/content/art all resolve to
+     rgba(0,0,0,0), with body background rgb(255,255,255). */
+  background-color: var(--color-paper);
+}
+
+/* Mirrors .wp-block-afc-cta-promo__inner (style.scss): mobile-first stack,
+   row layout + real max-width/padding/gap from >= 1024px.
+
+   box-sizing: content-box is deliberate here, overriding this app's global
+   border-box reset — the real site has no such reset, so its `max-width:
+   1220px` is a pure CONTENT width with padding added outside it (confirmed
+   live: at a 1920px viewport the rendered box is 1220 + 2×80.96 ≈ 1382px
+   wide). Under the inherited border-box default, the same `max-width:1220px`
+   + padding would instead squeeze the CONTENT down to 1220 minus 2×padding —
+   about 162px narrower at desktop — which was cramping this block's padding
+   and, since the content/art columns split whatever width is left over
+   proportionally, was also the root cause of the art image rendering
+   noticeably smaller than the real site. */
+.afc-eligibility-promo__inner {
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  max-width: 1220px;
+  margin-inline: auto;
+  padding: 36px 24px;
+}
+
+@media (min-width: 1024px) {
+  .afc-eligibility-promo__inner {
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+    padding: 54px 81px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1200px) {
+  .afc-eligibility-promo__inner {
+    padding: 36px;
+  }
+}
+
+/* Mirrors .wp-block-afc-cta-promo__content: flex-basis 621 of the 621:562
+   content/art split (Figma proportion carried over from style.scss). */
+.afc-eligibility-promo__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 621 1 0;
+  min-width: 0;
+  width: 100%;
+}
+
+.afc-eligibility-promo__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+/* Real source (.wp-block-afc-cta-promo__heading): font-weight 400 base, only
+   the <strong> portion bumps to 600 — NOT a flat 700 on the whole heading.
+   font-size is its own clamp capped at 48px (768px→40px, 1024px→48px in the
+   real breakpoint-based source), deliberately overriding the shared sitewide
+   --font-size-h2 token (which caps at 4.25rem/68px) rather than inheriting
+   it — this block's comp uses a smaller, brighter-blue heading treatment. */
+.afc-eligibility-promo__heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 3rem);
+  font-weight: 400;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0;
+  /* Matches .wp-block-afc-cta-promo__heading's gradient exactly (253deg,
+     structure 8.55% -> action 92.88%). */
+  background: linear-gradient(253deg, var(--color-structure) 8.55%, var(--color-action) 92.88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-eligibility-promo__heading strong {
+  font-weight: 600;
+}
+
+@media (min-width: 1024px) {
+  .afc-eligibility-promo__heading {
+    line-height: 1;
+  }
+}
+
+.afc-eligibility-promo__subheading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+@media (min-width: 1024px) {
+  .afc-eligibility-promo__subheading {
+    font-size: 24px;
+  }
+}
+
+/* Fixed 17px, matching the real .wp-block-afc-cta-promo__body exactly — NOT
+   the shared --font-size-lead token (clamp up to 22px), which was rendering
+   this noticeably larger than the live site at every width. */
+.afc-eligibility-promo__lead {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.afc-eligibility-promo__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.afc-eligibility-promo__check-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Circle-check icon: real source drives the circle's fill off `color`
+   (the SVG circle uses fill="currentColor") rather than a hardcoded value —
+   reproduced the same way here. */
+.afc-eligibility-promo__check-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  width: 27px;
+  height: 27px;
+  color: var(--color-structure);
+}
+
+.afc-eligibility-promo__check-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.afc-eligibility-promo__check-text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+/* Without this wrapper, the button (a direct child of .content, a column
+   flexbox) inherits align-items:stretch and fills the column's full width.
+   Real source wraps it in exactly this div for the same reason. */
+.afc-eligibility-promo__button-wrap {
+  display: flex;
+}
+
+/* Mirrors .wp-block-afc-cta-promo__art: flex-basis 562, art sits above the
+   content on mobile (order: -1) and to the side at >= 1024px. No
+   background-color anywhere in the real rule — the art image is shown with
+   no box behind it. */
+.afc-eligibility-promo__art {
+  flex: 562 1 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 440px;
+  order: -1;
+}
+
+@media (min-width: 1024px) {
+  .afc-eligibility-promo__art {
+    order: 0;
+    max-width: 562px;
+  }
+}
+
+.afc-eligibility-promo__art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Art-left variant (AFC-89 "What Partners Get"): flips the desktop columns
+   (mobile already renders art first via the base `order: -1` above), rounds
+   the art image, and widens the checklist gap. */
+@media (min-width: 1024px) {
+  .afc-eligibility-promo--art-left .afc-eligibility-promo__art {
+    order: -1;
+  }
+}
+
+.afc-eligibility-promo--art-left .afc-eligibility-promo__art img {
+  border-radius: 8px;
+}
+
+.afc-eligibility-promo--art-left .afc-eligibility-promo__list {
+  gap: 30px;
+}

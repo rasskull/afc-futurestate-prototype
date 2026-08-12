@@ -1,0 +1,227 @@
+/**
+ * AFC About People
+ *
+ * Ground truth: afc-core/blocks-src/about-people/style.scss, copied 1:1 —
+ * a full-bleed brand-navy band, plain 3-up grid (2-up tablet, 1-up mobile,
+ * NO column dividers), centered circular headshots with a white ring, a
+ * white "See All Authors" pill CTA below the grid. Bio text is real-source
+ * mobile-only (hidden above 768px); social icons are omitted (not modeled
+ * in this prototype).
+ */
+.afc-about-people {
+  width: 100%;
+  color: var(--color-paper);
+  background-color: var(--color-structure);
+  background-image: var(--afc-about-people-bg, none);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Border-box compensation (matches this app's .afc-wide/.afc-content
+   convention) — the real site is content-box, so max-width:1280px plus
+   padding stays exactly 1280px of content; widening by 2*gutter here
+   restores the same content width under this app's global border-box
+   reset. */
+.afc-about-people__inner {
+  max-width: calc(1280px + 2 * var(--gutter));
+  margin-inline: auto;
+  padding: clamp(3.5rem, 7vw, 6.25rem) var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.afc-about-people__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.afc-about-people__heading {
+  font-family: var(--font-heading);
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  margin: 0;
+}
+
+.afc-about-people__intro {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--color-paper);
+  max-width: 1131px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.afc-about-people__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+@media (max-width: 1023px) {
+  .afc-about-people__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .afc-about-people__grid {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+}
+
+.afc-about-people__person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+}
+
+.afc-about-people__headshot {
+  width: clamp(160px, 15vw, 220px);
+  height: clamp(160px, 15vw, 220px);
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+  margin-bottom: 0.5rem;
+}
+
+.afc-about-people__headshot-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.afc-about-people__name {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-paper);
+  margin: 0;
+}
+
+.afc-about-people__role {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-paper);
+  opacity: 0.85;
+  margin: 0;
+  max-width: 405px;
+}
+
+/* Bio is intentionally desktop-hidden — matches the real source exactly
+   (short cards above 768px, fuller cards on mobile). */
+.afc-about-people__bio {
+  display: none;
+}
+
+.afc-about-people__profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.afc-about-people__profile-link:hover {
+  text-decoration: underline;
+  color: var(--color-paper);
+}
+
+.afc-about-people__cta {
+  display: flex;
+  justify-content: center;
+}
+
+.afc-about-people__cta-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  background-color: var(--color-paper);
+  color: var(--color-structure);
+  font-family: var(--font-heading);
+  font-size: var(--font-size-button);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.afc-about-people__cta-link:hover,
+.afc-about-people__cta-link:focus-visible {
+  background-color: transparent;
+  color: var(--color-paper);
+  text-decoration: none;
+  outline: 2px solid var(--color-paper);
+  outline-offset: -2px;
+}
+
+@media (max-width: 767px) {
+  .afc-about-people__heading {
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .afc-about-people__intro {
+    font-size: 18px;
+  }
+
+  .afc-about-people__headshot {
+    width: 160px;
+    height: 160px;
+  }
+
+  .afc-about-people__name {
+    font-size: 22px;
+  }
+
+  .afc-about-people__role {
+    font-size: 21px;
+    max-width: 100%;
+  }
+
+  .afc-about-people__bio {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--font-size-body);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--color-paper);
+    opacity: 0.85;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .afc-about-people__profile-link {
+    font-size: 18px;
+    font-weight: 500;
+  }
+}

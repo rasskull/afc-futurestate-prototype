@@ -1,0 +1,116 @@
+/**
+ * AFC Featured Articles Blue
+ *
+ * Ground truth: theme style.css's `.afc-section--structure` dark-theme
+ * overrides layered on the same shared card-grid chrome used by the
+ * homepage's Stories section (`.afc-section__heading`, `.afc-content-grid--3
+ * .afc-card__title`, `.afc-card__summary`) — confirmed live on
+ * /how-the-eftc-works/. Dark background disables the gradient heading
+ * (solid paper instead) and flips card titles from action-blue to accent
+ * (#BEE0ED) for contrast; card summaries go to paper. No CTA button — the
+ * real block never had ctaText/ctaUrl set for this instance.
+ */
+.afc-featured-articles-blue {
+  width: 100%;
+  background-color: var(--color-structure);
+  color: var(--color-paper);
+  padding-block: clamp(3.5rem, 7vw, 6.25rem);
+}
+
+.afc-featured-articles-blue__header {
+  margin-bottom: 2.75rem;
+}
+
+.afc-featured-articles-blue__heading {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  margin: 0;
+}
+
+.afc-featured-articles-blue__heading strong {
+  font-weight: 700;
+}
+
+.afc-featured-articles-blue__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.afc-featured-articles-blue__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.afc-featured-articles-blue__card:hover {
+  text-decoration: none;
+}
+
+.afc-featured-articles-blue__card:hover .afc-featured-articles-blue__headline {
+  color: var(--color-paper);
+}
+
+.afc-featured-articles-blue__image-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.afc-featured-articles-blue__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.afc-featured-articles-blue__card:hover .afc-featured-articles-blue__image {
+  transform: scale(1.04);
+}
+
+.afc-featured-articles-blue__headline {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1rem + 1.05vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-accent);
+  margin: 0;
+  transition: color 0.15s ease;
+}
+
+.afc-featured-articles-blue__snippet {
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.5;
+  color: var(--color-paper);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 1023px) {
+  .afc-featured-articles-blue__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .afc-featured-articles-blue {
+    padding-block: clamp(2.5rem, 10vw, 4rem);
+  }
+
+  .afc-featured-articles-blue__grid {
+    grid-template-columns: 1fr;
+  }
+}

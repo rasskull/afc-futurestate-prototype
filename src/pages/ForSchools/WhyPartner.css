@@ -1,0 +1,37 @@
+.afc-why-partner {
+  width: 100%;
+  background-color: var(--color-paper);
+  margin-top: 24px;
+}
+
+.afc-why-partner__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.afc-why-partner__item {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.afc-why-partner__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h3);
+  font-weight: 400;
+  line-height: 1.15;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-why-partner__body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+}

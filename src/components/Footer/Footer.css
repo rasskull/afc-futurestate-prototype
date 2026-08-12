@@ -1,0 +1,104 @@
+.afc-footer {
+  background: var(--gradient-primary);
+  color: var(--color-paper);
+  padding-block: clamp(3rem, 5vw, 5rem);
+}
+
+.afc-footer-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.afc-footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.afc-footer-logo {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.afc-footer-logo img {
+  display: block;
+  width: clamp(8rem, 14vw, 15.75rem);
+  height: auto;
+}
+
+.afc-footer-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.afc-footer-nav a {
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-size: var(--font-size-nav);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.afc-footer-nav a:hover {
+  color: var(--color-paper);
+  text-decoration: underline;
+}
+
+.afc-footer-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.afc-footer-tagline {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-lead);
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.afc-footer-legal {
+  font-size: var(--font-size-caption);
+  margin: 0;
+}
+
+.afc-footer-legal-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.afc-footer-legal-links a {
+  color: var(--color-paper);
+  text-decoration: underline;
+  font-size: var(--font-size-body);
+}
+
+@media (max-width: 639px) {
+  .afc-footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .afc-footer-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .afc-footer-legal-links {
+    flex-direction: column;
+  }
+}

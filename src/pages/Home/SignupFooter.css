@@ -1,0 +1,124 @@
+/* ============================================================================
+   SIGNUP FOOTER ("Be Ready On Day One") — DARK variant of afc/email-signup
+   (style.scss).
+   ============================================================================ */
+.afc-signup-footer {
+  width: 100%;
+  padding-block: clamp(4rem, 10vw, 7rem);
+  /* Fallback surface before/without the photo, matching:
+     .wp-block-afc-email-signup--dark { background-color: var(--wp--preset--color--structure); } */
+  background-color: var(--color-structure);
+  /* Real overlay is a single flat wash, not a top-to-bottom gradient:
+       .wp-block-afc-email-signup__bg::after {
+         background: rgba(14, 22, 34, 0.5);
+       }
+     (a dark navy-black at 50% opacity — not rgba(0,0,0,*) and not two different
+     stops). Reproduced here as a flat two-stop gradient of the same color so it
+     layers with the background-image in one declaration. */
+  background-image: linear-gradient(rgba(14, 22, 34, 0.5), rgba(14, 22, 34, 0.5)),
+    var(--afc-signup-footer-bg, url('../../assets/photos/be-ready-day-one-bg.webp'));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.afc-signup-footer__inner {
+  /* User-requested override — widened from the real form-driven 624px
+     (.wp-block-afc-email-signup--dark .wp-block-afc-email-signup__form
+     { max-width: 624px; }) to give the now-larger alignfull heading more
+     room. */
+  max-width: 750px;
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Heading + copy stay centered (inherited from .afc-signup-footer__inner); only the
+   <form> itself is left-aligned, matching:
+     .wp-block-afc-email-signup__form { max-width: 624px; margin-inline: auto; text-align: left; } */
+.afc-signup-footer__inner .afc-signup-form form {
+  text-align: left;
+}
+
+/* Email field label: hidden while collapsed (matches SignupInline's
+   sr-only treatment — the label duplicates the input's own placeholder),
+   but restored to normal, visible text once the visitor expands the form
+   (the real block's own behavior; unlike SignupInline, this block keeps
+   the label on expand instead of staying permanently hidden). `:has()`
+   reads the lead-wrap's `--expanded` modifier to flip the label's
+   visibility with no JS changes needed. */
+.afc-signup-footer__inner form > .afc-signup-field > label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.afc-signup-footer__inner form:has(.afc-signup-form__lead-wrap--expanded) > .afc-signup-field > label {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  /* Restores the normal label→input rhythm (.afc-signup-field label's own
+     margin-bottom), not a flat 0 — the hidden state above needs margin:-1px
+     for the clip trick, so this can't just omit margin entirely. */
+  margin: 0 0 0.35rem;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  border: 0;
+}
+
+/* This instance is WP align:full (confirmed live: block classes include
+   `alignfull`), which triggers a DIFFERENT, larger heading rule than the
+   base dark-variant heading — `.wp-block-afc-email-signup--dark.alignfull
+   .wp-block-afc-email-signup__heading`: font-size var(--font-size-h-1)
+   [clamp(2rem, 1.4rem + 2.6vw, 4.25rem)], font-weight 400, line-height
+   1.05, letter-spacing -0.02em, strong{font-weight:700}. A previous pass
+   used the smaller non-alignfull rule (clamp(1.75rem,1.4rem+1vw,2rem),
+   line-height 1.15, letter-spacing 0, strong 600) — confirmed live at
+   1280px the real heading is 55.68px / line-height 58.464px (1.05) /
+   letter-spacing -1.1136px (-0.02em) / strong 700. */
+.afc-signup-footer__inner .afc-signup-form__heading {
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 4.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.afc-signup-footer__inner .afc-signup-form__heading strong {
+  font-weight: 700;
+}
+
+/* `&:not(.alignfull) .wp-block-afc-email-signup__copy { max-width: 500px;
+   margin-inline: auto; text-align: center; }` plus the shared dark copy rule:
+   font-family Inter; font-size var(--wp--preset--font-size--body, 1.0625rem). */
+.afc-signup-footer__inner .afc-signup-form__support-copy {
+  max-width: 500px;
+  margin-inline: auto;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+}
+
+@media (max-width: 600px) {
+  .afc-signup-footer {
+    padding-block: clamp(2.5rem, 10vw, 4rem);
+    background-image: linear-gradient(rgba(14, 22, 34, 0.5), rgba(14, 22, 34, 0.5)),
+      var(--afc-signup-footer-bg, url('../../assets/photos/be-ready-day-one-bg-mobile.webp'));
+  }
+
+  .afc-signup-footer__inner {
+    max-width: 100%;
+  }
+
+  /* Mobile-only override: `.wp-block-afc-email-signup--dark .wp-block-afc-email-signup__copy
+     { font-size: 16px; }` */
+  .afc-signup-footer__inner .afc-signup-form__support-copy {
+    font-size: 16px;
+  }
+}

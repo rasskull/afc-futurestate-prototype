@@ -1,0 +1,78 @@
+/**
+ * AFC What a Scholarship Can Help Cover
+ *
+ * Ground truth: confirmed live — gradient h2 + lead, then a 4-up grid of
+ * cream-background rounded chips (8px radius, 2rem/3rem padding), each just
+ * a centered bold line of text — no heading, no icon, no image.
+ */
+.afc-scholarship-covers {
+  width: 100%;
+  background-color: var(--color-paper);
+  padding-block: 0 clamp(3.5rem, 7vw, 6.25rem);
+}
+
+.afc-scholarship-covers__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: 1.05;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-scholarship-covers__heading strong {
+  font-weight: 700;
+}
+
+.afc-scholarship-covers__lead {
+  margin: 1rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-lead);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.afc-scholarship-covers__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.afc-scholarship-covers__chip {
+  background-color: var(--color-cream);
+  border-radius: 8px;
+  padding: 2rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.afc-scholarship-covers__chip p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  color: var(--color-ink);
+  text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .afc-scholarship-covers__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .afc-scholarship-covers__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .afc-scholarship-covers__chip {
+    padding: 1.5rem 2rem;
+  }
+}

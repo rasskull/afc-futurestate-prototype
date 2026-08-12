@@ -1,0 +1,59 @@
+@import './tokens.css';
+@import './reset.css';
+@import './typography.css';
+
+/* .afc-content / .afc-wide are the border-box equivalents of WordPress's
+   alignwide/section-inner pattern: on the live site (default content-box,
+   no universal border-box reset) `max-width` constrains the CONTENT area only,
+   and padding-inline is added OUTSIDE it — so a wide section's content is
+   exactly --wide-size wide no matter the gutter. This codebase resets
+   box-sizing to border-box globally (reset.css), which would otherwise make
+   padding eat into max-width and leave content 2x--gutter narrower than the
+   real site (confirmed root cause of the header nav-wrap bug: at 1400px
+   viewport the header row rendered 1172px of usable width instead of the
+   live site's 1260px). Widening max-width by 2x the gutter restores the
+   live site's true content width in border-box math:
+     border-box width = min(available, content-size + 2*gutter)
+     content width    = border-box width - 2*gutter
+                       = min(available - 2*gutter, content-size)
+   which is exactly what WordPress's content-box version computes. */
+.afc-content {
+  max-width: calc(var(--content-size) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.afc-wide {
+  max-width: calc(var(--wide-size) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Visually hidden, but still announced by screen readers and reachable by
+   sequential/programmatic focus — the standard sr-only pattern. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 1000;
+  background: var(--color-paper);
+  color: var(--color-structure);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--button-radius) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+}
