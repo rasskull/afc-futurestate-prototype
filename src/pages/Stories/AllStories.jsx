@@ -46,7 +46,10 @@ const DEFAULT_STORIES = [
   },
   {
     image: storyMilitaryFamilyLife,
-    headline: 'School Choice Is Transforming Military Family Life',
+    // Renamed live (2026-08-12 sync) from "School Choice Is Transforming
+    // Military Family Life" — same Carol Day/Savannah story, unchanged
+    // excerpt, just a new headline/slug on the live site.
+    headline: 'School Choice Changed Everything for This Military Family',
     snippet:
       'Carol Day’s family made sacrifice after sacrifice for military service. School choice — and the Education Freedom Tax Credit — made sure their daughter Savannah didn’t have to sacrifice her education too.',
   },
@@ -78,6 +81,46 @@ const DEFAULT_STORIES = [
     headline: 'She Almost Didn’t Go: How School Choice Helped Mya Reach a Top School',
     snippet:
       'One mother’s belief—and the power of school choice—set Mya on a path to one of the top boarding schools in the country.',
+  },
+  // Added via sync-live-content skill (2026-08-12) — images referenced by
+  // live URL directly rather than vendored locally, per that skill's
+  // convention for frequently-changing story content.
+  {
+    image:
+      'https://afcscholarshipfund.org/wp-content/uploads/2026/07/07.02-07.02-Kingdom-Life-Academy_-A-Christian-Micro-School-Preparing-Students-for-Real-Life.jpg',
+    headline: 'Kingdom Life Academy: A Christian Micro-School Preparing Students for Real Life',
+    snippet:
+      'For many low-income families, finding the right school can mean the difference between a child dropping out — or discovering their purpose.',
+  },
+  {
+    image:
+      'https://afcscholarshipfund.org/wp-content/uploads/2026/07/07.02-07.02-From-Wrestling-Mat-to-Classroom_-How-the-Right-School-Helped-Unlock-Bo-Bassetts-Potential.jpg',
+    headline: 'From Wrestling Mat to Classroom: How the Right School Helped Unlock Bo Bassett’s Potential',
+    snippet: 'For Bo Bassett, the right school didn’t just support his goals — it helped him reach his full potential.',
+  },
+  {
+    image: 'https://afcscholarshipfund.org/wp-content/uploads/2026/06/mom-and-daughter-school-story.jpg',
+    headline: 'When School Broke Her Confidence, School Choice Helped Rebuild It',
+    snippet:
+      'When her daughter started falling behind, one Oklahoma mom refused to accept it as the end of the story — and the school she found changed everything.',
+  },
+  {
+    image:
+      'https://afcscholarshipfund.org/wp-content/uploads/2026/06/mother-son-student-teen-school-story-banner.jpg',
+    headline: 'A Mother’s Fight: When Every Door Closes, School Choice Opens One',
+    snippet:
+      'When Tamica’s son George was expelled from two public schools, she feared she was out of options. A tax credit scholarship changed everything.',
+  },
+  {
+    image: 'https://afcscholarshipfund.org/wp-content/uploads/2026/06/teen-student-private-christian-school.jpg',
+    headline: 'More Than a Transfer: How School Choice Restores Confidence and Opportunity',
+    snippet:
+      'O’Brian was on the honors track but losing confidence in the wrong environment. After transferring to Valiant Cross, he rediscovered his love of learning and his leadership potential.',
+  },
+  {
+    image: 'https://afcscholarshipfund.org/wp-content/uploads/2026/06/daughter-father-family-school-home-story.jpg',
+    headline: 'A Different Path, A Stronger Future: How School Choice Helped Makensie Thrive',
+    snippet: 'When Makensie moved into a smaller classroom setting at Pope John Paul II Catholic High School, everything shifted.',
   },
 ];
 

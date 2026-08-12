@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# sync-live-content skill's fetched data — regenerated fresh each run
+.claude/skills/sync-live-content/.snapshot/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
