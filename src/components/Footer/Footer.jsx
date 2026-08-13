@@ -3,9 +3,9 @@ import { mainNavLinks, footerLegalLinks } from '../nav-links.js';
 import logoWhite from '../../assets/logos/afc-horizontal-white.png';
 import './Footer.css';
 
-export default function Footer() {
+export default function Footer({ className = '' }) {
   return (
-    <footer className="afc-footer">
+    <footer className={`afc-footer ${className}`.trim()}>
       <div className="afc-wide afc-footer-stack">
         <div className="afc-footer-top">
           <Link className="afc-footer-logo" to="/" aria-label="AFC Scholarship Fund — home">

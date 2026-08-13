@@ -1,0 +1,152 @@
+.afc-school-search {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.afc-school-search__field {
+  position: relative;
+  width: 100%;
+}
+
+.afc-school-search__field input {
+  width: 100%;
+  padding: 1rem 2.75rem 1rem 1rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+.afc-school-search__field input::placeholder {
+  color: #696969;
+}
+
+.afc-school-search__field input:disabled {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.afc-school-search__field input:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}
+
+.afc-school-search__icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-ink);
+  pointer-events: none;
+}
+
+.afc-school-search__results {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 26rem;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.afc-school-search__group:first-child .afc-school-search__city-row {
+  border-top: none;
+}
+
+.afc-school-search__city-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.0625rem 1rem;
+  border-bottom: 1px solid #ccc;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+
+.afc-school-search__city-row p {
+  margin: 0;
+}
+
+.afc-school-search__city-row p:first-child {
+  font-weight: 600;
+}
+
+.afc-school-search__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.0625rem 1rem 1.0625rem 1.875rem;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-action);
+  text-align: left;
+  cursor: pointer;
+}
+
+.afc-school-search__group:last-child .afc-school-search__option:last-child {
+  border-bottom: none;
+}
+
+.afc-school-search__option:hover {
+  background: #f2f6fa;
+}
+
+.afc-school-search__option.is-selected {
+  margin: 0.125rem 0.5rem;
+  padding-left: 1rem;
+  width: calc(100% - 1rem);
+  border: none;
+  border-radius: 0.75rem;
+  background: var(--color-structure);
+  color: var(--color-paper);
+}
+
+.afc-school-search__option.is-selected:hover {
+  background: var(--color-structure);
+}
+
+.afc-school-search__option-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.afc-school-search__check {
+  width: 1.3rem;
+  height: 1.3rem;
+  padding: 0.35rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-ink);
+  box-sizing: border-box;
+}
+
+.afc-school-search__close {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--color-paper);
+}
+
+.afc-school-search__empty,
+.afc-school-search__truncated {
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #696969;
+}

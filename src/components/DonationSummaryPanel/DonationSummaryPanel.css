@@ -1,0 +1,346 @@
+.afc-donation-panel {
+  flex-shrink: 0;
+  width: 28.75rem;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-paper);
+  position: sticky;
+  top: 2rem;
+}
+
+.afc-donation-panel__toggle {
+  display: none;
+}
+
+.afc-donation-panel__banner {
+  background: var(--color-structure);
+  color: var(--color-paper);
+  display: flex;
+  flex-direction: column;
+}
+
+.afc-donation-panel__banner-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem 1.75rem;
+}
+
+.afc-donation-panel__rail-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Full-bleed within the banner: negative margins matching banner-content's
+   side padding so the image reaches the banner's true edges rather than
+   just filling its padded content box. */
+.afc-donation-panel__rail-image--desktop {
+  width: calc(100% + 3rem);
+  max-width: none;
+  margin: 0 -1.5rem;
+}
+
+.afc-donation-panel__rail-image--mobile {
+  display: none;
+}
+
+.afc-donation-panel__banner-text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.afc-donation-panel__progress-label {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.afc-donation-panel__progress-track {
+  width: 100%;
+  height: 0.625rem;
+  border-radius: 0.5rem;
+  background: #577dad;
+  overflow: hidden;
+}
+
+.afc-donation-panel__progress-fill {
+  height: 100%;
+  background: var(--color-paper);
+  border-radius: 0.5rem;
+}
+
+.afc-donation-panel__rows {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.5rem 0;
+}
+
+.afc-donation-panel__rows-heading {
+  margin: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--color-ink);
+}
+
+.afc-donation-panel__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+}
+
+.afc-donation-panel__row--last {
+  border-bottom: none;
+}
+
+.afc-donation-panel__row-label {
+  margin: 0;
+  flex-shrink: 0;
+  width: 5rem;
+}
+
+.afc-donation-panel__row-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  text-align: right;
+}
+
+.afc-donation-panel__row-value p {
+  margin: 0;
+}
+
+.afc-donation-panel__row-value p.is-set,
+.afc-donation-panel__row-value p.is-select-now {
+  font-weight: 600;
+}
+
+.afc-donation-panel__row-link {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  color: var(--color-action);
+  font-weight: 600;
+}
+
+.afc-donation-panel__cta {
+  display: block;
+  width: calc(100% - 3rem);
+  margin: 1.5rem 1.5rem 1.5rem;
+  padding: 1.1rem 1.5rem;
+  border: none;
+  border-radius: var(--button-radius);
+  background: #d4d4d4;
+  color: var(--color-paper);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: uppercase;
+  text-align: center;
+  cursor: not-allowed;
+}
+
+.afc-donation-panel__cta.is-active {
+  background: var(--color-action);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.afc-donation-panel__cta.is-active:hover {
+  background: var(--color-link-hover);
+  color: var(--color-paper);
+  text-decoration: none;
+}
+
+@media (max-width: 980px) {
+  .afc-donation-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    height: var(--donation-panel-peek, 11rem);
+    border-radius: 0;
+    border: none;
+    z-index: 500;
+    overflow: visible;
+    background: var(--color-structure);
+    transition: height 0.35s ease;
+  }
+
+  .afc-donation-panel.is-expanded {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .afc-donation-panel__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    position: absolute;
+    left: 50%;
+    top: 0.6rem;
+    transform: translateX(-50%);
+    width: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-paper);
+  }
+
+  .afc-donation-panel__toggle-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--color-action);
+    box-shadow: 0 0 0 6px rgba(0, 153, 206, 0.25);
+  }
+
+  .afc-donation-panel__toggle-icon svg {
+    width: 0.9rem;
+    color: var(--color-paper);
+    transition: transform 0.2s ease;
+  }
+
+  .afc-donation-panel__toggle-icon svg.is-flipped {
+    transform: rotate(180deg);
+  }
+
+  .afc-donation-panel__toggle-label {
+    position: absolute;
+    top: 3.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+  }
+
+  /* Pinned to the panel's own bottom edge at its natural height, independent
+     of the panel's current height — so as the panel animates between the
+     collapsed peek and full screen, the banner never has to jump or resize,
+     it just stays flush with the bottom the whole time. */
+  .afc-donation-panel__banner {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .afc-donation-panel__banner-content {
+    padding: 5.5rem 1.5rem 1.5rem;
+    gap: 0.75rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .afc-donation-panel__banner-text {
+    font-size: 0.9rem;
+  }
+
+  .afc-donation-panel__progress-label {
+    order: 2;
+    margin: -0.5rem 0 0;
+    font-size: 0.875rem;
+  }
+
+  .afc-donation-panel__progress-track {
+    order: 1;
+  }
+
+  .afc-donation-panel__rail-image--desktop {
+    display: none;
+  }
+
+  /* On mobile the image lives in the upper blue area of the body (the part
+     that scrolls into view at the top when the sheet expands), not inside
+     the bottom-pinned banner — matching where the original placeholder box
+     used to sit, above the "Your Donation" rows. */
+  .afc-donation-panel__rail-image--mobile {
+    display: block;
+    margin-top: 1.5rem;
+  }
+
+  /* Fills the panel from the top down to exactly where the (independently
+     bottom-pinned) banner begins, via the same measured height used for the
+     collapsed peek — so its own box always shrinks/grows in lockstep with
+     the panel's height with no separate class-based size to snap between,
+     and its content is simply clipped by that box while collapsed. */
+  .afc-donation-panel__body {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: var(--donation-panel-peek, 11rem);
+    overflow-y: auto;
+    background: var(--color-structure);
+  }
+
+  .afc-donation-panel__rows {
+    padding: 2rem 1.25rem 0;
+  }
+
+  .afc-donation-panel__rows-heading {
+    border-bottom-color: #5578a3;
+    color: var(--color-paper);
+  }
+
+  .afc-donation-panel__row {
+    border-bottom-color: #5578a3;
+    color: var(--color-paper);
+  }
+
+  .afc-donation-panel__row-value p {
+    color: var(--color-paper);
+  }
+
+  .afc-donation-panel__row-value p.is-accent {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .afc-donation-panel__row-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .afc-donation-panel__row-link:hover {
+    color: var(--color-paper);
+  }
+
+  .afc-donation-panel__cta {
+    flex-shrink: 0;
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+    margin-bottom: 0;
+    width: calc(100% - 2.5rem);
+  }
+}

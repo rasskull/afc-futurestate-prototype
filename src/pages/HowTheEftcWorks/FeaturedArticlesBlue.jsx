@@ -1,26 +1,37 @@
-import articleWhatIsEftc from '../../assets/photos/article-what-is-eftc.jpg';
-import articleStepByStepGuide from '../../assets/photos/article-step-by-step-guide.jpg';
-import articleEftcTimeline from '../../assets/photos/article-eftc-timeline.jpg';
 import './FeaturedArticlesBlue.css';
 
+// Sourced live from the `articles` custom post type (wp-json/wp/v2/articles),
+// not the theme's own local assets — this content changes independently of
+// the app, so images are referenced by their live URL directly rather than
+// vendored into src/assets/photos/ (see .claude/skills/sync-live-content).
+// Replaces an earlier illustrative placeholder set (from a stale WP pattern-
+// file default). Two of those three placeholder headlines turned out to be
+// near-exact matches to real articles that WERE current when this component
+// was first built (April 2026) but have since aged off this page's own
+// "More to Explore" grid (StoriesGrid.jsx, which already covers everything
+// from ~July 2026 onward) — picked deliberately from OLDER live articles
+// here specifically to avoid duplicating a headline that already appears
+// twice on the same page.
 const DEFAULT_ARTICLES = [
   {
-    image: articleWhatIsEftc,
-    headline: 'What Is the Education Freedom Tax Credit?',
+    image:
+      'https://afcscholarshipfund.org/wp-content/uploads/2026/07/07.13.2026-Six-Months-to-Launch_-A-Donors-Countdown-to-January-1-2027-.jpg',
+    headline: 'Six Months to Launch: A Donor’s Countdown to January 1, 2027',
     snippet:
-      'The first federal school choice tax credit in American history allows eligible taxpayers to give to a qualified scholarship organization and reduce their federal tax bill dollar-for-dollar. Here’s everything donors need to understand before they give.',
+      'The most consequential date in American education philanthropy is now six months away. Between here and there sit exactly three milestones. Here’s what happens at each one and what a smart donor does about it.',
   },
   {
-    image: articleStepByStepGuide,
+    image:
+      'https://afcscholarshipfund.org/wp-content/uploads/2026/06/how-the-education-freedom-tax-credit-works-a-step-by-step-guide-girl-child-mom-computer-school-tax-taxes.jpg',
     headline: 'How the Education Freedom Tax Credit Works: A Step-by-Step Guide',
     snippet:
       'Five steps from first dollar to federal tax credit. Here’s the complete, plain-English breakdown of how the EFTC works — and what donors need to do to make the most of it.',
   },
   {
-    image: articleEftcTimeline,
-    headline: 'What Happens After I Donate? Your EFTC Timeline from Gift to Tax Filing',
+    image: 'https://afcscholarshipfund.org/wp-content/uploads/2026/07/07.23.2026-EFTC-timeline-key-dates.jpg',
+    headline: 'The Education Freedom Tax Credit Timeline: Key Dates From Enactment to Launch',
     snippet:
-      'You’ve heard about the Education Freedom Tax Credit. You’re ready to give. But what happens next? Here’s every step — from writing the check to seeing the credit on your tax return.',
+      'Between enactment and the program’s actual launch, a lot happens, mostly out of public view. Here is the dated roadmap, so donors, families, and Scholarship Granting Organizations (SGOs) know exactly where things stand and what’s still ahead.',
   },
 ];
 
