@@ -1,0 +1,18 @@
+.afc-choose-state__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.afc-choose-state__field label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--color-ink);
+}
+
+.afc-choose-state__required {
+  color: var(--color-error);
+  font-weight: 400;
+}

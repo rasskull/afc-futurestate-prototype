@@ -4,6 +4,16 @@
   padding-block: clamp(3rem, 5vw, 5rem);
 }
 
+/* The donation flow's mobile bottom sheet overlays the page — the footer
+   would render awkwardly beneath the fund list with the fixed drawer
+   floating on top of it, so it's dropped entirely on mobile for those
+   routes only (desktop keeps it, matching the Figma desktop screens). */
+@media (max-width: 980px) {
+  .afc-footer--hide-mobile {
+    display: none;
+  }
+}
+
 .afc-footer-stack {
   display: flex;
   flex-direction: column;

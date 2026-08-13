@@ -8,6 +8,10 @@ import Stories from './pages/Stories/Stories.jsx';
 import ForParents from './pages/ForParents/ForParents.jsx';
 import ForSchools from './pages/ForSchools/ForSchools.jsx';
 import BlankPage from './pages/Placeholder/BlankPage.jsx';
+import DonationFlowLayout from './pages/Donate/DonationFlowLayout.jsx';
+import ChooseFund from './pages/Donate/ChooseFund.jsx';
+import ChooseState from './pages/Donate/ChooseState.jsx';
+import ChooseSchool from './pages/Donate/ChooseSchool.jsx';
 
 export default function AppRoutes() {
   return (
@@ -22,7 +26,12 @@ export default function AppRoutes() {
         <Route path="/for-schools" element={<ForSchools />} />
         <Route path="/eligibility-calculator" element={<BlankPage title="Eligibility Calculator" />} />
         <Route path="/impact-calculator" element={<BlankPage title="Impact Calculator" />} />
-        <Route path="/donate" element={<BlankPage title="Donate" />} />
+        <Route path="/donate" element={<DonationFlowLayout />}>
+          <Route index element={<ChooseFund />} />
+          <Route path="state" element={<ChooseState />} />
+          <Route path="school" element={<ChooseSchool />} />
+          <Route path="gift-amount" element={<BlankPage title="Select Gift Amount" />} />
+        </Route>
         <Route path="*" element={<BlankPage title="Page not found" />} />
       </Route>
     </Routes>

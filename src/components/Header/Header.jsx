@@ -49,8 +49,11 @@ export default function Header() {
             >
               <img src={logo} alt="AFC Scholarship Fund" width="628" height="112" />
             </Link>
-            <UtilityNav className="afc-utility-nav afc-utility-nav--mobile" />
-            <MainNav className="afc-main-nav--mobile" />
+            <UtilityNav
+              className="afc-utility-nav afc-utility-nav--mobile"
+              onNavigate={() => setIsMenuOpen(false)}
+            />
+            <MainNav className="afc-main-nav--mobile" onNavigate={() => setIsMenuOpen(false)} />
           </div>
         )}
       </header>
