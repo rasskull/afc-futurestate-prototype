@@ -38,16 +38,12 @@ export default function ChooseSchool() {
           />
         </div>
 
-        <GiftAmountHint>
-          {selectedSchool ? (
-            <>Skip school selection and select gift amount.</>
-          ) : (
-            <>
-              If you&rsquo;re not choosing a school, you can <strong>Select Gift Amount</strong> to change a
-              child&rsquo;s life.
-            </>
-          )}
-        </GiftAmountHint>
+        {!selectedSchool && (
+          <GiftAmountHint>
+            If you&rsquo;re not choosing a school, you can <strong>Select Gift Amount</strong> to change a
+            child&rsquo;s life.
+          </GiftAmountHint>
+        )}
 
         <Link to="/donate/gift-amount" className="afc-choose-school__cta afc-pulse">
           Select gift amount
