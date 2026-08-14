@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SessionTestToggle from '../Donate/SessionTestToggle.jsx';
 import './PrototypeScenarios.css';
 
 // Internal testing page only — not linked from the site nav. Each card drops
@@ -98,6 +99,8 @@ export default function PrototypeScenarios() {
           ))}
         </div>
       </div>
+
+      <SessionTestToggle />
     </div>
   );
 }

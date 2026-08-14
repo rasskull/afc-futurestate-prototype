@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Button from '../../components/ui/Button.jsx';
 import railGraphic from '../../assets/photos/default-rail-graphic.png';
@@ -173,6 +173,15 @@ export default function ThankYou() {
   // pitch, so it falls back the same way.
   const rawAmount = Number(searchParams.get('amount'));
   const givenAmount = rawAmount > 0 && rawAmount < CREDIT_CAP ? rawAmount : 500;
+
+  // Client-side navigation (e.g. from the "Donate $X" button inside the
+  // Gift Amount modal) keeps whatever scroll position the donor was at on
+  // the previous page — a real page load wouldn't. Landing here scrolled
+  // partway down reads as broken, so this resets it every time the page is
+  // reached.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="afc-thank-you afc-wide">
