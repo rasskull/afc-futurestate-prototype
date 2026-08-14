@@ -1,20 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ChevronDoubleIcon } from '../icons/DonationIcons.jsx';
 import railGraphic from '../../assets/photos/default-rail-graphic.png';
 import './DonationSummaryPanel.css';
 
-const STEP_COPY = {
-  1: {
+// Indexed by how many of {fund, state, school} are filled in (0-3) — driven
+// purely by what's actually been selected, not by scroll position, so this
+// never changes just because the page happens to be scrolled somewhere.
+const PROGRESS_COPY = [
+  {
     banner: (
       <>
         Less than 30 seconds for you to <strong>change a child&rsquo;s life</strong>.
       </>
     ),
     progressLabel: 'Just getting started',
-    progressPercent: 10,
+    progressPercent: 0,
   },
-  2: {
+  {
     banner: (
       <>
         <strong>One more step</strong> until your donation.
@@ -23,31 +25,63 @@ const STEP_COPY = {
     progressLabel: '33% complete',
     progressPercent: 33,
   },
-  3: {
+  {
     banner: (
       <>
         Almost there &mdash; <strong>your gift</strong> is nearly on its way.
       </>
     ),
-    progressLabel: '67% complete',
-    progressPercent: 67,
+    progressLabel: '66% complete',
+    progressPercent: 66,
   },
-};
+  {
+    banner: (
+      <>
+        Everything&rsquo;s set &mdash; <strong>select your gift amount</strong> to finish.
+      </>
+    ),
+    progressLabel: '100% complete',
+    progressPercent: 100,
+  },
+];
 
 const MOBILE_QUERY = '(max-width: 980px)';
 
-export default function DonationSummaryPanel({ step, fund, stateLabel, schoolLabel }) {
+export default function DonationSummaryPanel({
+  fund,
+  stateLabel,
+  schoolLabel,
+  isStateLocked,
+  isSchoolLocked,
+  hideSchool,
+  onFundRowClick,
+  onStateRowClick,
+  onSchoolRowClick,
+  onOpenGiftAmountModal,
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [peekHeight, setPeekHeight] = useState(null);
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(MOBILE_QUERY).matches
   );
   const bannerRef = useRef(null);
-  const copy = STEP_COPY[step];
-  // Gift amount only truly requires Fund + State — School is optional, and
-  // this must stay true no matter which step page is currently showing
-  // (e.g. going back to Fund after State is already picked).
+  // "No preference" for state means there's no school step to complete —
+  // treat that as done (100%) rather than stuck below full since school can
+  // never be filled in.
+  const filledCount = hideSchool ? 3 : [fund, stateLabel, schoolLabel].filter(Boolean).length;
+  const copy = PROGRESS_COPY[filledCount];
+  // Gift amount only truly requires Fund + State — School is optional.
   const isGiftAmountActive = Boolean(fund) && Boolean(stateLabel);
+
+  // Collapse the mobile drawer before jumping to a section, so the section
+  // being scrolled to is actually visible instead of hidden behind the
+  // expanded full-screen sheet.
+  function handleRowClick(callback) {
+    return () => {
+      if (isMobile) setIsExpanded(false);
+      callback();
+    };
+  }
 
   // The rows/CTA body is only ever actually hidden (collapsed off-screen)
   // in the mobile bottom-sheet layout — on desktop it's always shown as a
@@ -130,104 +164,87 @@ export default function DonationSummaryPanel({ step, fund, stateLabel, schoolLab
           <div className="afc-donation-panel__row">
             <p className="afc-donation-panel__row-label">Fund</p>
             <div className="afc-donation-panel__row-value">
-              {step === 1 ? (
-                fund ? (
+              {fund ? (
+                <>
                   <p className="is-set">{fund.name}</p>
-                ) : isMobile ? (
                   <button
                     type="button"
-                    className="afc-donation-panel__row-link is-select-now"
-                    onClick={() => setIsExpanded(false)}
+                    className="afc-donation-panel__row-link"
+                    onClick={handleRowClick(onFundRowClick)}
                   >
-                    Select now
-                  </button>
-                ) : (
-                  <p className="is-accent is-select-now">Select now</p>
-                )
-              ) : (
-                <>
-                  <p className="is-set">{fund?.name}</p>
-                  <Link to="/donate" className="afc-donation-panel__row-link">
                     Change
-                  </Link>
+                  </button>
                 </>
+              ) : (
+                <p>Choose now</p>
               )}
             </div>
           </div>
 
-          <div className="afc-donation-panel__row">
+          <div className={`afc-donation-panel__row${hideSchool ? ' afc-donation-panel__row--last' : ''}`}>
             <p className="afc-donation-panel__row-label">State</p>
             <div className="afc-donation-panel__row-value">
-              {step === 2 ? (
-                stateLabel ? (
-                  <p className="is-set">{stateLabel}</p>
-                ) : isMobile ? (
-                  <button
-                    type="button"
-                    className="afc-donation-panel__row-link is-select-now"
-                    onClick={() => setIsExpanded(false)}
-                  >
-                    Select now
-                  </button>
-                ) : (
-                  <p className="is-accent is-select-now">Select now</p>
-                )
-              ) : stateLabel ? (
+              {stateLabel ? (
                 <>
                   <p className="is-set">{stateLabel}</p>
-                  <Link to="/donate/state" className="afc-donation-panel__row-link">
+                  <button
+                    type="button"
+                    className="afc-donation-panel__row-link"
+                    onClick={handleRowClick(onStateRowClick)}
+                  >
                     Change
-                  </Link>
+                  </button>
                 </>
-              ) : fund ? (
-                <Link to="/donate/state" className="afc-donation-panel__row-link">
-                  Choose next
-                </Link>
+              ) : isStateLocked ? (
+                <p className="is-locked">Choose next</p>
               ) : (
-                <p>Choose next</p>
+                <p>Choose now</p>
               )}
             </div>
           </div>
 
-          <div className="afc-donation-panel__row afc-donation-panel__row--last">
-            <p className="afc-donation-panel__row-label">School</p>
-            <div className="afc-donation-panel__row-value">
-              {step === 3 ? (
-                schoolLabel ? (
-                  <p className="is-set">{schoolLabel}</p>
-                ) : isMobile ? (
-                  <button
-                    type="button"
-                    className="afc-donation-panel__row-link is-select-now"
-                    onClick={() => setIsExpanded(false)}
-                  >
-                    Select now (optional)
-                  </button>
+          {!hideSchool && (
+            <div className="afc-donation-panel__row afc-donation-panel__row--last">
+              <p className="afc-donation-panel__row-label">School</p>
+              <div className="afc-donation-panel__row-value">
+                {schoolLabel ? (
+                  <>
+                    <p className="is-set">{schoolLabel}</p>
+                    <button
+                      type="button"
+                      className="afc-donation-panel__row-link"
+                      onClick={handleRowClick(onSchoolRowClick)}
+                    >
+                      Change
+                    </button>
+                  </>
+                ) : isSchoolLocked ? (
+                  <p className="is-locked">Choose next (optional)</p>
                 ) : (
-                  <p>Select now (optional)</p>
-                )
-              ) : schoolLabel ? (
-                <>
-                  <p className="is-set">{schoolLabel}</p>
-                  <Link to="/donate/school" className="afc-donation-panel__row-link">
-                    Change
-                  </Link>
-                </>
-              ) : stateLabel ? (
-                <Link to="/donate/school" className="afc-donation-panel__row-link">
-                  Choose next (optional)
-                </Link>
-              ) : (
-                <p>Choose next (optional)</p>
-              )}
+                  <p>
+                    <button
+                      type="button"
+                      className="afc-donation-panel__row-link"
+                      onClick={handleRowClick(onSchoolRowClick)}
+                    >
+                      Choose now
+                    </button>
+                    <span className="afc-donation-panel__row-optional"> (optional)</span>
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {isGiftAmountActive ? (
-          <Link to="/donate/gift-amount" className="afc-donation-panel__cta is-active afc-pulse">
+          <button
+            type="button"
+            className="afc-donation-panel__cta is-active afc-pulse"
+            onClick={onOpenGiftAmountModal}
+          >
             Select gift amount
-          </Link>
+          </button>
         ) : (
           <button type="button" className="afc-donation-panel__cta" disabled>
             Select gift amount

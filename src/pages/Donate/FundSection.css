@@ -72,6 +72,14 @@
   color: var(--color-paper);
 }
 
+.afc-fund-card__desc-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 .afc-fund-card__desc {
   margin: 0;
   font-family: var(--font-body);
@@ -84,26 +92,24 @@
   color: var(--color-paper);
 }
 
-.afc-fund-card__selected {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  align-self: flex-end;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  color: var(--color-paper);
-}
-
+/* Always reserved (width + left margin) whether selected or not, so
+   selecting/deselecting a card never changes its height — only the
+   background + checkmark inside become visible when selected. */
 .afc-fund-card__selected-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   width: 1.3rem;
   height: 1.3rem;
+  margin-left: 0.5rem;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: transparent;
   color: var(--color-ink);
+}
+
+.afc-fund-card__selected-icon.is-visible {
+  background-color: var(--color-accent);
 }
 
 .afc-fund-card__selected-icon svg {
@@ -143,79 +149,5 @@
 
   .afc-fund-card-list {
     gap: 1rem;
-  }
-}
-
-.afc-choose-fund__sidebar {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2.3125rem;
-}
-
-@media (min-width: 981px) {
-  /* The summary panel is sticky on its own (see DonationSummaryPanel.css),
-     which is fine on the state page where it's the only thing in the
-     sidebar — but here the "Continue with" link sits below it, and since
-     only the panel itself was sticky, the link stayed in normal flow and
-     scrolled up underneath the pinned panel. Making the whole sidebar
-     sticky (and the panel inside it static) keeps the link glued to the
-     bottom of the panel as one unit. */
-  .afc-choose-fund__sidebar {
-    position: sticky;
-    top: 2rem;
-  }
-
-  .afc-choose-fund__sidebar .afc-donation-panel {
-    position: static;
-  }
-}
-
-@media (max-width: 980px) {
-  /* display:contents (not display:none — that would also hide the fixed-
-     position panel inside, since display:none removes descendants from
-     rendering entirely). This drops just the wrapper's own box from the
-     flex layout so it stops eating a gap after the last card, while its
-     children (the fixed summary panel, the hidden desktop continue link)
-     still render exactly as their own styles say. */
-  .afc-choose-fund__sidebar {
-    display: contents;
-  }
-}
-
-.afc-choose-fund__continue {
-  display: block;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.2;
-  color: var(--color-ink);
-}
-
-.afc-choose-fund__continue-link {
-  display: block;
-  margin-top: 0.125rem;
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  line-height: 1.2;
-  font-weight: 600;
-  color: var(--color-action);
-}
-
-.afc-choose-fund__continue--mobile {
-  display: none;
-}
-
-@media (max-width: 980px) {
-  .afc-choose-fund__continue--desktop {
-    display: none;
-  }
-
-  .afc-choose-fund__continue--mobile {
-    display: block;
-  }
-
-  .afc-choose-fund__continue-link {
-    font-size: 1.0625rem;
   }
 }

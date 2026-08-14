@@ -9,9 +9,9 @@ import ForParents from './pages/ForParents/ForParents.jsx';
 import ForSchools from './pages/ForSchools/ForSchools.jsx';
 import BlankPage from './pages/Placeholder/BlankPage.jsx';
 import DonationFlowLayout from './pages/Donate/DonationFlowLayout.jsx';
-import ChooseFund from './pages/Donate/ChooseFund.jsx';
-import ChooseState from './pages/Donate/ChooseState.jsx';
-import ChooseSchool from './pages/Donate/ChooseSchool.jsx';
+import DonateScrollFlow from './pages/Donate/DonateScrollFlow.jsx';
+import ThankYou from './pages/ThankYou/ThankYou.jsx';
+import PrototypeScenarios from './pages/Prototype/PrototypeScenarios.jsx';
 
 export default function AppRoutes() {
   return (
@@ -27,11 +27,10 @@ export default function AppRoutes() {
         <Route path="/eligibility-calculator" element={<BlankPage title="Eligibility Calculator" />} />
         <Route path="/impact-calculator" element={<BlankPage title="Impact Calculator" />} />
         <Route path="/donate" element={<DonationFlowLayout />}>
-          <Route index element={<ChooseFund />} />
-          <Route path="state" element={<ChooseState />} />
-          <Route path="school" element={<ChooseSchool />} />
-          <Route path="gift-amount" element={<BlankPage title="Select Gift Amount" />} />
+          <Route index element={<DonateScrollFlow />} />
         </Route>
+        <Route path="/thank-you" element={<ThankYou />} />
+        <Route path="/prototype" element={<PrototypeScenarios />} />
         <Route path="*" element={<BlankPage title="Page not found" />} />
       </Route>
     </Routes>

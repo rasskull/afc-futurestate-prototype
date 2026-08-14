@@ -1,0 +1,517 @@
+/* Figma: node-id 20966-28621 / 20971-29145 / 20971-29387 (desktop variants),
+   20999-2567 (mobile reference). Built as one page + a ?variant= query
+   param (see ThankYou.jsx) rather than three separate routes/components,
+   since the three states only ever differ by the single CTA box on the
+   right — everything else here is identical between them. */
+.afc-thank-you {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding-block: clamp(2.5rem, 5vw, 5rem) clamp(4rem, 8vw, 7.5rem);
+}
+
+.afc-thank-you__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.afc-thank-you__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-display);
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-thank-you__heading strong {
+  font-weight: 700;
+}
+
+.afc-thank-you__share {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  padding-bottom: 1.7rem;
+  border-bottom: 1px solid #ccc;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__share p {
+  margin: 0;
+}
+
+.afc-thank-you__share-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6875rem;
+}
+
+.afc-thank-you__share-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background: var(--color-action);
+  color: var(--color-paper);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.afc-thank-you__share-icon:hover {
+  background: var(--color-link-hover);
+}
+
+.afc-thank-you__copy-link {
+  height: 2.75rem;
+  padding-inline: 1.5rem;
+  border: none;
+  border-radius: 0.3125rem;
+  background: var(--color-action);
+  color: var(--color-paper);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.afc-thank-you__copy-link:hover {
+  background: var(--color-link-hover);
+}
+
+.afc-thank-you__lede {
+  margin: 0;
+  max-width: 45rem;
+  font-family: var(--font-body);
+  font-size: var(--font-size-lead);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__columns {
+  display: flex;
+  align-items: stretch;
+  gap: 4rem;
+}
+
+/* --- Tax receipt card --- */
+
+.afc-thank-you__receipt {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 34.5rem;
+  max-width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.afc-thank-you__receipt-banner {
+  display: block;
+  object-fit: cover;
+  background: var(--color-structure);
+}
+
+.afc-thank-you__receipt-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.afc-thank-you__receipt-title {
+  margin: 0;
+  padding-bottom: 1.0625rem;
+  border-bottom: 1px solid #ccc;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__receipt-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__receipt-row--last {
+  border-bottom: none;
+}
+
+.afc-thank-you__receipt-row p {
+  margin: 0;
+}
+
+.afc-thank-you__receipt-row p:first-child {
+  flex-shrink: 0;
+}
+
+.afc-thank-you__receipt-row p:last-child {
+  font-weight: 600;
+  text-align: right;
+}
+
+.afc-thank-you__receipt-note {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__receipt-cta {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+/* --- Right column: timeline + CTA box --- */
+
+.afc-thank-you__side {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 2.5rem;
+}
+
+.afc-thank-you__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.afc-thank-you__timeline-step {
+  position: relative;
+  display: flex;
+  gap: 1.25rem;
+}
+
+/* Same recipe as the donation flow's own timeline (.afc-timeline-line /
+   .afc-timeline-dot in DonateScrollFlow.css): a light-green connecting line
+   and a two-tone circle (white center + green ring) via radial-gradient,
+   rather than a nested icon element.
+
+   One segment per gap (not one line spanning the whole list) — the dot
+   sits at the top of its own (taller, text-driven) list item, so a single
+   line running from 1rem-from-the-top to 1rem-from-the-bottom of the whole
+   list only lines up with the first/last dot when every item happens to be
+   exactly as tall as the dot. Anchoring each segment to "this dot's bottom"
+   through "the top of the next item" (via a negative bottom inset spanning
+   exactly the flex gap) instead reaches precisely the next dot regardless
+   of how tall the text next to it wraps to — and naturally stops at the
+   last dot, since there's no segment after it. */
+.afc-thank-you__timeline-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 2rem;
+  bottom: -2.75rem;
+  left: 1rem;
+  width: 3px;
+  transform: translateX(-1.5px);
+  background: #cfe7c6;
+}
+
+.afc-thank-you__timeline-dot {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 0.375rem, var(--color-emphasis) 0.375rem 100%);
+}
+
+.afc-thank-you__timeline-step h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.375rem;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__timeline-step p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+/* --- CTA box (the part that varies by ?variant=) --- */
+
+.afc-thank-you__cta-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2.5rem 2rem;
+  border-radius: 0.5rem;
+  background: var(--gradient-primary);
+  text-align: center;
+}
+
+.afc-thank-you__cta-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+
+.afc-thank-you__cta-heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+
+.afc-thank-you__cta-body {
+  margin: 0;
+  max-width: 34rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-paper);
+}
+
+.afc-thank-you__cta-footnote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-paper);
+}
+
+/* White pill / blue text on this box's dark gradient background — mirrors
+   Hero.css's own `.afc-hero--dark .afc-button--solid` override rather than
+   adding a new generic Button variant. */
+.afc-thank-you__cta-box .afc-button--solid {
+  background: var(--color-paper);
+  color: var(--color-link-hover);
+}
+
+.afc-thank-you__cta-box .afc-button--solid:hover {
+  background: var(--color-structure);
+  color: var(--color-paper);
+}
+
+.afc-thank-you__progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 28rem;
+}
+
+.afc-thank-you__progress-track {
+  width: 100%;
+  height: 0.75rem;
+  border-radius: 999px;
+  background: #294568;
+  overflow: hidden;
+}
+
+.afc-thank-you__progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-paper);
+}
+
+.afc-thank-you__progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--color-paper);
+}
+
+/* --- Keep reading --- */
+
+.afc-thank-you__stories {
+  display: flex;
+  flex-direction: column;
+  gap: 2.75rem;
+  padding-top: clamp(3rem, 6vw, 5rem);
+}
+
+.afc-thank-you__stories-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 50rem;
+}
+
+.afc-thank-you__stories-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__stories-heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-h2);
+  font-weight: 400;
+  line-height: 1.15;
+  text-transform: uppercase;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.afc-thank-you__stories-heading strong {
+  font-weight: 700;
+}
+
+.afc-thank-you__stories-subheading {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-lead);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.afc-thank-you__stories-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.25rem, 2vw, 2rem);
+}
+
+.afc-thank-you__story-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.afc-thank-you__story-card:hover {
+  text-decoration: none;
+}
+
+.afc-thank-you__story-card:hover .afc-thank-you__story-title {
+  color: var(--color-link-hover);
+}
+
+.afc-thank-you__story-image-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.afc-thank-you__story-image-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.afc-thank-you__story-card:hover .afc-thank-you__story-image-wrap img {
+  transform: scale(1.04);
+}
+
+.afc-thank-you__story-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #404040;
+}
+
+.afc-thank-you__story-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: var(--color-action);
+  transition: color 0.15s ease;
+}
+
+.afc-thank-you__story-body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+@media (max-width: 980px) {
+  .afc-thank-you__columns {
+    flex-direction: column;
+  }
+
+  .afc-thank-you__receipt {
+    width: 100%;
+  }
+
+  .afc-thank-you__side {
+    gap: 2.5rem;
+  }
+
+  .afc-thank-you__stories-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .afc-thank-you__share {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

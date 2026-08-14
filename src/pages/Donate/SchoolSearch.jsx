@@ -13,19 +13,6 @@ function SearchIcon({ className }) {
   );
 }
 
-function CheckIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M22.4453 0.660156C23.1055 1.26953 23.1055 2.33594 22.4453 2.94531L9.44531 15.9453C8.83594 16.6055 7.76953 16.6055 7.16016 15.9453L0.660156 9.44531C0 8.83594 0 7.76953 0.660156 7.16016C1.26953 6.5 2.33594 6.5 2.94531 7.16016L8.27734 12.4922L20.1602 0.660156C20.7695 0 21.8359 0 22.4453 0.660156Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
 function CloseIcon({ className }) {
   return (
     <svg className={className} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -41,11 +28,14 @@ function CloseIcon({ className }) {
 
 export default function SchoolSearch({ stateCode, stateName, value, onChange }) {
   const dataset = useMemo(() => getSchoolsForState(stateCode), [stateCode]);
+  const selectedSchool = dataset.find((s) => s.id === value) ?? null;
 
-  // If a school is already chosen (e.g. returning here via a "Change" link),
-  // pre-fill the search box with its name so the selection is visible right
-  // away instead of showing an empty field with no obvious selected state.
-  const [query, setQuery] = useState(() => dataset.find((s) => s.id === value)?.name ?? '');
+  const [query, setQuery] = useState('');
+
+  function handleClear() {
+    onChange(null);
+    setQuery('');
+  }
 
   const groups = useMemo(() => {
     const trimmed = query.trim().toLowerCase();
@@ -66,75 +56,79 @@ export default function SchoolSearch({ stateCode, stateName, value, onChange }) 
   const totalMatches = groups.reduce((sum, group) => sum + group.schools.length, 0);
   let shown = 0;
 
-  function handleSelect(school) {
-    if (value === school.id) {
-      onChange(null);
-    } else {
-      onChange(school);
-      setQuery(school.name);
-    }
-  }
-
   return (
     <div className="afc-school-search">
-      <div className="afc-school-search__field">
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={`Search ${stateName} Schools`}
-          aria-label={`Search ${stateName} schools`}
-        />
-        <SearchIcon className="afc-school-search__icon" />
-      </div>
-
-      {query.trim() && (
-        <div className="afc-school-search__results">
-          {groups.length === 0 && (
-            <p className="afc-school-search__empty">No schools found for &ldquo;{query.trim()}&rdquo;.</p>
-          )}
-
-          {groups.map((group) => {
-            const remaining = RESULTS_CAP - shown;
-            if (remaining <= 0) return null;
-            const visibleSchools = group.schools.slice(0, remaining);
-            shown += visibleSchools.length;
-
-            return (
-              <div key={group.city} className="afc-school-search__group">
-                <div className="afc-school-search__city-row">
-                  <p>{group.city}</p>
-                  <p>
-                    {group.schools.length} school{group.schools.length === 1 ? '' : 's'}
-                  </p>
-                </div>
-
-                {visibleSchools.map((school) => (
-                  <button
-                    key={school.id}
-                    type="button"
-                    className={`afc-school-search__option${school.id === value ? ' is-selected' : ''}`}
-                    onClick={() => handleSelect(school)}
-                  >
-                    <span>{school.name}</span>
-                    {school.id === value && (
-                      <span className="afc-school-search__option-actions">
-                        <CheckIcon className="afc-school-search__check" />
-                        <CloseIcon className="afc-school-search__close" />
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            );
-          })}
-
-          {totalMatches > RESULTS_CAP && (
-            <p className="afc-school-search__truncated">
-              Showing the first {RESULTS_CAP} of {totalMatches} results — refine your search to see more.
-            </p>
-          )}
+      {selectedSchool ? (
+        <div className="afc-school-search__selected">
+          <p className="afc-school-search__selected-name">
+            {selectedSchool.name}
+            <span className="afc-school-search__selected-city">, {selectedSchool.city}</span>
+          </p>
+          <button
+            type="button"
+            className="afc-school-search__selected-close"
+            aria-label="Clear selected school"
+            onClick={handleClear}
+          >
+            <CloseIcon />
+          </button>
         </div>
+      ) : (
+        <>
+          <div className="afc-school-search__field">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={`Search ${stateName} Schools`}
+              aria-label={`Search ${stateName} schools`}
+            />
+            <SearchIcon className="afc-school-search__icon" />
+          </div>
+
+          {query.trim() && (
+            <div className="afc-school-search__results">
+              {groups.length === 0 && (
+                <p className="afc-school-search__empty">No schools found for &ldquo;{query.trim()}&rdquo;.</p>
+              )}
+
+              {groups.map((group) => {
+                const remaining = RESULTS_CAP - shown;
+                if (remaining <= 0) return null;
+                const visibleSchools = group.schools.slice(0, remaining);
+                shown += visibleSchools.length;
+
+                return (
+                  <div key={group.city} className="afc-school-search__group">
+                    <div className="afc-school-search__city-row">
+                      <p>{group.city}</p>
+                      <p>
+                        {group.schools.length} school{group.schools.length === 1 ? '' : 's'}
+                      </p>
+                    </div>
+
+                    {visibleSchools.map((school) => (
+                      <button
+                        key={school.id}
+                        type="button"
+                        className="afc-school-search__option"
+                        onClick={() => onChange(school)}
+                      >
+                        <span>{school.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                );
+              })}
+
+              {totalMatches > RESULTS_CAP && (
+                <p className="afc-school-search__truncated">
+                  Showing the first {RESULTS_CAP} of {totalMatches} results — refine your search to see more.
+                </p>
+              )}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

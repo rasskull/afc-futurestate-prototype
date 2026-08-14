@@ -7,7 +7,9 @@
   overflow: hidden;
   background: var(--color-paper);
   position: sticky;
-  top: 2rem;
+  /* The site header is sticky too — stick below it, not at the bare
+     viewport top, or this panel ends up partially hidden underneath it. */
+  top: calc(var(--site-header-height, 120px) + 2rem);
 }
 
 .afc-donation-panel__toggle {
@@ -24,7 +26,7 @@
 .afc-donation-panel__banner-content {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 1.5rem 1.75rem;
+  padding: 1rem 1.5rem 1.75rem;
 }
 
 .afc-donation-panel__rail-image {
@@ -51,6 +53,7 @@
   font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 1.35;
+  text-align: center;
 }
 
 .afc-donation-panel__progress-label {
@@ -126,9 +129,12 @@
   margin: 0;
 }
 
-.afc-donation-panel__row-value p.is-set,
-.afc-donation-panel__row-value p.is-select-now {
+.afc-donation-panel__row-value p.is-set {
   font-weight: 600;
+}
+
+.afc-donation-panel__row-value p.is-locked {
+  color: #999;
 }
 
 .afc-donation-panel__row-link {
@@ -141,6 +147,13 @@
   cursor: pointer;
   color: var(--color-action);
   font-weight: 600;
+}
+
+/* No color set here on purpose — it should just inherit the surrounding
+   text color (ink on the desktop card, paper/white on the mobile drawer via
+   .afc-donation-panel__row-value p), not lock in one color for both. */
+.afc-donation-panel__row-optional {
+  font-weight: 400;
 }
 
 .afc-donation-panel__cta {
@@ -256,8 +269,15 @@
   }
 
   .afc-donation-panel__banner-content {
-    padding: 5.5rem 1.5rem 1.5rem;
-    gap: 0.75rem;
+    /* Toggle label ("See donation details") is absolutely positioned above
+       this, so the gap below it comes from this top padding, not from any
+       margin on the label itself. +8px for a bit more breathing room. */
+    padding: calc(5.5rem + 8px) 1.5rem 1.5rem;
+    /* One consistent gap for every stacked child here (text, track, label)
+       — previously the label pulled itself up with a negative margin,
+       leaving it visibly closer to the track than the track was to the
+       text above it. */
+    gap: 0.625rem;
     align-items: center;
     text-align: center;
   }
@@ -268,7 +288,7 @@
 
   .afc-donation-panel__progress-label {
     order: 2;
-    margin: -0.5rem 0 0;
+    margin: 0;
     font-size: 0.875rem;
   }
 
@@ -322,9 +342,8 @@
     color: var(--color-paper);
   }
 
-  .afc-donation-panel__row-value p.is-accent {
-    color: var(--color-accent);
-    text-decoration: underline;
+  .afc-donation-panel__row-value p.is-locked {
+    color: rgba(255, 255, 255, 0.55);
   }
 
   .afc-donation-panel__row-link {
