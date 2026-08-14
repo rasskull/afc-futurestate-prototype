@@ -1,0 +1,49 @@
+.afc-military-challenges {
+  width: 100%;
+  background-color: var(--color-paper);
+  /* The preceding NarrativeBlock already carries its own
+     clamp(3rem, 8vw, 6rem) bottom padding (shared rhythm across every
+     NarrativeBlock instance) — subtracting it back out of the desired 4rem
+     lead-to-grid gap (matching live) keeps the total constant instead of
+     stacking both, at every viewport width. */
+  margin-top: calc(4rem - clamp(3rem, 8vw, 6rem));
+}
+
+.afc-military-challenges__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.afc-military-challenges__col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.afc-military-challenges__item {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  color: var(--color-ink);
+  line-height: 1.5;
+}
+
+.afc-military-challenges__item strong {
+  color: var(--color-structure);
+}
+
+@media (max-width: 767px) {
+  .afc-military-challenges__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* NarrativeBlock's own bottom padding switches to a different clamp below
+   600px — match it here too so the compensating margin stays exact. */
+@media (max-width: 600px) {
+  .afc-military-challenges {
+    margin-top: calc(4rem - clamp(2.5rem, 10vw, 4rem));
+  }
+}

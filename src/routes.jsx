@@ -7,6 +7,7 @@ import AboutUs from './pages/AboutUs/AboutUs.jsx';
 import Stories from './pages/Stories/Stories.jsx';
 import ForParents from './pages/ForParents/ForParents.jsx';
 import ForSchools from './pages/ForSchools/ForSchools.jsx';
+import AmericanHeroesFund from './pages/AmericanHeroesFund/AmericanHeroesFund.jsx';
 import BlankPage from './pages/Placeholder/BlankPage.jsx';
 import DonationFlowLayout from './pages/Donate/DonationFlowLayout.jsx';
 import DonateScrollFlow from './pages/Donate/DonateScrollFlow.jsx';
@@ -24,6 +25,7 @@ export default function AppRoutes() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/for-parents" element={<ForParents />} />
         <Route path="/for-schools" element={<ForSchools />} />
+        <Route path="/funds/american-heroes" element={<AmericanHeroesFund />} />
         <Route path="/eligibility-calculator" element={<BlankPage title="Eligibility Calculator" />} />
         <Route path="/impact-calculator" element={<BlankPage title="Impact Calculator" />} />
         <Route path="/donate" element={<DonationFlowLayout />}>

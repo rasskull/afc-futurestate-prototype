@@ -41,6 +41,10 @@ export default function StoriesGrid({
   subheading = 'Stay informed with our latest articles, news, and scholarship stories.',
   stories = DEFAULT_STORIES,
   ctaLabel = 'View More Stories',
+  // Desktop column count — 4 by default (matches every current usage);
+  // lower it when there are fewer stories to show so the grid doesn't leave
+  // a dangling empty column. Mobile's 2-up/1-up breakpoints are unaffected.
+  columns = 4,
 }) {
   return (
     <section className="afc-stories">
@@ -64,7 +68,7 @@ export default function StoriesGrid({
           </div>
         </div>
 
-        <div className="afc-stories__grid">
+        <div className="afc-stories__grid" style={{ '--afc-stories-columns': columns }}>
           {stories.map((story) => (
             <a
               className="afc-stories__card"

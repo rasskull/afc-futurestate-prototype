@@ -42,6 +42,14 @@ const DONATION_SCENARIOS = [
   },
 ];
 
+const PAGE_ENTRIES = [
+  {
+    title: 'Fund Example Page',
+    description: 'A standalone fund detail page (American Heroes Scholarship Fund), ported from the live site.',
+    to: '/funds/american-heroes',
+  },
+];
+
 const THANK_YOU_SCENARIOS = [
   {
     title: 'Thank you — standard',
@@ -86,6 +94,15 @@ export default function PrototypeScenarios() {
         <h2 className="afc-prototype-scenarios__section-heading">Donation form</h2>
         <div className="afc-prototype-scenarios__grid">
           {DONATION_SCENARIOS.map((scenario) => (
+            <ScenarioCard key={scenario.to} {...scenario} />
+          ))}
+        </div>
+      </div>
+
+      <div className="afc-prototype-scenarios__section">
+        <h2 className="afc-prototype-scenarios__section-heading">Page entries</h2>
+        <div className="afc-prototype-scenarios__grid">
+          {PAGE_ENTRIES.map((scenario) => (
             <ScenarioCard key={scenario.to} {...scenario} />
           ))}
         </div>

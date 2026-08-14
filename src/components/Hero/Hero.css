@@ -171,7 +171,57 @@
    rule collapses against the paragraph on the real site (32px gap
    measured live, i.e. max(16px, 32px) — not the sum of both). */
 .afc-hero__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   margin-top: 2rem;
+}
+
+/* Plain underlined text link + arrow — matches the live "is-style-text-link"
+   button style used alongside a solid CTA (e.g. "How the EFTC Works"), plus
+   this app's own established "text link + nudging arrow" pattern (see
+   FeaturedStory/People). Explicit colors (not `inherit`) since `.afc-hero`
+   sets a blanket white base color for the dark theme that would otherwise
+   leak through on light-theme instances, same reasoning as every other
+   themed override in this file. */
+.afc-hero__secondary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.afc-hero--light .afc-hero__secondary-cta {
+  color: var(--color-structure);
+}
+
+.afc-hero--dark .afc-hero__secondary-cta {
+  color: var(--color-paper);
+}
+
+.afc-hero__secondary-cta:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.afc-hero__secondary-cta-arrow {
+  display: inline-flex;
+  width: 14px;
+  height: 12px;
+  transition: transform 0.2s ease;
+}
+
+.afc-hero__secondary-cta-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.afc-hero__secondary-cta:hover .afc-hero__secondary-cta-arrow {
+  transform: translateX(4px);
 }
 
 /* Dark-hero CTA: white pill, inverting to a blue pill on hover — matches

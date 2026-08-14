@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Button from '../../components/ui/Button.jsx';
 import railGraphic from '../../assets/photos/default-rail-graphic.png';
@@ -179,15 +179,6 @@ export default function ThankYou() {
   // under the cap — falls back to $500 for direct links with no ?amount=
   // (e.g. the prototype scenarios page's static card).
   const givenAmount = rawAmount > 0 && rawAmount < CREDIT_CAP ? rawAmount : 500;
-
-  // Client-side navigation (e.g. from the "Donate $X" button inside the
-  // Gift Amount modal) keeps whatever scroll position the donor was at on
-  // the previous page — a real page load wouldn't. Landing here scrolled
-  // partway down reads as broken, so this resets it every time the page is
-  // reached.
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="afc-thank-you afc-wide">
