@@ -50,8 +50,11 @@ const KEEP_READING_STORIES = [
   },
 ];
 
+// Fallback shown when the page is reached with no ?amount= at all (e.g. a
+// direct link, or the prototype scenarios page's standard/give-again cards).
+const DEFAULT_RECEIPT_AMOUNT = 1700;
+
 const RECEIPT = {
-  amount: '$1,700',
   fund: 'The American Promise Scholarship Fund',
   stateSchool: 'Alaska',
   organization: 'AFC Scholarship Fund · EIN 41-3421652',
@@ -167,11 +170,14 @@ export default function ThankYou() {
   const rawVariant = searchParams.get('variant');
   const variant = VALID_VARIANTS.includes(rawVariant) ? rawVariant : 'standard';
 
-  // Falls back to $500 for direct links with no ?amount= (e.g. the
-  // prototype scenarios page's static card) — anything outside (0, cap)
-  // doesn't make sense for this variant's "you still have credit left"
-  // pitch, so it falls back the same way.
+  // Whatever amount was actually selected in the Gift Amount modal — shown
+  // in the tax receipt regardless of which CTA variant is showing.
   const rawAmount = Number(searchParams.get('amount'));
+  const receiptAmount = rawAmount > 0 ? rawAmount : DEFAULT_RECEIPT_AMOUNT;
+
+  // The remaining-credit variant's own pitch only makes sense for an amount
+  // under the cap — falls back to $500 for direct links with no ?amount=
+  // (e.g. the prototype scenarios page's static card).
   const givenAmount = rawAmount > 0 && rawAmount < CREDIT_CAP ? rawAmount : 500;
 
   // Client-side navigation (e.g. from the "Donate $X" button inside the
@@ -207,11 +213,7 @@ export default function ThankYou() {
 
             <div className="afc-thank-you__receipt-row">
               <p>Amount</p>
-              {/* The remaining-credit variant's whole pitch is "you gave
-                  $X of your $1,700 cap" — the receipt has to agree with
-                  the actual amount given, not show the full cap amount
-                  like the other two variants. */}
-              <p>{variant === 'remaining-credit' ? `$${givenAmount.toLocaleString()}` : RECEIPT.amount}</p>
+              <p>${receiptAmount.toLocaleString()}</p>
             </div>
             <div className="afc-thank-you__receipt-row">
               <p>Fund</p>

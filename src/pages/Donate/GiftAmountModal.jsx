@@ -363,7 +363,7 @@ export default function GiftAmountModal({ open, onClose, fund, stateLabel, schoo
                     navigate(
                       amount > 0 && amount < 1700
                         ? `/thank-you?variant=remaining-credit&amount=${amount}`
-                        : '/thank-you'
+                        : `/thank-you?amount=${amount}`
                     )
                   }
                 >
