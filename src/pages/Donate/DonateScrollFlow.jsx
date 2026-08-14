@@ -9,7 +9,6 @@ import StateSection from './StateSection.jsx';
 import SchoolSection from './SchoolSection.jsx';
 import DonationSummaryPanel from '../../components/DonationSummaryPanel/DonationSummaryPanel.jsx';
 import GiftAmountModal from './GiftAmountModal.jsx';
-import SessionTestToggle from './SessionTestToggle.jsx';
 import { LockIcon } from '../../components/icons/DonationIcons.jsx';
 import './DonationStep.css';
 import './DonateScrollFlow.css';
@@ -269,8 +268,6 @@ export default function DonateScrollFlow() {
               />
             )}
           </div>
-
-          <SessionTestToggle />
         </div>
 
         <div className="afc-donate-scroll-flow__sidebar">
