@@ -336,7 +336,8 @@
 }
 
 .afc-thank-you__cta-box .afc-button--solid:hover {
-  background: var(--color-structure);
+  background: transparent;
+  border: 2px solid var(--color-paper);
   color: var(--color-paper);
 }
 

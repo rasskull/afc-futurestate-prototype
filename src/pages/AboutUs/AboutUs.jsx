@@ -23,7 +23,7 @@ export default function AboutUs() {
             Built for <strong>this moment</strong>
           </>
         }
-        subheading="By people who’ve done this for decades"
+        subheading="by people who’ve done this for decades"
         lead=""
         body={[
           'For over two decades, the American Federation for Children has worked so that a child’s zip code doesn’t decide the quality of their education. AFC Scholarship Fund carries that work into a new era.',

@@ -215,7 +215,12 @@
     gap: 0.4rem;
     position: absolute;
     left: 50%;
-    top: 0.6rem;
+    /* Straddles the drawer's top edge — half the 3rem icon pokes up above
+       the blue background, half sits inside it — rather than sitting
+       fully inside it. This is purely an absolutely-positioned overlay, so
+       it doesn't add to the banner's own measured height (the collapsed
+       drawer's height/--donation-panel-peek stay exactly the same). */
+    top: -1.5rem;
     transform: translateX(-50%);
     width: auto;
     padding: 0;
@@ -248,6 +253,11 @@
 
   .afc-donation-panel__toggle-label {
     position: absolute;
+    /* Same 3.5rem offset as before the icon started overlapping the edge —
+       relative to .toggle's own top, which moved up by 2.1rem, so keeping
+       this unchanged moves the label up by that same amount too, closing
+       the gap that opened up below the icon's now-smaller visible portion
+       instead of leaving the label pinned at its old on-screen spot. */
     top: 3.5rem;
     left: 50%;
     transform: translateX(-50%);
@@ -271,8 +281,12 @@
   .afc-donation-panel__banner-content {
     /* Toggle label ("See donation details") is absolutely positioned above
        this, so the gap below it comes from this top padding, not from any
-       margin on the label itself. +8px for a bit more breathing room. */
-    padding: calc(5.5rem + 8px) 1.5rem 1.5rem;
+       margin on the label itself. Shrunk from 5.5rem+8px to match how much
+       higher the label now sits since the toggle icon started overlapping
+       the drawer's top edge — otherwise this padding stays put while the
+       label moves up, opening a bigger gap and making the whole collapsed
+       drawer taller than before. */
+    padding: 3.9rem 1.5rem 1.5rem;
     /* One consistent gap for every stacked child here (text, track, label)
        — previously the label pulled itself up with a negative margin,
        leaving it visibly closer to the track than the track was to the

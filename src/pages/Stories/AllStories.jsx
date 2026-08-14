@@ -82,6 +82,18 @@ const DEFAULT_STORIES = [
     snippet:
       'One mother’s belief—and the power of school choice—set Mya on a path to one of the top boarding schools in the country.',
   },
+  // Added via sync-live-content skill (2026-08-14) — a second, separately
+  // published live post about the same Carol Day/Savannah story (distinct
+  // slug/image from the "Changed Everything" entry above), so it's a real
+  // addition, not a duplicate. Image referenced by live URL directly rather
+  // than vendored locally, per that skill's convention for frequently-
+  // changing story content.
+  {
+    image: 'https://afcscholarshipfund.org/wp-content/uploads/2026/03/School-Choice-Is-Transforming-Military-Family-Life.jpg',
+    headline: 'School Choice Is Transforming Military Family Life',
+    snippet:
+      'Carol Day’s family made sacrifice after sacrifice for military service. School choice — and the Education Freedom Tax Credit — made sure their daughter Savannah didn’t have to sacrifice her education too.',
+  },
   // Added via sync-live-content skill (2026-08-12) — images referenced by
   // live URL directly rather than vendored locally, per that skill's
   // convention for frequently-changing story content.
@@ -134,7 +146,7 @@ const DEFAULT_STORIES = [
 export default function AllStories({
   heading = (
     <>
-      All <strong>Stories</strong>
+      <strong>All</strong> Stories
     </>
   ),
   stories = DEFAULT_STORIES,

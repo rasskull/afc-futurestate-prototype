@@ -257,6 +257,7 @@ export default function DonateScrollFlow() {
               headingRef={stateHeadingRef}
               isLocked={isStateLocked}
               onSelectState={handleStateChange}
+              onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
             />
             {!isNoPreference && (
               <SchoolSection

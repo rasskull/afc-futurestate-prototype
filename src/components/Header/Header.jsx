@@ -43,14 +43,6 @@ export default function Header() {
 
         {isMenuOpen && (
           <div className="afc-mobile-panel">
-            <Link
-              className="afc-site-logo afc-site-logo--mobile"
-              to="/"
-              aria-label="AFC Scholarship Fund — home"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <img src={logo} alt="AFC Scholarship Fund" width="628" height="112" />
-            </Link>
             <UtilityNav
               className="afc-utility-nav afc-utility-nav--mobile"
               onNavigate={() => setIsMenuOpen(false)}

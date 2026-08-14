@@ -25,7 +25,10 @@ export default function Stories() {
       />
       <FeaturedStory backgroundImage={featuredStoryBg} copyTheme="light" />
       <AllStories />
-      <EligibilityPromo />
+      <EligibilityPromo
+        lead="The Education Freedom Tax Credit gives eligible donors a dollar-for-dollar federal tax credit of up to $1,700 for contributions to qualifying K–12 scholarship organizations. Answer three quick questions to find out if you qualify — and exactly how much your credit could be."
+        bullets={['Check your eligibility in under a minute', 'See your estimated credit amount instantly', 'Results emailed directly to you']}
+      />
       <SignupFooter />
     </>
   );

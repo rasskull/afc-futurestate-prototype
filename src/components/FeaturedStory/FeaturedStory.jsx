@@ -46,7 +46,7 @@ export default function FeaturedStory({
           <img className="afc-featured-story__image" src={image} alt={imageAlt} loading="lazy" />
         </div>
         <div className="afc-featured-story__content">
-          <p className="eyebrow afc-featured-story__eyebrow">{eyebrow}</p>
+          <h6 className="eyebrow afc-featured-story__eyebrow">{eyebrow}</h6>
           <h3 className="afc-featured-story__heading">{heading}</h3>
           <div className="afc-featured-story__arrow" aria-hidden="true">
             <ArrowIcon />

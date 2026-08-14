@@ -47,6 +47,8 @@ export default function HowScholarshipsHelp({
             </div>
           ))}
         </div>
+
+        <hr className="afc-scholarships-help__divider" />
       </div>
     </section>
   );

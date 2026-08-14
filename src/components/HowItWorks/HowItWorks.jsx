@@ -20,7 +20,7 @@ const DEFAULT_STEPS = [
   },
   {
     number: '3',
-    heading: 'A Student Gets Funded',
+    heading: 'A student gets funded',
     body: 'Funds help cover real education costs — tuition, tutoring, books, and more — putting the right educational opportunity within reach.',
     image: step3Image,
   },

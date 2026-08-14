@@ -85,3 +85,10 @@
     gap: 2rem;
   }
 }
+
+.afc-scholarships-help__divider {
+  margin-top: 4rem;
+  border: none;
+  height: 1px;
+  background-color: #ccc;
+}

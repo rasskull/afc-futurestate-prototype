@@ -23,7 +23,7 @@ export default function WhatCanBeCovered({
     <section className="afc-scholarship-covers">
       <div className="afc-wide">
         <div className="afc-scholarship-covers__header">
-          <h3 className="afc-scholarship-covers__heading">{heading}</h3>
+          <h2 className="afc-scholarship-covers__heading">{heading}</h2>
           <p className="afc-scholarship-covers__lead">{lead}</p>
         </div>
 

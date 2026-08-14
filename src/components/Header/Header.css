@@ -209,6 +209,10 @@
   .afc-hamburger {
     display: flex;
   }
+
+  .afc-header {
+    padding-top: 12px;
+  }
 }
 
 .afc-mobile-panel {

@@ -25,10 +25,17 @@ export default function ResourceCenter() {
       <DownloadGuides />
       <StoriesGrid
         heading="More to Explore"
+        subheading=""
         ctaLabel="Explore More Articles"
         stories={RESOURCE_CENTER_STORIES}
       />
-      <SignupFooter />
+      <SignupFooter
+        heading={
+          <>
+            Be Ready on <strong>Day One</strong>
+          </>
+        }
+      />
     </>
   );
 }

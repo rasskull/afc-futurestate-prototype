@@ -34,9 +34,15 @@ export default function HowTheEftcWorks() {
       />
       <EligibilityPromo />
       <FeaturedArticlesBlue />
-      <StoriesGrid />
+      <StoriesGrid pageCount={7} />
       <Faq />
-      <SignupFooter />
+      <SignupFooter
+        heading={
+          <>
+            Be Ready on <strong>Day One</strong>
+          </>
+        }
+      />
     </>
   );
 }

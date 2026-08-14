@@ -16,3 +16,41 @@
   color: var(--color-error);
   font-weight: 400;
 }
+
+/* Mobile-only "Select gift amount" CTA for the no-preference case — mirrors
+   .afc-choose-school__cta in SchoolSection.css exactly (same reasoning: a
+   quick way to jump to the gift-amount modal without opening the bottom
+   drawer first, sized to the full container width by living outside
+   .afc-scroll-section's own padded/indented gutter). */
+.afc-choose-state__cta {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .afc-choose-state__cta {
+    display: block;
+    position: relative;
+    width: 100%;
+    /* Same trick as .afc-choose-school__cta — pulls back from the
+       timeline's inter-step gap (4.68rem on mobile) to a deliberate 4rem
+       instead. */
+    margin-top: calc(4rem - 4.68rem);
+    padding: 1.1rem 1.5rem;
+    border: none;
+    border-radius: var(--button-radius);
+    background: var(--color-action);
+    color: var(--color-paper);
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: var(--button-letter-spacing);
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .afc-choose-state__cta:hover {
+    background: var(--color-link-hover);
+    color: var(--color-paper);
+  }
+}

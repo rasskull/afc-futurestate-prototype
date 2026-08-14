@@ -17,14 +17,14 @@ const DEFAULT_PEOPLE = [
     photo: tommySchultzPhoto,
     name: 'Tommy Schultz',
     title: 'Chief Executive Officer',
-    bio: 'Tommy Schultz is CEO of the American Federation for Children (AFC). He is a Stanford graduate with more than a decade of experience at all levels of AFC. In his time as CEO, AFC has raised and deployed $179 million across half of the country, growing private school choice enrollment from 540,000 to 1.6 million and passing 80 laws across 30 states, including the Education Freedom Tax Credit (EFTC).',
+    bio: 'Tommy Schultz is CEO of the American Federation for Children (AFC). He is Stanford graduate with more than a decade of experience at all levels of AFC. In his time at AFC, Tommy has been the organization’s primary public voice during the most prolific era of school choice lawmaking in American history. During his time as CEO, AFC has raised and deployed $179 million across half of the country. During that time, private school choice program enrollment grew from 540,000 to 1.6 million today as AFC passed 80 laws across 30 states, including the Education Freedom Tax Credit (EFTC).',
   },
   {
     id: 'greg-allum',
     photo: gregAllumPhoto,
     name: 'Greg Allum',
     title: 'Chief Marketing Officer',
-    bio: 'Greg Allum is Chief Marketing Officer of the AFC Scholarship Fund, where he leads the marketing infrastructure and data strategy behind the Education Freedom Tax Credit. He brings over 15 years of marketing and growth leadership from organizations including Stand Together, GrowthDay, Fuzzy, Jellyfish, and Sony Electronics.',
+    bio: 'Greg Allum is Chief Marketing Officer of the AFC Scholarship Fund, where he leads the marketing infrastructure and data strategy behind the Education Freedom Tax Credit — the first federal school choice tax credit in U.S. history. He brings over 15 years of marketing and growth leadership from organizations including Stand Together, GrowthDay, Fuzzy, Jellyfish, and Sony Electronics. Greg holds an MFA in Creative Writing from Pacific University and a BS in Business Administration from Capella University, and is also a published poet and Founder of Ink & Ribbon Press.',
   },
 ];
 
@@ -50,11 +50,7 @@ function ArrowIcon() {
 // an inert `href="#"` placeholder link, same convention as every other
 // no-destination link in this app.
 export default function People({
-  heading = (
-    <>
-      The People <strong>Behind the Network</strong>
-    </>
-  ),
+  heading = 'The People Behind the Network',
   intro = 'AFC Scholarship Fund brings together leaders in education, scholarship operations, and family support — united by one belief: every family deserves a real choice.',
   people = DEFAULT_PEOPLE,
   ctaLabel = 'See All Authors',

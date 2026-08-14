@@ -184,5 +184,6 @@
 
   .afc-scroll-section {
     padding-left: 2.5rem;
+    scroll-margin-top: calc(var(--site-header-height, 120px) + 1.5rem);
   }
 }
