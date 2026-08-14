@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { isSessionPersistDisabled } from './sessionPersistFlag.js';
 
 const DonationFlowContext = createContext(null);
 
@@ -8,6 +9,7 @@ const STORAGE_KEY = 'afc-donation-flow';
 // navigating around the site and coming back, but not linger indefinitely
 // once the tab is closed.
 function readStoredState() {
+  if (isSessionPersistDisabled()) return {};
   try {
     const raw = window.sessionStorage.getItem(STORAGE_KEY);
     return raw ? JSON.parse(raw) : {};
@@ -25,6 +27,7 @@ export function DonationFlowProvider({ children }) {
   // saved object and their own useState above — everything here is restored
   // on mount and kept in sync automatically.
   useEffect(() => {
+    if (isSessionPersistDisabled()) return;
     try {
       window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ fundId, stateCode, schoolId }));
     } catch {

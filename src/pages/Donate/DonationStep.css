@@ -36,10 +36,23 @@
   font-weight: 700;
 }
 
+/* Section headings (Fund/State/School) are h3s sharing this class with the
+   page-level "Make a Donation" h1 — scope the 20% size reduction to h3 only. */
+h3.afc-donation-step__heading {
+  font-size: clamp(1.024rem, 2.048vw, 2.176rem);
+}
+
+/* The page-level h1 gets the divider the h3s used to have, but below itself
+   instead of above — same 1px line, 24px of breathing room before it. */
+h1.afc-donation-step__heading {
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
 .afc-donation-step__subtext {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1.375rem;
+  font-size: 1.25rem;
   line-height: 1.5;
   color: var(--color-ink);
   max-width: 45ch;
@@ -62,5 +75,16 @@
 
   .afc-donation-step__subtext {
     font-size: 1.125rem;
+  }
+
+  /* Mobile-only bumps, layered on top of the shared/h3-specific desktop
+     clamps above (25%/30% larger respectively) rather than replacing them
+     for other viewports. */
+  h1.afc-donation-step__heading {
+    font-size: clamp(2.5rem, 5vw, 5.3125rem);
+  }
+
+  h3.afc-donation-step__heading {
+    font-size: clamp(1.73056rem, 3.46112vw, 3.67744rem);
   }
 }

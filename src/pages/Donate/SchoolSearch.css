@@ -16,7 +16,10 @@
   border: 1px solid var(--color-ink);
   border-radius: 0.5rem;
   font-family: var(--font-body);
-  font-size: 1.0625rem;
+  /* Matches the state Dropdown's trigger exactly (font-size + line-height,
+     same padding/border) so both fields render at the same height. */
+  font-size: 1rem;
+  line-height: 1.3;
   color: var(--color-ink);
   background: var(--color-paper);
 }
@@ -105,41 +108,68 @@
   background: #f2f6fa;
 }
 
-.afc-school-search__option.is-selected {
-  margin: 0.125rem 0.5rem;
-  padding-left: 1rem;
-  width: calc(100% - 1rem);
-  border: none;
-  border-radius: 0.75rem;
-  background: var(--color-structure);
-  color: var(--color-paper);
-}
-
-.afc-school-search__option.is-selected:hover {
-  background: var(--color-structure);
-}
-
-.afc-school-search__option-actions {
+/* Replaces the search field + results entirely once a school is chosen. */
+.afc-school-search__selected {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 0.5rem;
+  background: var(--color-structure);
+  color: var(--color-paper);
 }
 
-.afc-school-search__check {
+/* Name + city sit on one line (not stacked) so this card matches the
+   search field's height instead of growing taller than it. Font-size +
+   line-height match the search field/state dropdown exactly, so all three
+   controls render at the same height. */
+.afc-school-search__selected-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--color-paper);
+}
+
+.afc-school-search__selected-city {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--color-accent);
+}
+
+.afc-school-search__selected-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  /* Kept within the name text's own line-height (1rem * 1.3) so it doesn't
+     push the card taller than the search field it replaces. */
   width: 1.3rem;
   height: 1.3rem;
-  padding: 0.35rem;
+  padding: 0;
+  border: none;
   border-radius: 50%;
-  background: var(--color-accent);
-  color: var(--color-ink);
-  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-paper);
+  cursor: pointer;
 }
 
-.afc-school-search__close {
-  width: 0.9rem;
-  height: 0.9rem;
-  color: var(--color-paper);
+.afc-school-search__selected-close svg {
+  width: 0.6rem;
+  height: 0.6rem;
+}
+
+.afc-school-search__selected-close:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 .afc-school-search__empty,

@@ -14,9 +14,9 @@
   color: var(--color-ink);
 }
 
-/* The desktop sidebar owns the only CTA — this inline button is mobile-only,
-   mirroring the Figma mobile screens (which duplicate the button in the page
-   flow since there's no persistent sidebar there). */
+/* The sidebar/drawer CTA already covers desktop — this is a mobile-only
+   duplicate so there's a quick "Select gift amount" button in the page
+   content itself, without needing to open the bottom drawer first. */
 .afc-choose-school__cta {
   display: none;
 }
@@ -26,8 +26,15 @@
     display: block;
     position: relative;
     width: 100%;
-    margin-top: 0.5rem;
+    /* This button is now a direct sibling of the School section inside
+       .afc-donate-scroll-flow__timeline (not nested inside the section
+       anymore, so it can span the full width instead of the section's own
+       padded/indented content box) — that timeline's gap (4.68rem on
+       mobile) is meant for spacing BETWEEN steps, way more than wanted
+       here, so this pulls it back down to a deliberate 4rem instead. */
+    margin-top: calc(4rem - 4.68rem);
     padding: 1.1rem 1.5rem;
+    border: none;
     border-radius: var(--button-radius);
     background: var(--color-action);
     color: var(--color-paper);
@@ -37,11 +44,10 @@
     letter-spacing: var(--button-letter-spacing);
     text-transform: uppercase;
     text-align: center;
-    text-decoration: none;
+    cursor: pointer;
   }
 
   .afc-choose-school__cta:hover {
-    text-decoration: none;
     background: var(--color-link-hover);
     color: var(--color-paper);
   }

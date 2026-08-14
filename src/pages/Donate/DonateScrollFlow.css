@@ -1,0 +1,188 @@
+.afc-donate-scroll-flow {
+  display: flex;
+  /* stretch (not flex-start): the sidebar wrapper has no height of its own,
+     so it needs to match the (much taller) sections column's height for its
+     sticky panel to actually have room to stick while the page scrolls —
+     with flex-start the wrapper is only ever as tall as the panel itself,
+     leaving position:sticky nothing to stick within. */
+  align-items: stretch;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-top: clamp(1rem, calc(5.4vw - 20px), 3.25rem);
+  padding-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+
+.afc-donate-scroll-flow__sections {
+  flex: 1 1 0%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4rem, 8vw, 7rem);
+}
+
+/* Wraps just the three selection sections (not the h1) — owns the gap
+   between them (moved here from .__sections now that they're nested one
+   level deeper) and is the positioning context for the connecting line.
+   20% larger than .__sections' own gap (which only spaces the h1 from this
+   wrapper, not the sections from each other). */
+.afc-donate-scroll-flow__timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(6.24rem, 12.48vw, 10.92rem);
+}
+
+/* The line's exact top/height are set inline (measured via JS from the
+   first/last heading's real position, since section content heights vary
+   dynamically) — this just handles the parts that don't change. */
+.afc-timeline-line {
+  position: absolute;
+  left: 1rem;
+  width: 3px;
+  transform: translateX(-1.5px);
+  background: #cfe7c6;
+  z-index: 0;
+}
+
+/* Circle marker next to each h3 — rendered here as a sibling of the
+   sections (not nested inside one), so a locked section's opacity/filter
+   dimming never touches it: that dimming applies to a whole subtree with
+   no way for a descendant to opt back out, so the only way to keep the
+   circle fully opaque is to keep it outside that subtree entirely. Its
+   vertical position (top) is set inline, measured from the heading it sits
+   next to. A radial-gradient gives the white center dot without a second
+   nested element. */
+.afc-timeline-dot {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 0.375rem, var(--color-emphasis) 0.375rem 100%);
+  z-index: 1;
+}
+
+/* Locked steps get a solid light-green fill instead of relying on any
+   opacity-based dimming, which would make it look washed out/transparent. */
+.afc-timeline-dot.is-locked {
+  background: radial-gradient(circle, #fff 0 0.375rem, #cfe7c6 0.375rem 100%);
+}
+
+/* Halve just the space between the "Make a Donation" h1 and the first
+   section (Fund) — gap applies uniformly to every sibling pair, so a
+   negative margin on the h1 alone is what lets this one gap differ while
+   the gaps between the other sections stay at the full value. */
+.afc-donate-scroll-flow__sections > h1.afc-donation-step__heading {
+  margin-bottom: calc(clamp(4rem, 8vw, 7rem) * -0.694);
+}
+
+/* The last section (School) needs enough scrollable room below its own top
+   for the browser to actually bring it up near the header when auto-scroll
+   targets it — otherwise the page simply runs out of scroll distance and
+   the browser clamps short, undershooting scroll-margin-top. */
+@media (min-width: 981px) {
+  .afc-donate-scroll-flow__sections {
+    padding-bottom: 50dvh;
+  }
+}
+
+.afc-donate-scroll-flow__trust {
+  display: flex;
+  align-items: center;
+  gap: 3.125rem;
+  padding-top: 1.5rem;
+  padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  border-top: 1px solid #e4e4e4;
+}
+
+.afc-donate-scroll-flow__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: #696969;
+}
+
+.afc-donate-scroll-flow__trust-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--color-emphasis);
+}
+
+.afc-donate-scroll-flow__sidebar {
+  flex-shrink: 0;
+}
+
+@media (max-width: 980px) {
+  .afc-donate-scroll-flow {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: calc(var(--donation-panel-peek, 11rem) + 80px);
+  }
+
+  .afc-donate-scroll-flow__sections {
+    gap: 3rem;
+  }
+
+  .afc-donate-scroll-flow__timeline {
+    gap: 4.68rem;
+  }
+
+  .afc-donate-scroll-flow__sections > h1.afc-donation-step__heading {
+    margin-bottom: -1.44858rem;
+  }
+
+  /* Tighter timeline on mobile: smaller circles (20% down from 2rem) and a
+     narrower gutter, so the line/circles sit closer to the section copy. */
+  .afc-timeline-line {
+    left: 0.8rem;
+  }
+
+  .afc-timeline-dot {
+    width: 1.6rem;
+    height: 1.6rem;
+    background: radial-gradient(circle, #fff 0 0.3rem, var(--color-emphasis) 0.3rem 100%);
+  }
+
+  .afc-timeline-dot.is-locked {
+    background: radial-gradient(circle, #fff 0 0.3rem, #cfe7c6 0.3rem 100%);
+  }
+}
+
+.afc-scroll-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  /* Reserves the gutter (dot + gap) so every other element in a section
+     lines up with the heading's own text, not its circle. */
+  padding-left: 3.5rem;
+  /* +80px on top of the header clearance so a scrolled-to section lands
+     with some visual breathing room below the header, not flush against it. */
+  scroll-margin-top: calc(var(--site-header-height, 120px) + 1.5rem + 80px);
+  transition: opacity 0.25s ease;
+}
+
+.afc-scroll-section[data-locked] {
+  opacity: 0.45;
+  filter: grayscale(0.3);
+}
+
+.afc-scroll-section__lock-hint {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-structure);
+}
+
+@media (max-width: 980px) {
+  html {
+    scroll-padding-bottom: var(--donation-panel-peek, 11rem);
+  }
+
+  .afc-scroll-section {
+    padding-left: 2.5rem;
+  }
+}

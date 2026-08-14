@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import UtilityNav from './UtilityNav.jsx';
 import MainNav from './MainNav.jsx';
 import { useHeaderScroll } from './useHeaderScroll.js';
+import { useHeaderHeightVar } from './useHeaderHeightVar.js';
 import logo from '../../assets/logos/afc-primary-gradient.png';
 import './Header.css';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isScrolled = useHeaderScroll();
+  const headerRef = useHeaderHeightVar();
 
   return (
-    <div className={`afc-header-wrapper ${isScrolled ? 'is-scrolled' : ''}`.trim()}>
+    <div ref={headerRef} className={`afc-header-wrapper ${isScrolled ? 'is-scrolled' : ''}`.trim()}>
       <div className="afc-utility-row">
         <div className="afc-wide afc-utility-row__inner">
           <UtilityNav />
