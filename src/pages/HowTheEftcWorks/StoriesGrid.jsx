@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import StoryListingCta from '../../components/StoryListingCta/StoryListingCta.jsx';
 import exploreNewEra from '../../assets/photos/explore-new-era.jpg';
 import exploreTaxCreditChanging from '../../assets/photos/explore-tax-credit-changing.jpg';
@@ -101,35 +102,25 @@ export default function StoriesGrid({ heading = (
 
         <div className="afc-explore__grid">
           {articles.slice(0, 3).map((article) => (
-            <a
-              className="afc-explore__card"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              key={article.headline}
-            >
+            <Link className="afc-explore__card" to="/stories/example" key={article.headline}>
               <div className="afc-explore__image-wrap">
                 <img className="afc-explore__image" src={article.image} alt="" loading="lazy" />
               </div>
               <h3 className="afc-explore__headline">{article.headline}</h3>
               <p className="afc-explore__snippet">{article.snippet}</p>
-            </a>
+            </Link>
           ))}
 
           <StoryListingCta backgroundImage={listingCtaBg} />
 
           {articles.slice(3).map((article) => (
-            <a
-              className="afc-explore__card"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              key={article.headline}
-            >
+            <Link className="afc-explore__card" to="/stories/example" key={article.headline}>
               <div className="afc-explore__image-wrap">
                 <img className="afc-explore__image" src={article.image} alt="" loading="lazy" />
               </div>
               <h3 className="afc-explore__headline">{article.headline}</h3>
               <p className="afc-explore__snippet">{article.snippet}</p>
-            </a>
+            </Link>
           ))}
         </div>
 

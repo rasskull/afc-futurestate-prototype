@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import bgTexture from '../../assets/photos/light-blue-textured-bg.jpg';
 import clayPhoto from '../../assets/photos/featured-story-clay.jpg';
 import './FeaturedStory.css';
@@ -20,7 +21,7 @@ export default function FeaturedStory({
   heading = 'From Falling Behind to Team Captain: How School Choice Changed Clay’s Life',
   image = clayPhoto,
   imageAlt = '',
-  href = '#',
+  href = '/stories/example',
   // Per-instance override — the homepage and Stories page use two different
   // real background photos here (confirmed live: homepage's plain blue
   // texture vs. Stories' own SGO-HEADER-FULL-BLUE-TEXTURE.jpg).
@@ -37,11 +38,7 @@ export default function FeaturedStory({
       className={`afc-featured-story afc-featured-story--${copyTheme}`}
       style={{ '--featured-story-bg': `url(${backgroundImage})` }}
     >
-      <a
-        className="afc-featured-story__wrap"
-        href={href}
-        onClick={(e) => e.preventDefault()}
-      >
+      <Link className="afc-featured-story__wrap" to={href}>
         <div className="afc-featured-story__photo">
           <img className="afc-featured-story__image" src={image} alt={imageAlt} loading="lazy" />
         </div>
@@ -52,7 +49,7 @@ export default function FeaturedStory({
             <ArrowIcon />
           </div>
         </div>
-      </a>
+      </Link>
     </section>
   );
 }

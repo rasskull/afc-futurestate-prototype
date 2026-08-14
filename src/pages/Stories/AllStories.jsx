@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import StoryListingCta from '../../components/StoryListingCta/StoryListingCta.jsx';
 import storyTwoBrothers from '../../assets/photos/explore2-two-brothers-college.jpg';
 import storyAllenThompson from '../../assets/photos/explore2-allen-thompson.jpg';
@@ -162,35 +163,25 @@ export default function AllStories({
 
         <div className="afc-all-stories__grid">
           {stories.slice(0, 3).map((story) => (
-            <a
-              className="afc-all-stories__card"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              key={story.headline}
-            >
+            <Link className="afc-all-stories__card" to="/stories/example" key={story.headline}>
               <div className="afc-all-stories__image-wrap">
                 <img className="afc-all-stories__image" src={story.image} alt="" loading="lazy" />
               </div>
               <h3 className="afc-all-stories__headline">{story.headline}</h3>
               <p className="afc-all-stories__snippet">{story.snippet}</p>
-            </a>
+            </Link>
           ))}
 
           <StoryListingCta backgroundImage={listingCtaBg} />
 
           {stories.slice(3).map((story) => (
-            <a
-              className="afc-all-stories__card"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              key={story.headline}
-            >
+            <Link className="afc-all-stories__card" to="/stories/example" key={story.headline}>
               <div className="afc-all-stories__image-wrap">
                 <img className="afc-all-stories__image" src={story.image} alt="" loading="lazy" />
               </div>
               <h3 className="afc-all-stories__headline">{story.headline}</h3>
               <p className="afc-all-stories__snippet">{story.snippet}</p>
-            </a>
+            </Link>
           ))}
         </div>
 

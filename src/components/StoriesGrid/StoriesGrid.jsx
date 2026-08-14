@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Button from '../ui/Button.jsx';
 import goldStarFamilyImage from '../../assets/photos/story-gold-star-family.jpg';
 import samMyersImage from '../../assets/photos/story-sam-myers.jpg';
@@ -70,12 +71,7 @@ export default function StoriesGrid({
 
         <div className="afc-stories__grid" style={{ '--afc-stories-columns': columns }}>
           {stories.map((story) => (
-            <a
-              className="afc-stories__card"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              key={story.headline}
-            >
+            <Link className="afc-stories__card" to="/stories/example" key={story.headline}>
               <div className="afc-stories__image-wrap">
                 <img
                   className="afc-stories__image"
@@ -86,7 +82,7 @@ export default function StoriesGrid({
               </div>
               <h3 className="afc-stories__headline">{story.headline}</h3>
               <p className="afc-stories__snippet">{story.snippet}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

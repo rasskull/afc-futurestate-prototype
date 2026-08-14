@@ -1,0 +1,211 @@
+/**
+ * AFC Story Example (article body)
+ *
+ * Ground truth: confirmed live at afcscholarshipfund.org/stories/she-almost-
+ * didnt-go-.../ — the article's `.entry-content` is `is-layout-constrained`
+ * (WP's --content-size: 720px), noticeably narrower than every other page in
+ * this app, which uses the wide 1312px container. `.afc-content` (defined in
+ * styles/global.css) is that exact 720px-capped equivalent, already built
+ * for this — no new container class needed, just used here for the first
+ * time.
+ */
+.afc-story-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.afc-story-body p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+
+.afc-story-body__lead {
+  font-size: var(--font-size-lead) !important;
+}
+
+/* Confirmed live (computed styles, 1400px viewport): this in-article
+   heading is plain — 24px/600/1.2, no uppercase transform — NOT the large
+   gradient-text treatment every other page's h2 uses for section headings;
+   this page's h2s are just body-copy-scale subheads within the article. */
+.afc-story-body h2 {
+  margin-top: 1.5rem;
+  margin-bottom: 0;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-transform: none;
+  color: var(--color-structure);
+}
+
+.afc-story-body__video {
+  margin: 0;
+}
+
+.afc-story-body__video-el {
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+/* Confirmed live (computed styles, 1400px viewport): border/padding were
+   already right, but the quote text itself is body-font (Inter, not
+   heading), 36px/400 (not 24px/500), action-blue (not structure-blue). */
+.afc-story-body__quote {
+  margin: 0;
+  padding-left: 1.5rem;
+  border-left: 3px solid var(--color-structure);
+}
+
+.afc-story-body__quote p {
+  font-family: var(--font-body);
+  font-size: 2.25rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-action);
+}
+
+.afc-story-body__image {
+  margin: 0;
+}
+
+.afc-story-body__image img {
+  display: block;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+
+/* Confirmed live (computed styles, 1400px viewport): no box at all — just a
+   plain paragraph, transparent background, no padding/border-radius. */
+.afc-story-body__whats-next p {
+  margin: 0;
+}
+
+/* Mirrors ThankYou.css's .afc-thank-you__cta-box exactly (same gradient
+   card treatment) under this page's own class names, since ThankYou.css
+   isn't imported here. .afc-story-body already gives every child a 1.5rem
+   flex gap — the requested 64px above/below is on top of that gap, not
+   instead of it, so this subtracts the gap back out to land on exactly
+   64px total rather than 64+24. */
+.afc-story-body__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-block: calc(64px - 1.5rem);
+  padding: 2.5rem 2rem;
+  border-radius: 0.5rem;
+  background: var(--gradient-primary);
+  text-align: center;
+}
+
+/* Doubled-up selectors here and below (not just the bare class) so these
+   beat the earlier `.afc-story-body p` rule's higher specificity, which
+   would otherwise win and paint this box's text ink-colored instead of
+   white against its own dark gradient background. */
+.afc-story-body__cta .afc-story-body__cta-eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+
+/* Doubled-up selector (not just `.afc-story-body__cta-heading`) so this
+   beats the earlier `.afc-story-body h2` rule's higher specificity —
+   otherwise that rule's structure-blue color wins and the heading goes
+   near-invisible against this box's own dark gradient background. */
+.afc-story-body__cta .afc-story-body__cta-heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--color-paper);
+}
+
+.afc-story-body__cta .afc-story-body__cta-body {
+  margin: 0;
+  max-width: 34rem;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--color-paper);
+}
+
+.afc-story-body__cta .afc-button--solid {
+  background: var(--color-paper);
+  color: var(--color-link-hover);
+}
+
+.afc-story-body__cta .afc-button--solid:hover {
+  background: transparent;
+  border: 2px solid var(--color-paper);
+  color: var(--color-paper);
+}
+
+/* Confirmed live (computed styles, 1400px viewport): cream background,
+   28px/32px padding, 8px corners — a real card, unlike a plain top border. */
+.afc-story-body__author {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.75rem 2rem;
+  border-radius: 0.5rem;
+  background: var(--color-cream);
+}
+
+.afc-story-body__author-photo {
+  flex-shrink: 0;
+  width: 4.6875rem;
+  height: 4.6875rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.afc-story-body__author-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.afc-story-body__author-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #696969;
+}
+
+.afc-story-body__author-name {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-structure);
+}
+
+.afc-story-body__author-role {
+  font-size: 0.9rem;
+  color: #696969;
+}
+
+.afc-story-body__author-bio {
+  margin-top: 0.25rem !important;
+}
+
+@media (max-width: 639px) {
+  .afc-story-body__author {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

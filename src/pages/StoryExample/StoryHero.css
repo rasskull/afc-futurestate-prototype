@@ -1,0 +1,156 @@
+.afc-story-hero {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  min-height: clamp(520px, 40vw, 700px);
+  background-color: var(--color-cream);
+  overflow: hidden;
+}
+
+.afc-story-hero__clip-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.afc-story-hero__content {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+  padding: clamp(2.5rem, 5vw, 3.75rem) clamp(2rem, 4vw, 5rem) clamp(2.5rem, 5vw, 4rem)
+    clamp(40px, 15.6vw - 120px, 150px);
+}
+
+.afc-story-hero__title {
+  margin: 0;
+  max-width: clamp(474px, 474px + (100vw - 1024px) * 0.115, 555px);
+  font-family: var(--font-heading);
+  font-size: clamp(37px, 21px + 1.56vw, 48px);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--color-structure);
+}
+
+.afc-story-hero__excerpt {
+  margin: 0;
+  max-width: 446px;
+  font-family: var(--font-body);
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.afc-story-hero__share {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 25px;
+}
+
+.afc-story-hero__share-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-structure);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.afc-story-hero__share-btn:hover {
+  opacity: 0.75;
+}
+
+.afc-story-hero__copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-structure);
+  cursor: pointer;
+}
+
+.afc-story-hero__copy-btn:hover {
+  text-decoration: underline;
+}
+
+.afc-story-hero__mobile-divider {
+  display: none;
+}
+
+.afc-story-hero__image-side {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: clamp(38%, 20.6vw + 301px, 50%);
+  z-index: 0;
+  overflow: hidden;
+  clip-path: url(#afc-story-hero-clip);
+}
+
+.afc-story-hero__img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+@media (max-width: 1023px) {
+  .afc-story-hero {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .afc-story-hero__image-side {
+    position: relative;
+    inset: auto;
+    order: 1;
+    width: 100%;
+    height: clamp(291px, 46vw, 460px);
+    overflow: visible;
+    clip-path: none;
+  }
+
+  .afc-story-hero__mobile-divider {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 61px;
+  }
+
+  .afc-story-hero__content {
+    order: 2;
+    width: 100%;
+    gap: 1rem;
+    padding: 0 var(--gutter) 2rem;
+  }
+
+  .afc-story-hero__title {
+    font-size: 26px;
+    line-height: 1.05;
+  }
+
+  .afc-story-hero__excerpt {
+    font-size: 18px;
+  }
+}

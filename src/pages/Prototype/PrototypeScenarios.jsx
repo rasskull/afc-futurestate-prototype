@@ -48,6 +48,11 @@ const PAGE_ENTRIES = [
     description: 'A standalone fund detail page (American Heroes Scholarship Fund), ported from the live site.',
     to: '/funds/american-heroes',
   },
+  {
+    title: 'Story Example Page',
+    description: 'A standalone story detail page (Mya’s story), ported from the live site. Every story/article card sitewide links here.',
+    to: '/stories/example',
+  },
 ];
 
 const THANK_YOU_SCENARIOS = [

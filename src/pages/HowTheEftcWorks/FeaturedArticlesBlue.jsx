@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './FeaturedArticlesBlue.css';
 
 // Sourced live from the `articles` custom post type (wp-json/wp/v2/articles),
@@ -55,10 +56,9 @@ export default function FeaturedArticlesBlue({
 
         <div className="afc-featured-articles-blue__grid">
           {articles.map((article) => (
-            <a
+            <Link
               className="afc-featured-articles-blue__card"
-              href="#"
-              onClick={(e) => e.preventDefault()}
+              to="/stories/example"
               key={article.headline}
             >
               <div className="afc-featured-articles-blue__image-wrap">
@@ -71,7 +71,7 @@ export default function FeaturedArticlesBlue({
               </div>
               <h3 className="afc-featured-articles-blue__headline">{article.headline}</h3>
               <p className="afc-featured-articles-blue__snippet">{article.snippet}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

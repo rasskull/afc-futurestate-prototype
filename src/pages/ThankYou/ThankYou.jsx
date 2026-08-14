@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Button from '../../components/ui/Button.jsx';
 import railGraphic from '../../assets/photos/default-rail-graphic.png';
 import goldStarFamilyImage from '../../assets/photos/story-gold-star-family.jpg';
@@ -253,9 +253,9 @@ export default function ThankYou() {
       <div className="afc-thank-you__stories">
         <div className="afc-thank-you__stories-intro">
           <p className="afc-thank-you__stories-eyebrow">Keep reading</p>
-          <h2 className="afc-thank-you__stories-heading">
+          <h3 className="afc-thank-you__stories-heading">
             How your gift works, and <strong>who it reaches</strong>
-          </h2>
+          </h3>
           <p className="afc-thank-you__stories-subheading">
             Stay informed with our latest articles, news, and scholarship stories.
           </p>
@@ -263,19 +263,14 @@ export default function ThankYou() {
 
         <div className="afc-thank-you__stories-grid">
           {KEEP_READING_STORIES.map((story) => (
-            <a
-              key={story.title}
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              className="afc-thank-you__story-card"
-            >
+            <Link key={story.title} to="/stories/example" className="afc-thank-you__story-card">
               <div className="afc-thank-you__story-image-wrap">
                 <img src={story.image} alt="" loading="lazy" />
               </div>
               <p className="afc-thank-you__story-eyebrow">{story.eyebrow}</p>
               <h3 className="afc-thank-you__story-title">{story.title}</h3>
               <p className="afc-thank-you__story-body">{story.body}</p>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
