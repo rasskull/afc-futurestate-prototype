@@ -13,7 +13,7 @@ import DonateFooter from './DonateFooter.jsx';
 export default function Home() {
   return (
     <>
-      <Hero />
+      <Hero ctaLabel="Donate Now" ctaTo="/donate" />
       <NarrativeBlock />
       <Video paddingTop="0" />
       <HowItWorks />

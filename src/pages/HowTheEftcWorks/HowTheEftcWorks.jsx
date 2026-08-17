@@ -21,7 +21,7 @@ export default function HowTheEftcWorks() {
         subtitle="The Education Freedom Tax Credit"
         lead="Starting in 2027, a new federal tax credit lets you fund a scholarship for a child — and claim up to $1,700 back, dollar for dollar. Here’s exactly how it works."
         ctaLabel="Check My Eligibility"
-        ctaTo="/eligibility-calculator"
+        ctaTo="https://afcscholarshipfund.org/resource-center/eligibility-calculator/"
       />
       <HowItWorks />
       <Video

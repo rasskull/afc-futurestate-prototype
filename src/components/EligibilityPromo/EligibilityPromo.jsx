@@ -37,7 +37,9 @@ export default function EligibilityPromo({
   lead = 'The Education Freedom Tax Credit gives eligible donors a dollar-for-dollar federal tax credit of up to $1,700 for contributions to qualifying K–12 scholarship organizations. Answer three quick questions to see if you qualify — and get an estimate of your credit.',
   bullets = DEFAULT_BULLETS,
   ctaLabel = 'Check my eligibility',
-  ctaTo = '/eligibility-calculator',
+  // Real live-site page (not part of this prototype's own routes) — Button
+  // opens absolute URLs like this one in a new tab automatically.
+  ctaTo = 'https://afcscholarshipfund.org/resource-center/eligibility-calculator/',
   art = promoArt,
   artAlt = '',
   // Flips the art column to the left/first position at desktop (mobile

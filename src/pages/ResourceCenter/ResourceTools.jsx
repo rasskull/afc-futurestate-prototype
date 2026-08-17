@@ -21,7 +21,9 @@ const DEFAULT_CARDS = [
       'See your estimated credit amount instantly',
       'Free, with no obligation',
     ],
-    to: '/eligibility-calculator',
+    // Real live-site page (not part of this prototype's own routes) — Button
+    // opens absolute URLs like this one in a new tab automatically.
+    to: 'https://afcscholarshipfund.org/resource-center/eligibility-calculator/',
     label: 'Find Out If You Qualify',
   },
   {

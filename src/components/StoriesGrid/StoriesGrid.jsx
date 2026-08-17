@@ -42,6 +42,11 @@ export default function StoriesGrid({
   subheading = 'Stay informed with our latest articles, news, and scholarship stories.',
   stories = DEFAULT_STORIES,
   ctaLabel = 'View More Stories',
+  // Every current usage of this "view more" CTA means the full Stories
+  // listing page, regardless of heading/label wording (e.g. ResourceCenter's
+  // "Explore More Articles" still links here — same underlying `stories`
+  // content, just curated down for that page).
+  ctaTo = '/stories',
   // Desktop column count — 4 by default (matches every current usage);
   // lower it when there are fewer stories to show so the grid doesn't leave
   // a dangling empty column. Mobile's 2-up/1-up breakpoints are unaffected.
@@ -58,12 +63,7 @@ export default function StoriesGrid({
             {subheading && <p className="afc-stories__subheading">{subheading}</p>}
           </div>
           <div className="afc-stories__header-right">
-            <Button
-              className="afc-stories__cta"
-              variant="solid"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-            >
+            <Button className="afc-stories__cta" variant="solid" to={ctaTo}>
               {ctaLabel}
             </Button>
           </div>
