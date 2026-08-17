@@ -45,9 +45,13 @@ export default function SignupInline({
   // scoped style override (e.g. a smaller heading) without affecting other
   // SignupInline usages.
   formClassName,
+  // Extra class on the section root — lets one specific instance override
+  // e.g. the decoration's position without affecting other SignupInline
+  // usages (see ForParents.jsx).
+  className = '',
 }) {
   return (
-    <section className="afc-signup-inline">
+    <section className={`afc-signup-inline ${className}`.trim()}>
       <div className="afc-signup-inline__decoration" aria-hidden="true">
         <SwooshLines className="afc-signup-inline__decoration-svg" />
       </div>

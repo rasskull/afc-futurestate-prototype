@@ -4,13 +4,14 @@
    flash-then-jump. Kept in normal layout (opacity, not display:none) so the
    stability-check in DonateScrollFlow.jsx can still measure real positions
    while hidden; fades in once the jump (if any) has already happened, so a
-   normal fresh visit — nothing to jump past — never sees this at all. */
+   normal fresh visit — nothing to jump past — never sees this at all. Only
+   ever applied to .afc-donate-scroll-flow itself (the trust row lives
+   inside it now, so it's covered by the same opacity for free). */
 .is-positioning {
   opacity: 0;
 }
 
-.afc-donate-scroll-flow,
-.afc-donate-scroll-flow__trust {
+.afc-donate-scroll-flow {
   transition: opacity 0.2s ease;
 }
 
@@ -27,9 +28,21 @@
   padding-bottom: clamp(2.5rem, 6vw, 5rem);
 }
 
-.afc-donate-scroll-flow__sections {
+/* Wraps .__sections + .__trust in their own column so the trust row sits
+   beneath the content column specifically (matching its width exactly),
+   not the full sections+sidebar row — takes over the "be the flexible
+   content-column item" role .__sections used to play directly in the outer
+   flex row (flex:1 1 0%, min-width:0 to allow its own content to shrink/wrap
+   rather than overflowing). No gap here: .__trust's own padding-top already
+   provides its spacing below .__sections. */
+.afc-donate-scroll-flow__main {
   flex: 1 1 0%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.afc-donate-scroll-flow__sections {
   display: flex;
   flex-direction: column;
   gap: clamp(4rem, 8vw, 7rem);

@@ -3,7 +3,7 @@ import HowItWorks from '../../components/HowItWorks/HowItWorks.jsx';
 import Video from '../../components/Video/Video.jsx';
 import EligibilityPromo from '../../components/EligibilityPromo/EligibilityPromo.jsx';
 import Faq from '../../components/Faq/Faq.jsx';
-import SignupFooter from '../Home/SignupFooter.jsx';
+import DonateFooter from '../Home/DonateFooter.jsx';
 import FeaturedArticlesBlue from './FeaturedArticlesBlue.jsx';
 import StoriesGrid from './StoriesGrid.jsx';
 import eftcHeroImage from '../../assets/photos/eftc-hero.webp';
@@ -36,13 +36,7 @@ export default function HowTheEftcWorks() {
       <FeaturedArticlesBlue />
       <StoriesGrid pageCount={7} />
       <Faq />
-      <SignupFooter
-        heading={
-          <>
-            Be Ready on <strong>Day One</strong>
-          </>
-        }
-      />
+      <DonateFooter />
     </>
   );
 }

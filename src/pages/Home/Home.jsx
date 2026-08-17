@@ -2,13 +2,13 @@ import Hero from '../../components/Hero/Hero.jsx';
 import NarrativeBlock from '../../components/NarrativeBlock/NarrativeBlock.jsx';
 import Video from '../../components/Video/Video.jsx';
 import HowItWorks from '../../components/HowItWorks/HowItWorks.jsx';
-import SignupInline from './SignupInline.jsx';
+import DonateInline from './DonateInline.jsx';
 import EligibilityPromo from '../../components/EligibilityPromo/EligibilityPromo.jsx';
 import FeaturedStory from '../../components/FeaturedStory/FeaturedStory.jsx';
 import StoriesGrid from '../../components/StoriesGrid/StoriesGrid.jsx';
 import AudienceRouting from './AudienceRouting.jsx';
 import Faq from '../../components/Faq/Faq.jsx';
-import SignupFooter from './SignupFooter.jsx';
+import DonateFooter from './DonateFooter.jsx';
 
 export default function Home() {
   return (
@@ -17,13 +17,13 @@ export default function Home() {
       <NarrativeBlock />
       <Video paddingTop="0" />
       <HowItWorks />
-      <SignupInline />
+      <DonateInline />
       <EligibilityPromo />
       <FeaturedStory />
       <StoriesGrid />
       <AudienceRouting />
       <Faq />
-      <SignupFooter />
+      <DonateFooter />
     </>
   );
 }

@@ -4,7 +4,7 @@ import EligibilityPromo from '../../components/EligibilityPromo/EligibilityPromo
 import Stats from '../../components/Stats/Stats.jsx';
 import Faq from '../../components/Faq/Faq.jsx';
 import ProcessSteps from '../../components/ProcessSteps/ProcessSteps.jsx';
-import SignupFooter from '../Home/SignupFooter.jsx';
+import DonateFooter from '../Home/DonateFooter.jsx';
 import WhyPartner from './WhyPartner.jsx';
 import SchoolsSgosCards from './SchoolsSgosCards.jsx';
 import schoolsHeroBg from '../../assets/photos/schools-hero-bg.webp';
@@ -154,15 +154,7 @@ export default function ForSchools() {
         faqs={SCHOOLS_FAQS}
       />
 
-      <SignupFooter
-        heading={
-          <>
-            Be funding students <strong>on day one</strong>
-          </>
-        }
-        supportCopy="Register your interest and our partnerships team will get you set up — your co-branded portal, your families, our engine — ready for January 1, 2027"
-        backgroundImage={schoolsEmailCaptureBg}
-      />
+      <DonateFooter backgroundImage={schoolsEmailCaptureBg} />
     </>
   );
 }

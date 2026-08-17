@@ -2,8 +2,8 @@ import Hero from '../../components/Hero/Hero.jsx';
 import Stats from '../../components/Stats/Stats.jsx';
 import FeaturedStory from '../../components/FeaturedStory/FeaturedStory.jsx';
 import Faq from '../../components/Faq/Faq.jsx';
-import SignupInline from '../Home/SignupInline.jsx';
-import SignupFooter from '../Home/SignupFooter.jsx';
+import DonateInline from '../Home/DonateInline.jsx';
+import DonateFooter from '../Home/DonateFooter.jsx';
 import HowScholarshipsHelp from './HowScholarshipsHelp.jsx';
 import WhatCanBeCovered from './WhatCanBeCovered.jsx';
 import parentsHeroImage from '../../assets/photos/parents-hero-bg.webp';
@@ -28,7 +28,10 @@ export default function ForParents() {
           </>
         }
         subtitle=""
-        lead="Find the right school for your child — and a scholarship to help pay for it. Register your interest and we’ll keep you posted on when applications open and how to apply."
+        lead="Find the right school for your child — and a scholarship to help pay for it."
+        ctaLabel="APPLY FOR A SCHOLARSHIP"
+        modalTitle="Apply for a Scholarship"
+        modalCopy="Sign up to be notified as soon as the Education Freedom Tax Credit launches and scholarship applications open."
       />
       <HowScholarshipsHelp />
       <WhatCanBeCovered />
@@ -43,25 +46,10 @@ export default function ForParents() {
         backgroundImage={parentsHappensNextBg}
         backgroundOffsetY={110}
       />
-      <SignupInline
-        heading={
-          <>
-            <strong>Get Notified</strong> When Applications Open
-          </>
-        }
-        supportCopy="Scholarship application windows open after the Education Freedom Tax Credit activates in 2027. Register now and we’ll email you the moment applications open in your state — with everything you need to apply."
-        formClassName="afc-signup-form--compact-heading"
-      />
+      <DonateInline />
       <FeaturedStory />
       <Faq />
-      <SignupFooter
-        heading={
-          <>
-            Get Notified <strong>When Applications Open</strong>
-          </>
-        }
-        supportCopy="Register now and we’ll email you the moment applications open in your state."
-      />
+      <DonateFooter />
     </>
   );
 }

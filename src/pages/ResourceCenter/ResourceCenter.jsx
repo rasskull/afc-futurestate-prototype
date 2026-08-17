@@ -2,7 +2,7 @@ import Hero from '../../components/Hero/Hero.jsx';
 import StoriesGrid from '../../components/StoriesGrid/StoriesGrid.jsx';
 import DownloadGuides from '../../components/DownloadGuides/DownloadGuides.jsx';
 import ResourceTools from './ResourceTools.jsx';
-import SignupFooter from '../Home/SignupFooter.jsx';
+import DonateFooter from '../Home/DonateFooter.jsx';
 import resourceHeroImage from '../../assets/photos/resource-center-hero-bg.webp';
 import { RESOURCE_CENTER_STORIES } from './StoriesGridContent.js';
 
@@ -29,13 +29,7 @@ export default function ResourceCenter() {
         ctaLabel="Explore More Articles"
         stories={RESOURCE_CENTER_STORIES}
       />
-      <SignupFooter
-        heading={
-          <>
-            Be Ready on <strong>Day One</strong>
-          </>
-        }
-      />
+      <DonateFooter />
     </>
   );
 }

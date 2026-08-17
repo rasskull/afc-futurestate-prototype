@@ -1,7 +1,7 @@
 import Hero from '../../components/Hero/Hero.jsx';
 import NarrativeBlock from '../../components/NarrativeBlock/NarrativeBlock.jsx';
 import Stats from '../../components/Stats/Stats.jsx';
-import SignupFooter from '../Home/SignupFooter.jsx';
+import DonateFooter from '../Home/DonateFooter.jsx';
 import AboutCards from './AboutCards.jsx';
 import People from './People.jsx';
 import aboutHeroImage from '../../assets/photos/about-hero-bg.webp';
@@ -34,13 +34,7 @@ export default function AboutUs() {
       <AboutCards />
       <Stats staggered />
       <People />
-      <SignupFooter
-        heading={
-          <>
-            Be Part of <strong>What Comes Next</strong>
-          </>
-        }
-      />
+      <DonateFooter />
     </>
   );
 }

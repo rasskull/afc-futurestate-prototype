@@ -1,0 +1,80 @@
+/* ============================================================================
+   DONATE FOOTER — copied from SignupFooter.css (afc/email-signup, dark
+   variant) with the form swapped for a single Donate CTA. Background photo
+   treatment/spacing kept identical on purpose; only the form-area content
+   changed. See SignupFooter.css for the original ground-truth sourcing
+   notes this was adapted from.
+   ============================================================================ */
+.afc-donate-footer {
+  width: 100%;
+  padding-block: clamp(4rem, 10vw, 7rem);
+  background-color: var(--color-structure);
+  background-image: linear-gradient(rgba(14, 22, 34, 0.5), rgba(14, 22, 34, 0.5)),
+    var(--afc-donate-footer-bg, url('../../assets/photos/be-ready-day-one-bg.webp'));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.afc-donate-footer__inner {
+  max-width: 750px;
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.afc-donate-footer__heading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 1.4rem + 2.6vw, 4.25rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-paper);
+}
+
+.afc-donate-footer__heading strong {
+  font-weight: 700;
+}
+
+.afc-donate-footer__copy {
+  max-width: 500px;
+  margin: 1rem auto 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  color: var(--color-paper);
+}
+
+.afc-donate-footer__cta {
+  margin-top: 1.5rem;
+}
+
+/* White pill inverting to a structure-blue pill on hover — same dark-photo
+   CTA treatment Hero.css uses for its own dark theme, applied here since
+   this section sits on the same kind of dark full-bleed photo background. */
+.afc-donate-footer .afc-button--solid {
+  background: var(--color-paper);
+  color: var(--color-action);
+}
+
+.afc-donate-footer .afc-button--solid:hover {
+  background: transparent;
+  border-color: var(--color-paper);
+  color: var(--color-paper);
+}
+
+@media (max-width: 600px) {
+  .afc-donate-footer {
+    padding-block: clamp(2.5rem, 10vw, 4rem);
+    background-image: linear-gradient(rgba(14, 22, 34, 0.5), rgba(14, 22, 34, 0.5)),
+      var(--afc-donate-footer-bg, url('../../assets/photos/be-ready-day-one-bg-mobile.webp'));
+  }
+
+  .afc-donate-footer__inner {
+    max-width: 100%;
+  }
+
+  .afc-donate-footer__copy {
+    font-size: 16px;
+  }
+}

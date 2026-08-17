@@ -108,22 +108,20 @@ export default function DonateScrollFlow() {
     });
   }
 
-  // Auto-scroll only fires the first time a section gets its initial answer
-  // — checking "was this unset before this click" (read before the setter
-  // runs) is what makes later edits stay put instead of re-triggering it.
-  // First-time selection scrolls to the natural next step (State) — unless
-  // State is already filled in ahead of time (e.g. a prefill link that sets
-  // State but not Fund), in which case there's nothing left there and School
-  // is the next real step. Re-selecting an already-answered Fund also jumps
-  // straight to School instead of back to State — by that point State is
-  // presumably already filled in too, and the goal is keeping the donor
-  // moving toward finishing rather than re-visiting a step they've already
-  // cleared. No-preference has no School step to land on either way.
+  // Scrolls to whichever of State/School is still the next real step —
+  // checked directly off the current stateCode rather than off "was Fund
+  // itself unset before this click". That used to be the proxy for "has
+  // State already been answered", which breaks for a fund-only prefill link
+  // (?fund=...): the GET-param prefill sets fundId on mount, so by the time
+  // the donor picks a fund from the cards, Fund already reads as "answered"
+  // even though State has never actually been filled in — the old check
+  // would then jump straight to School, skipping State entirely. Checking
+  // stateCode itself is correct regardless of how Fund got its value.
+  // No-preference has no School step to land on either way.
   function handleFundSelect(fund) {
-    const wasUnset = !fundId;
     setFundId(fund.id);
     if (stateCode === 'no-preference') return;
-    if (wasUnset && !stateCode) {
+    if (!stateCode) {
       scrollToSectionWhenStable('state', { smooth: true });
     } else {
       scrollToSectionWhenStable('school', { smooth: true });
@@ -258,8 +256,8 @@ export default function DonateScrollFlow() {
   }, [isNoPreference]);
 
   return (
-    <>
-      <div className={`afc-donate-scroll-flow afc-wide${isReady ? '' : ' is-positioning'}`}>
+    <div className={`afc-donate-scroll-flow afc-wide${isReady ? '' : ' is-positioning'}`}>
+      <div className="afc-donate-scroll-flow__main">
         <div className="afc-donate-scroll-flow__sections">
           <h1 className="afc-donation-step__heading">
             MAKE A <strong>DONATION</strong>
@@ -300,37 +298,37 @@ export default function DonateScrollFlow() {
           </div>
         </div>
 
-        <div className="afc-donate-scroll-flow__sidebar">
-          <DonationSummaryPanel
-            fund={selectedFund}
-            stateLabel={selectedState?.label}
-            schoolLabel={selectedSchool?.name}
-            isStateLocked={isStateLocked}
-            isSchoolLocked={isSchoolLocked}
-            hideSchool={isNoPreference}
-            onFundRowClick={() => scrollToSection('fund')}
-            onStateRowClick={() => scrollToSection('state')}
-            onSchoolRowClick={() => scrollToSection('school')}
-            onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
-          />
+        <div className="afc-donate-scroll-flow__trust">
+          <p className="afc-donate-scroll-flow__trust-item">
+            <LockIcon className="afc-donate-scroll-flow__trust-icon" />
+            Secure donation
+          </p>
+          <p className="afc-donate-scroll-flow__trust-item">501(c)(3) &middot; EIN 41-3421652</p>
         </div>
+      </div>
 
-        <GiftAmountModal
-          open={isGiftAmountModalOpen}
-          onClose={() => setIsGiftAmountModalOpen(false)}
+      <div className="afc-donate-scroll-flow__sidebar">
+        <DonationSummaryPanel
           fund={selectedFund}
           stateLabel={selectedState?.label}
           schoolLabel={selectedSchool?.name}
+          isStateLocked={isStateLocked}
+          isSchoolLocked={isSchoolLocked}
+          hideSchool={isNoPreference}
+          onFundRowClick={() => scrollToSection('fund')}
+          onStateRowClick={() => scrollToSection('state')}
+          onSchoolRowClick={() => scrollToSection('school')}
+          onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
         />
       </div>
 
-      <div className={`afc-wide afc-donate-scroll-flow__trust${isReady ? '' : ' is-positioning'}`}>
-        <p className="afc-donate-scroll-flow__trust-item">
-          <LockIcon className="afc-donate-scroll-flow__trust-icon" />
-          Secure donation
-        </p>
-        <p className="afc-donate-scroll-flow__trust-item">501(c)(3) &middot; EIN 41-3421652</p>
-      </div>
-    </>
+      <GiftAmountModal
+        open={isGiftAmountModalOpen}
+        onClose={() => setIsGiftAmountModalOpen(false)}
+        fund={selectedFund}
+        stateLabel={selectedState?.label}
+        schoolLabel={selectedSchool?.name}
+      />
+    </div>
   );
 }

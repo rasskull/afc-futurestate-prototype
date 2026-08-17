@@ -1,0 +1,147 @@
+/* ============================================================================
+   DONATE INLINE — copied from SignupInline.css (afc/email-signup, light
+   variant) with the form swapped for a single Donate CTA. Layout/decoration
+   (full-bleed section, wavy swoosh lines, grid column tracks) kept identical
+   on purpose; only the form-area content changed. See SignupInline.css for
+   the original ground-truth sourcing notes this was adapted from.
+   ============================================================================ */
+.afc-donate-inline {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.afc-donate-inline__decoration {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.afc-donate-inline__decoration-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.afc-donate-inline__decoration--bottom {
+  display: none;
+}
+
+.afc-donate-inline__inner {
+  position: relative;
+  z-index: 1;
+  padding: 2.25rem 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .afc-donate-inline__inner {
+    padding-inline: 0;
+    padding-top: clamp(149px, 14.9vw, 259px);
+    padding-bottom: 3.375rem;
+    min-height: clamp(460px, 46vw, 800px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-donate-inline__inner {
+    padding: 1.5rem 25px;
+  }
+}
+
+.afc-donate-inline__heading {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-weight: 100;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  font-size: var(--font-size-h1);
+  margin: 0;
+}
+
+.afc-donate-inline__heading strong {
+  font-weight: 700;
+}
+
+.afc-donate-inline__copy {
+  max-width: 28rem;
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  color: var(--color-ink);
+}
+
+.afc-donate-inline__cta {
+  display: inline-flex;
+}
+
+@media (min-width: 1024px) {
+  .afc-donate-inline__copy {
+    font-family: var(--font-body);
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 150%;
+  }
+
+  /* Real layout: a flex row with __text at a 14.9% left margin / 28% width
+     and __form-area at a 1.2% margin / 36.1% width — both against the full
+     section width (align:full). Reproduced as grid tracks against
+     .afc-donate-inline__inner's flat heading/form-area children. */
+  .afc-donate-inline__inner {
+    display: grid;
+    grid-template-columns: 14.9% 28% 1.2% 36.1% 1fr;
+    align-items: start;
+  }
+
+  .afc-donate-inline__heading {
+    grid-column: 2;
+  }
+
+  .afc-donate-inline__form-area {
+    grid-column: 4;
+  }
+}
+
+@media (max-width: 1023px) {
+  .afc-donate-inline__heading {
+    font-size: 42px;
+    margin-bottom: 1rem;
+  }
+
+  .afc-donate-inline__copy {
+    font-size: 18px;
+  }
+
+  .afc-donate-inline__form-area {
+    margin-top: 1.5rem;
+  }
+
+  /* Decoration reserves a band at the top of the stacked layout; the
+     heading's margin-top clears it (matches SignupInline.css's rule). */
+  .afc-donate-inline {
+    --afc-decoration-height: clamp(140px, 38vw, 220px);
+  }
+
+  .afc-donate-inline__decoration {
+    inset: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--afc-decoration-height);
+    overflow: hidden;
+  }
+
+  .afc-donate-inline__decoration--bottom {
+    display: block;
+    top: auto;
+    bottom: 0;
+    transform: rotate(180deg);
+  }
+
+  .afc-donate-inline__heading {
+    margin-top: var(--afc-decoration-height);
+  }
+}

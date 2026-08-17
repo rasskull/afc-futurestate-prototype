@@ -1,8 +1,8 @@
 import Hero from '../../components/Hero/Hero.jsx';
 import NarrativeBlock from '../../components/NarrativeBlock/NarrativeBlock.jsx';
 import Stats from '../../components/Stats/Stats.jsx';
-import SignupInline from '../Home/SignupInline.jsx';
-import SignupFooter from '../Home/SignupFooter.jsx';
+import DonateInline from '../Home/DonateInline.jsx';
+import DonateFooter from '../Home/DonateFooter.jsx';
 import StoriesGrid from '../../components/StoriesGrid/StoriesGrid.jsx';
 import Faq from '../../components/Faq/Faq.jsx';
 import WhoWeServe from './WhoWeServe.jsx';
@@ -107,7 +107,7 @@ export default function AmericanHeroesFund() {
 
       <Stats stats={STATS} />
 
-      <SignupInline />
+      <DonateInline />
 
       <NarrativeBlock
         heading={
@@ -132,14 +132,7 @@ export default function AmericanHeroesFund() {
 
       <Faq faqs={FAQS} />
 
-      <SignupFooter
-        heading={
-          <>
-            Be Part of <strong>What Comes Next</strong>
-          </>
-        }
-        supportCopy="Register your interest and we’ll keep you close to the network as giving opens in 2027."
-      />
+      <DonateFooter />
     </>
   );
 }
