@@ -1,3 +1,19 @@
+/* Hidden while a prefill link (?fund=...) is still jumping the scroll
+   position past Fund — without this, the first paint briefly shows the page
+   at the top before it snaps down to State/School, reading as a jarring
+   flash-then-jump. Kept in normal layout (opacity, not display:none) so the
+   stability-check in DonateScrollFlow.jsx can still measure real positions
+   while hidden; fades in once the jump (if any) has already happened, so a
+   normal fresh visit — nothing to jump past — never sees this at all. */
+.is-positioning {
+  opacity: 0;
+}
+
+.afc-donate-scroll-flow,
+.afc-donate-scroll-flow__trust {
+  transition: opacity 0.2s ease;
+}
+
 .afc-donate-scroll-flow {
   display: flex;
   /* stretch (not flex-start): the sidebar wrapper has no height of its own,

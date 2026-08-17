@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDoubleIcon } from '../icons/DonationIcons.jsx';
 import railGraphic from '../../assets/photos/default-rail-graphic.png';
+import logoWhite from '../../assets/logos/afc-horizontal-white.png';
 import './DonationSummaryPanel.css';
 
 // Indexed by how many of {fund, state, school} are filled in (0-3) — driven
@@ -153,11 +154,18 @@ export default function DonationSummaryPanel({
       </div>
 
       <div className="afc-donation-panel__body" aria-hidden={isMobile && !isExpanded}>
-        <img
-          src={railGraphic}
-          alt=""
-          className="afc-donation-panel__rail-image afc-donation-panel__rail-image--mobile"
-        />
+        <div className="afc-donation-panel__mobile-header">
+          <img
+            src={logoWhite}
+            alt="AFC Scholarship Fund"
+            className="afc-donation-panel__mobile-logo"
+          />
+          <img
+            src={railGraphic}
+            alt=""
+            className="afc-donation-panel__rail-image afc-donation-panel__rail-image--mobile"
+          />
+        </div>
         <div className="afc-donation-panel__rows">
           <p className="afc-donation-panel__rows-heading">Your Donation</p>
 

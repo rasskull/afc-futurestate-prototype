@@ -32,6 +32,28 @@ export default function DonateScrollFlow() {
   const [dotPositions, setDotPositions] = useState({ fund: 0, state: 0, school: 0 });
   const didInitOnce = useRef(false);
 
+  // A prefill link (e.g. ?fund=american-promise) makes the init effect below
+  // jump the scroll position past Fund — but that jump only happens after a
+  // render + several requestAnimationFrame stability checks, so without this
+  // the very first paint briefly shows the page at the top before snapping
+  // down, reading as a jarring flash-then-jump. Computed synchronously here
+  // (mirroring the init effect's own target resolution exactly) so a normal
+  // fresh visit — the common case, nothing to jump past — never pays for
+  // this at all: it's ready immediately.
+  const [isReady, setIsReady] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    const fundParam = params.get('fund');
+    const stateParam = params.get('state');
+    const hasFund = Boolean(fundParam) && FUNDS.some((fund) => fund.id === fundParam);
+    if (!hasFund) return true;
+    const matchedState = stateParam
+      ? STATE_OPTIONS.find((option) => option.value.toLowerCase() === stateParam.toLowerCase())
+      : null;
+    // No-preference resolves the whole flow with no School step left to jump
+    // to, same as the init effect's own target computation.
+    return matchedState?.value === 'no-preference';
+  });
+
   const selectedFund = FUNDS.find((fund) => fund.id === fundId) || null;
   const selectedState = STATE_OPTIONS.find((option) => option.value === stateCode) || null;
   const selectedSchool = findSchool(stateCode, schoolId);
@@ -58,7 +80,10 @@ export default function DonateScrollFlow() {
   // land short. Poll the target's absolute position each frame until it
   // stops moving between two consecutive frames, then scroll — robust to
   // however many render passes the change actually takes to settle.
-  function scrollToSectionWhenStable(key, opts, stableStreak = 0, attemptsLeft = 60) {
+  // onDone (used only by the init effect's prefill jump) fires right after
+  // the scroll actually happens — that's the signal the page is safe to
+  // reveal, having landed at its final position with nothing left to jump.
+  function scrollToSectionWhenStable(key, opts, stableStreak = 0, attemptsLeft = 60, onDone) {
     const el = sectionRefs[key].current;
     // Require several consecutive matching frames, not just one — a single
     // match can be a false positive between two separate cascading render
@@ -67,6 +92,7 @@ export default function DonateScrollFlow() {
     const REQUIRED_STREAK = 15;
     if (!el || attemptsLeft <= 0) {
       scrollToSection(key, opts);
+      onDone?.();
       return;
     }
     const top = el.getBoundingClientRect().top + window.scrollY;
@@ -75,8 +101,9 @@ export default function DonateScrollFlow() {
       const nextStreak = nowTop === top ? stableStreak + 1 : 0;
       if (nextStreak >= REQUIRED_STREAK) {
         scrollToSection(key, opts);
+        onDone?.();
       } else {
-        scrollToSectionWhenStable(key, opts, nextStreak, attemptsLeft - 1);
+        scrollToSectionWhenStable(key, opts, nextStreak, attemptsLeft - 1, onDone);
       }
     });
   }
@@ -179,7 +206,9 @@ export default function DonateScrollFlow() {
     // idea when no-preference resolves the whole flow with no School step to
     // land on — target is null and there's nothing to scroll to.
     if (target && target !== 'fund') {
-      scrollToSectionWhenStable(target, { smooth: false });
+      scrollToSectionWhenStable(target, { smooth: false }, 0, 60, () => setIsReady(true));
+    } else {
+      setIsReady(true);
     }
     // Only ever runs once, regardless of what changes afterward.
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -230,7 +259,7 @@ export default function DonateScrollFlow() {
 
   return (
     <>
-      <div className="afc-donate-scroll-flow afc-wide">
+      <div className={`afc-donate-scroll-flow afc-wide${isReady ? '' : ' is-positioning'}`}>
         <div className="afc-donate-scroll-flow__sections">
           <h1 className="afc-donation-step__heading">
             MAKE A <strong>DONATION</strong>
@@ -295,7 +324,7 @@ export default function DonateScrollFlow() {
         />
       </div>
 
-      <div className="afc-wide afc-donate-scroll-flow__trust">
+      <div className={`afc-wide afc-donate-scroll-flow__trust${isReady ? '' : ' is-positioning'}`}>
         <p className="afc-donate-scroll-flow__trust-item">
           <LockIcon className="afc-donate-scroll-flow__trust-icon" />
           Secure donation

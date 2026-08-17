@@ -48,8 +48,15 @@
   display: none;
 }
 
+/* Mobile-only (see @media below) — hidden here the same way
+   .rail-image--mobile is, since this wrapper only exists for the
+   full-screen mobile drawer, not the desktop card. */
+.afc-donation-panel__mobile-header {
+  display: none;
+}
+
 .afc-donation-panel__banner-text {
-  margin: 0;
+  margin: 0 0 10px;
   font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 1.35;
@@ -149,6 +156,13 @@
   font-weight: 600;
 }
 
+/* Unscoped (not inside any @media block) so this applies at every
+   breakpoint, not just desktop. */
+.afc-donation-panel__row-link:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
 /* No color set here on purpose — it should just inherit the surrounding
    text color (ink on the desktop card, paper/white on the mobile drawer via
    .afc-donation-panel__row-value p), not lock in one color for both. */
@@ -199,7 +213,7 @@
     border: none;
     z-index: 500;
     overflow: visible;
-    background: var(--color-structure);
+    background: var(--color-paper);
     transition: height 0.35s ease;
   }
 
@@ -297,6 +311,10 @@
   }
 
   .afc-donation-panel__banner-text {
+    /* Desktop's 10px margin-bottom would double up with this layout's own
+       0.625rem (10px) gap between every stacked child — the gap alone
+       already gives the same spacing here. */
+    margin-bottom: 0;
     font-size: 0.9rem;
   }
 
@@ -317,10 +335,39 @@
   /* On mobile the image lives in the upper blue area of the body (the part
      that scrolls into view at the top when the sheet expands), not inside
      the bottom-pinned banner — matching where the original placeholder box
-     used to sit, above the "Your Donation" rows. */
+     used to sit, above the "Your Donation" rows. Full-bleed within
+     .mobile-header: negative margins cancel that wrapper's own
+     padding-inline (var(--gutter)) so the image reaches its true edges
+     instead of just filling the padded content box — same technique as
+     .rail-image--desktop above, against this wrapper's own padding. */
   .afc-donation-panel__rail-image--mobile {
     display: block;
-    margin-top: 1.5rem;
+    width: calc(100% + 2 * var(--gutter));
+    max-width: none;
+    margin: 1.5rem calc(-1 * var(--gutter)) 12px;
+  }
+
+  /* Wraps the mobile logo + rail image in their own dark-blue band at the
+     top of the expanded drawer — the rest of the drawer is now white (see
+     .afc-donation-panel__body below), so this band needs its own explicit
+     background to stay blue instead of inheriting white.
+     Logo padding/sizing intentionally mirrors the real site header exactly
+     (same padding-top: 12px, same padding-inline: var(--gutter), same
+     width: clamp(220px, 22vw, 314px)) — confirmed via direct measurement
+     against .afc-site-logo img at 390px (x:20 y:12 w:220 h:39.2) — so that
+     when the drawer expands and covers the real header, this logo sits at
+     the exact same on-screen position/size the real one just occupied,
+     reading as one continuous logo rather than a jump-cut. */
+  .afc-donation-panel__mobile-header {
+    display: block;
+    padding: 12px var(--gutter) 0;
+    background: var(--color-structure);
+  }
+
+  .afc-donation-panel__mobile-logo {
+    display: block;
+    width: clamp(220px, 22vw, 314px);
+    height: auto;
   }
 
   /* Fills the panel from the top down to exactly where the (independently
@@ -335,39 +382,16 @@
     top: 0;
     bottom: var(--donation-panel-peek, 11rem);
     overflow-y: auto;
-    background: var(--color-structure);
+    background: var(--color-paper);
   }
 
   .afc-donation-panel__rows {
     padding: 2rem 1.25rem 0;
   }
 
-  .afc-donation-panel__rows-heading {
-    border-bottom-color: #5578a3;
-    color: var(--color-paper);
-  }
-
-  .afc-donation-panel__row {
-    border-bottom-color: #5578a3;
-    color: var(--color-paper);
-  }
-
-  .afc-donation-panel__row-value p {
-    color: var(--color-paper);
-  }
-
-  .afc-donation-panel__row-value p.is-locked {
-    color: rgba(255, 255, 255, 0.55);
-  }
-
-  .afc-donation-panel__row-link {
-    color: var(--color-accent);
-    text-decoration: underline;
-  }
-
-  .afc-donation-panel__row-link:hover {
-    color: var(--color-paper);
-  }
+  /* Rows/links below here now sit on the same white background as desktop
+     (.afc-donation-panel__body, above), so they just inherit the desktop
+     base rules unchanged — no dark-background color overrides needed. */
 
   .afc-donation-panel__cta {
     flex-shrink: 0;

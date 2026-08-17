@@ -41,7 +41,10 @@ export default function SchoolSearch({ stateCode, stateName, value, onChange }) 
     const trimmed = query.trim().toLowerCase();
     if (!trimmed) return [];
 
-    const matches = dataset.filter((school) => school.name.toLowerCase().includes(trimmed));
+    const matches = dataset.filter(
+      (school) =>
+        school.name.toLowerCase().includes(trimmed) || school.city.toLowerCase().includes(trimmed)
+    );
     const byCity = new Map();
     for (const school of matches) {
       if (!byCity.has(school.city)) byCity.set(school.city, []);
