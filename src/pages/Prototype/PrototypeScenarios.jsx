@@ -63,13 +63,13 @@ const THANK_YOU_SCENARIOS = [
   },
   {
     title: 'Thank you — give again',
-    description: 'Repeat-donor prompt: support a different fund, state, or school.',
-    to: '/thank-you?variant=give-again',
+    description: 'Donor gave $500 or less: repeat-donor prompt to support a different fund, state, or school.',
+    to: '/thank-you?variant=give-again&amount=250',
   },
   {
     title: 'Thank you — remaining credit',
-    description: 'Donor gave less than the federal credit cap ($500 of $1,700) — prompts them to give the rest.',
-    to: '/thank-you?variant=remaining-credit&amount=500',
+    description: 'Donor gave $1,000 of the $1,700 federal credit cap — prompts them to give the rest.',
+    to: '/thank-you?variant=remaining-credit&amount=1000',
   },
 ];
 

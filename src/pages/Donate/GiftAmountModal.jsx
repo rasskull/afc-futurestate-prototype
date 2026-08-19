@@ -359,13 +359,15 @@ export default function GiftAmountModal({ open, onClose, fund, stateLabel, schoo
                 <button
                   type="button"
                   className="afc-gift-amount-modal__cta"
-                  onClick={() =>
+                  onClick={() => {
+                    const variant =
+                      amount <= 500 ? 'give-again' : amount <= 1699 ? 'remaining-credit' : null;
                     navigate(
-                      amount > 0 && amount < 1700
-                        ? `/thank-you?variant=remaining-credit&amount=${amount}`
+                      variant
+                        ? `/thank-you?variant=${variant}&amount=${amount}`
                         : `/thank-you?amount=${amount}`
-                    )
-                  }
+                    );
+                  }}
                 >
                   Donate ${amount ? amount.toLocaleString() : '0'}
                   {frequency === 'monthly' ? '/mo' : ''}
