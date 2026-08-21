@@ -55,8 +55,25 @@
   display: none;
 }
 
-.afc-donation-panel__banner-text {
+.afc-donation-panel__banner-text-wrap {
+  /* Reserves room for two lines at all times (line-height * font-size * 2)
+     so the panel's height stays constant as the copy changes across
+     progress steps, regardless of whether the current copy wraps to one
+     line or two — and vertically centers whatever actually renders (one
+     line or two) within that reserved space. The flex centering lives on
+     THIS wrapper, not on the <p> itself — making the <p> a flex container
+     would wrap each inline-level ELEMENT child (like <strong>) into its
+     own separate flex item instead of one continuous run, breaking normal
+     text flow (missing space, side-by-side wrapping). */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(1.35 * 1.15rem * 2);
   margin: 0 0 10px;
+}
+
+.afc-donation-panel__banner-text {
+  margin: 0;
   font-family: var(--font-body);
   font-size: 1.15rem;
   line-height: 1.35;
@@ -310,11 +327,21 @@
     text-align: center;
   }
 
-  .afc-donation-panel__banner-text {
+  .afc-donation-panel__banner-text-wrap {
     /* Desktop's 10px margin-bottom would double up with this layout's own
        0.625rem (10px) gap between every stacked child — the gap alone
        already gives the same spacing here. */
     margin-bottom: 0;
+    /* Recomputed at this breakpoint's own font-size — the mobile drawer's
+       collapsed height is measured live off this banner (see the
+       ResizeObserver in DonationSummaryPanel.jsx), so it already adapts to
+       whatever height this reserves; it just needs to reserve the right
+       amount for two lines of *this* font-size rather than inheriting
+       desktop's larger one. */
+    min-height: calc(1.35 * 0.9rem * 2);
+  }
+
+  .afc-donation-panel__banner-text {
     font-size: 0.9rem;
   }
 

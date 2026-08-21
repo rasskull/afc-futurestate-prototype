@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import Button from '../../components/ui/Button.jsx';
-import railGraphic from '../../assets/photos/default-rail-graphic.png';
+import railGraphic from '../../assets/photos/AFC-SF_Card-_P2_American-Promise_v4_460x142.png';
 import goldStarFamilyImage from '../../assets/photos/story-gold-star-family.jpg';
 import kingdomLifeAcademyImage from '../../assets/photos/story-kingdom-life-academy.jpg';
 import resourceEligibilityImage from '../../assets/photos/resource-eligibility-calculator.webp';
@@ -198,7 +198,9 @@ export default function ThankYou() {
 
       <div className="afc-thank-you__columns">
         <div className="afc-thank-you__receipt">
-          <img src={railGraphic} alt="" className="afc-thank-you__receipt-banner" />
+          <div className="afc-thank-you__receipt-banner-wrap">
+            <img src={railGraphic} alt="" className="afc-thank-you__receipt-banner" />
+          </div>
           <div className="afc-thank-you__receipt-body">
             <p className="afc-thank-you__receipt-title">Your tax receipt</p>
 

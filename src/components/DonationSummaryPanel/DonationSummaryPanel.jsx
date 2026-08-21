@@ -137,7 +137,9 @@ export default function DonationSummaryPanel({
         </button>
 
         <div className="afc-donation-panel__banner-content">
-          <p className="afc-donation-panel__banner-text">{copy.banner}</p>
+          <div className="afc-donation-panel__banner-text-wrap">
+            <p className="afc-donation-panel__banner-text">{copy.banner}</p>
+          </div>
           <img
             src={railGraphic}
             alt=""

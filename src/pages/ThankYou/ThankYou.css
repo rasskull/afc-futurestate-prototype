@@ -132,10 +132,15 @@
   overflow: hidden;
 }
 
+.afc-thank-you__receipt-banner-wrap {
+  background: var(--color-structure);
+  padding: 20px 0 20px;
+}
+
 .afc-thank-you__receipt-banner {
   display: block;
+  width: 100%;
   object-fit: cover;
-  background: var(--color-structure);
 }
 
 .afc-thank-you__receipt-body {
@@ -498,6 +503,10 @@
 
   .afc-thank-you__receipt {
     width: 100%;
+  }
+
+  .afc-thank-you__receipt-body {
+    padding: 1rem;
   }
 
   .afc-thank-you__side {
