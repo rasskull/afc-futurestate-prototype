@@ -344,7 +344,7 @@
     display: block;
     width: calc(100% + 2 * var(--gutter));
     max-width: none;
-    margin: 1.5rem calc(-1 * var(--gutter)) 12px;
+    margin: 1.5rem calc(-1 * var(--gutter)) 0;
   }
 
   /* Wraps the mobile logo + rail image in their own dark-blue band at the
@@ -360,7 +360,7 @@
      reading as one continuous logo rather than a jump-cut. */
   .afc-donation-panel__mobile-header {
     display: block;
-    padding: 12px var(--gutter) 0;
+    padding: 12px var(--gutter) 20px;
     background: var(--color-structure);
   }
 

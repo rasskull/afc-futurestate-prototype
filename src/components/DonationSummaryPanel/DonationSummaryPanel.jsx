@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDoubleIcon } from '../icons/DonationIcons.jsx';
-import railGraphic from '../../assets/photos/default-rail-graphic.png';
+import railGraphic from '../../assets/photos/AFC-SF_Card-_P2_American-Promise_v4_460x142.png';
 import logoWhite from '../../assets/logos/afc-horizontal-white.png';
 import './DonationSummaryPanel.css';
 

@@ -6,6 +6,21 @@ export const FUNDS = [
     isDefault: true,
   },
   {
+    id: 'special-education',
+    name: 'The Special Education Scholarship Fund',
+    description: 'Supports students with special needs and learning differences.',
+  },
+  {
+    id: 'american-heroes',
+    name: 'The American Heroes Scholarship Fund',
+    description: 'Supports children of military service members and veterans.',
+  },
+  {
+    id: 'christian-schools',
+    name: 'The Christian Schools Scholarship Fund',
+    description: 'Supports students attending Christian schools.',
+  },
+  {
     id: 'catholic-schools',
     name: 'The Catholic Schools Scholarship Fund',
     description: 'Supports students attending Catholic schools.',
@@ -16,23 +31,8 @@ export const FUNDS = [
     description: 'Supports students attending Jewish day schools.',
   },
   {
-    id: 'christian-schools',
-    name: 'The Christian Schools Scholarship Fund',
-    description: 'Supports students attending Christian schools.',
-  },
-  {
-    id: 'other-faiths',
-    name: 'The Other Faiths Scholarship Fund',
-    description: 'Supports students at faith-based schools of other traditions.',
-  },
-  {
-    id: 'every-child',
-    name: 'The Every Child Scholarship Fund',
-    description: 'Supports students with special needs.',
-  },
-  {
-    id: 'american-heroes',
-    name: 'The American Heroes Scholarship Fund',
-    description: 'Supports children of military service members and veterans.',
+    id: 'trade-schools',
+    name: 'The Trade Schools Scholarship Fund',
+    description: 'Supports students attending trade and vocational schools.',
   },
 ];
