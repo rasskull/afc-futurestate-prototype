@@ -134,6 +134,14 @@
   margin: 0;
   flex-shrink: 0;
   width: 5rem;
+  line-height: 125%;
+}
+
+/* Desktop only — mobile keeps the narrower 5rem above. */
+@media (min-width: 981px) {
+  .afc-donation-panel__row-label {
+    width: 7rem;
+  }
 }
 
 .afc-donation-panel__row-value {
@@ -150,6 +158,7 @@
 
 .afc-donation-panel__row-value p.is-set {
   font-weight: 600;
+  line-height: 125%;
 }
 
 .afc-donation-panel__row-value p.is-locked {

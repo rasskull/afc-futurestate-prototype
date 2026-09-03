@@ -100,26 +100,6 @@
   color: #696969;
 }
 
-/* The only actually-clickable part of an unavailable row — same "send my
-   gift where it's most needed" action as .afc-choose-state__no-preference,
-   just reachable inline from here too. */
-.afc-state-search__unavailable-link {
-  display: inline;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  font: inherit;
-  font-weight: 600;
-  color: var(--color-action);
-  cursor: pointer;
-}
-
-.afc-state-search__unavailable-link:hover {
-  color: var(--color-link-hover);
-  text-decoration: underline;
-}
-
 .afc-state-search__option:not(.afc-state-search__option--unavailable):hover {
   background: #f2f6fa;
 }

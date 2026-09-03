@@ -70,84 +70,124 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* Explains the "No preference" choice above its own button — same
-   formatting as .afc-choose-state__field's own "State" label. */
-.afc-choose-state__no-preference-label {
-  /* .afc-choose-state__field's own gap (0.75rem) already spaces every child
-     uniformly (label-to-dropdown included) — this adds another 0.75rem on
-     top of that, doubling the space above this label/button pair without
-     touching the label/dropdown gap above it. */
-  margin: 0.75rem 0 0;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1.25rem;
-  color: var(--color-ink);
-}
-
-/* Replaces the old "No preference" dropdown option — a standalone choice
-   under the field instead, at every breakpoint. Outline treatment (white
-   background, blue border/text) so it reads as a secondary action next to
-   .afc-choose-state__cta's solid blue below. */
-.afc-choose-state__no-preference {
+/* Same card treatment as .afc-fund-card (FundSection.css) — border, radius,
+   padding, hover border-color, name/desc typography, and the same
+   is-selected dark-blue + checkmark treatment — so "no preference" reads
+   and behaves as the same kind of selectable choice as a fund card. Unlike
+   a real state, choosing it does NOT replace the search field with the
+   selected pill — it just switches this card itself into that selected
+   look, leaving the field above untouched (see isRealStateSelected in
+   StateSection.jsx). */
+.afc-choose-state__no-preference-card {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
   width: 100%;
-  /* Matches .afc-dropdown__trigger's own box model exactly (1rem padding-block
-     + 1.3 line-height at 1rem font-size + 1px border, both sides) for the
-     single-line case — min-height, not height, so this sentence can still
-     grow taller on narrow/full-width mobile instead of clipping once it
-     wraps to two or three lines. box-sizing:border-box (global reset) means
-     the thicker 2px border below doesn't change this from the dropdown's
-     own 1px-border height. */
-  min-height: calc(2rem + 1.3rem + 2px);
-  padding-block: 0.5rem;
-  padding-inline: 1.5rem;
-  border: 2px solid var(--color-action);
-  border-radius: var(--button-radius);
+  /* .afc-choose-state__field's own gap (0.75rem) already spaces every child
+     uniformly (search-field-to-card included) — this adds another 0.75rem
+     on top of that, doubling the space above this card without touching
+     the label/search-field gap above it. */
+  margin-top: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
   background: var(--color-paper);
-  color: var(--color-action);
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: var(--button-letter-spacing);
-  text-transform: uppercase;
-  text-align: center;
+  text-align: left;
   cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.afc-choose-state__no-preference:hover {
-  border-color: var(--color-link-hover);
-  background: var(--color-link-hover);
+.afc-choose-state__no-preference-card:hover {
+  border-color: var(--color-structure);
+}
+
+.afc-choose-state__no-preference-card:hover .afc-choose-state__no-preference-card-name {
+  color: var(--color-structure);
+}
+
+.afc-choose-state__no-preference-card.is-selected,
+.afc-choose-state__no-preference-card.is-selected:hover {
+  background: var(--color-structure);
+  border-color: var(--color-structure);
+}
+
+.afc-choose-state__no-preference-card-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--color-action);
+}
+
+.afc-choose-state__no-preference-card.is-selected .afc-choose-state__no-preference-card-name,
+.afc-choose-state__no-preference-card.is-selected:hover .afc-choose-state__no-preference-card-name {
   color: var(--color-paper);
 }
 
-/* Desktop only — hugs its own content instead of spanning the field's full
-   width; mobile keeps the full-width look above. */
-@media (min-width: 981px) {
-  .afc-choose-state__no-preference {
-    /* .afc-choose-state__field is a flex column, whose default
-       align-items:stretch otherwise overrides width:auto and stretches
-       this flex item to the full cross-axis width regardless. */
-    align-self: flex-start;
-    display: inline-flex;
-    width: auto;
-  }
+.afc-choose-state__no-preference-card-desc-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.afc-choose-state__no-preference-card-desc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.afc-choose-state__no-preference-card.is-selected .afc-choose-state__no-preference-card-desc {
+  color: var(--color-paper);
+}
+
+/* Always reserved (width + left margin) whether selected or not, so
+   selecting/deselecting this card never changes its height — matches
+   .afc-fund-card__selected-icon exactly. */
+.afc-choose-state__no-preference-card-selected-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.afc-choose-state__no-preference-card-selected-icon.is-visible {
+  background-color: var(--color-accent);
+}
+
+.afc-choose-state__no-preference-card-selected-icon svg {
+  width: 0.6rem;
+  height: auto;
 }
 
 /* "Select gift amount" CTA for the no-preference case, at every breakpoint
    now (the right panel's own CTA is gone on desktop) — mirrors
    .afc-choose-school__cta in SchoolSection.css exactly, including the
-   margin-top trick that cancels the timeline's own inter-step gap. Not a
-   scroll target itself — selecting "no preference" re-settles the scroll
-   on the State section instead (see handleStateChange in
-   DonateScrollFlow.jsx), which is what keeps this CTA within view together
-   with the State field/heading above it. */
+   margin-top trick that cancels the timeline's own inter-step gap and
+   re-adds a flat 5.2rem instead (4rem + 30%, desktop only — mobile keeps
+   its own flat 4rem below).
+   scroll-margin-top matters here because clicking the no-preference card
+   scrolls straight to this button (see handleStateChange in
+   DonateScrollFlow.jsx) — without it, that scroll lands the button hidden
+   behind the sticky site header. */
 .afc-choose-state__cta {
   display: block;
   position: relative;
   width: 100%;
-  margin-top: calc(clamp(6.24rem, 12.48vw, 10.92rem) * -1 + 4rem);
+  scroll-margin-top: calc(var(--site-header-height, 120px) + 1.5rem + 80px);
+  margin-top: calc(clamp(6.24rem, 12.48vw, 10.92rem) * -1 + 5.2rem);
   padding: 1.1rem 1.5rem;
   border: none;
   border-radius: var(--button-radius);
@@ -169,12 +209,7 @@
 
 @media (max-width: 980px) {
   .afc-choose-state__cta {
+    scroll-margin-top: calc(var(--site-header-height, 120px) + 1.5rem);
     margin-top: calc(4rem - 4.68rem);
-  }
-
-  .afc-choose-state__no-preference {
-    padding-inline: 0.75rem;
-    letter-spacing: -0.5px;
-    line-height: 119%;
   }
 }

@@ -14,6 +14,107 @@
   color: var(--color-ink);
 }
 
+/* Same card treatment as .afc-fund-card (FundSection.css) and
+   .afc-choose-state__no-preference-card (StateSection.css) — border,
+   radius, padding, hover border-color, name/desc typography, and the same
+   is-selected dark-blue + checkmark treatment. Choosing it does NOT replace
+   the search field with anything — it just switches this card itself into
+   the selected look, leaving the field above untouched (mirrors how "no
+   state preference" works). */
+.afc-choose-school__no-preference-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  width: 100%;
+  /* .afc-choose-school__field's own gap (1rem) already spaces every child
+     uniformly (search-field-to-card included) — this adds another 0.75rem
+     on top of that, matching the extra breathing room State's own card
+     gets above it. */
+  margin-top: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.afc-choose-school__no-preference-card:hover {
+  border-color: var(--color-structure);
+}
+
+.afc-choose-school__no-preference-card:hover .afc-choose-school__no-preference-card-name {
+  color: var(--color-structure);
+}
+
+.afc-choose-school__no-preference-card.is-selected,
+.afc-choose-school__no-preference-card.is-selected:hover {
+  background: var(--color-structure);
+  border-color: var(--color-structure);
+}
+
+.afc-choose-school__no-preference-card-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  font-weight: 600;
+  color: var(--color-action);
+}
+
+.afc-choose-school__no-preference-card.is-selected .afc-choose-school__no-preference-card-name,
+.afc-choose-school__no-preference-card.is-selected:hover .afc-choose-school__no-preference-card-name {
+  color: var(--color-paper);
+}
+
+.afc-choose-school__no-preference-card-desc-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.afc-choose-school__no-preference-card-desc {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.afc-choose-school__no-preference-card.is-selected .afc-choose-school__no-preference-card-desc {
+  color: var(--color-paper);
+}
+
+/* Always reserved (width + left margin) whether selected or not, so
+   selecting/deselecting this card never changes its height — matches
+   .afc-fund-card__selected-icon exactly. */
+.afc-choose-school__no-preference-card-selected-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-left: 0.5rem;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.afc-choose-school__no-preference-card-selected-icon.is-visible {
+  background-color: var(--color-accent);
+}
+
+.afc-choose-school__no-preference-card-selected-icon svg {
+  width: 0.6rem;
+  height: auto;
+}
+
 /* The right-panel CTA is gone on desktop now — this inline button is the
    only "Select gift amount" action left, at every breakpoint. This button
    is a direct sibling of the School section inside
@@ -22,12 +123,17 @@
    padded/indented content box) — that timeline's own gap (see
    DonateScrollFlow.css) is sized for spacing BETWEEN steps, way more than
    wanted directly above this button, so margin-top below cancels whatever
-   that gap currently is and re-adds a flat 4rem instead. */
+   that gap currently is and re-adds a flat 5.2rem instead (4rem + 30%).
+   scroll-margin-top matters here because clicking the no-preference card
+   scrolls straight to this button (see handleSchoolChange in
+   DonateScrollFlow.jsx) — without it, that scroll lands the button hidden
+   behind the sticky site header. */
 .afc-choose-school__cta {
   display: block;
   position: relative;
   width: 100%;
-  margin-top: calc(clamp(6.24rem, 12.48vw, 10.92rem) * -1 + 4rem);
+  scroll-margin-top: calc(var(--site-header-height, 120px) + 1.5rem + 80px);
+  margin-top: calc(clamp(6.24rem, 12.48vw, 10.92rem) * -1 + 5.2rem);
   padding: 1.1rem 1.5rem;
   border: none;
   border-radius: var(--button-radius);
@@ -49,8 +155,9 @@
 
 @media (max-width: 980px) {
   .afc-choose-school__cta {
+    scroll-margin-top: calc(var(--site-header-height, 120px) + 1.5rem);
     /* Mobile's timeline gap is a fixed 4.68rem (not the desktop clamp()
-       above) — see DonateScrollFlow.css. */
-    margin-top: calc(4rem - 4.68rem);
+       above) — see DonateScrollFlow.css. 5.2rem = 4rem + 30%. */
+    margin-top: calc(5.2rem - 4.68rem);
   }
 }

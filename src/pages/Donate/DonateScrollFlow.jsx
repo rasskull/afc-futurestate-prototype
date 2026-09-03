@@ -38,7 +38,21 @@ export default function DonateScrollFlow() {
   const fundRef = useRef(null);
   const stateRef = useRef(null);
   const schoolRef = useRef(null);
-  const sectionRefs = { fund: fundRef, state: stateRef, school: schoolRef };
+  // Not sections — each no-preference card's own "Select gift amount" CTA
+  // button, which only appears once that step is actually decided (a real
+  // value picked, or the no-preference card clicked). Reused as scroll
+  // targets the same way as the three real sections, but only for one
+  // specific path each — clicking the respective no-preference card (see
+  // handleStateChange / handleSchoolChange below).
+  const stateCtaRef = useRef(null);
+  const schoolCtaRef = useRef(null);
+  const sectionRefs = {
+    fund: fundRef,
+    state: stateRef,
+    school: schoolRef,
+    stateCta: stateCtaRef,
+    schoolCta: schoolCtaRef,
+  };
 
   const timelineRef = useRef(null);
   const fundHeadingRef = useRef(null);
@@ -82,7 +96,12 @@ export default function DonateScrollFlow() {
   const selectedState =
     STATE_OPTIONS.find((option) => option.value === stateCode) ||
     (stateCode === 'no-preference' ? { value: stateCode, label: NO_PREFERENCE_LABEL } : null);
-  const selectedSchool = findSchool(stateCode, schoolId);
+  // "no-preference" isn't a real school id (see SchoolSection.jsx), so
+  // findSchool naturally returns null for it — same fallback treatment as
+  // State's own no-preference above, for the summary panel's School row.
+  const selectedSchool =
+    findSchool(stateCode, schoolId) ||
+    (schoolId === 'no-preference' ? { id: schoolId, name: NO_PREFERENCE_LABEL } : null);
   const isStateLocked = !fundId;
   const isSchoolLocked = !fundId || !stateCode;
   // Choosing "No preference" for state means there's no school step left to
@@ -90,18 +109,45 @@ export default function DonateScrollFlow() {
   // drop out of the timeline entirely rather than staying stuck unanswered.
   const isNoPreference = stateCode === 'no-preference';
 
-  function scrollToSection(key, { smooth = true } = {}) {
+  // halfwayOnDesktop: instead of scrolling all the way to the target (the
+  // normal scrollIntoView behavior), stops at the midpoint between the
+  // current scroll position and where the target would otherwise land —
+  // used for the "no school preference" card specifically, on desktop
+  // only (mobile always scrolls the full distance, same as every other
+  // target). Reads the target's own scroll-margin-top so the "full
+  // distance" being halved matches whatever clearance that target's CSS
+  // already reserves above it, rather than duplicating that offset here.
+  // fromY: the scroll position to treat as "current" — pass the value
+  // captured at the moment of the click (see handleSchoolChange) rather
+  // than reading window.scrollY fresh here. By the time this actually
+  // runs, scrollToSectionWhenStable has already waited across several
+  // animation frames for the newly-revealed content to settle — layout
+  // changes during that wait (the CTA button and card appearing) could
+  // otherwise shift window.scrollY out from under us before we read it,
+  // halving the distance from a moved position instead of from where the
+  // donor actually was when they clicked.
+  function scrollToSection(key, { smooth = true, halfwayOnDesktop = false, fromY } = {}) {
     const prefersReducedMotion =
       typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    sectionRefs[key].current?.scrollIntoView({
-      behavior: smooth && !prefersReducedMotion ? 'smooth' : 'instant',
-      block: 'start',
-    });
+    const behavior = smooth && !prefersReducedMotion ? 'smooth' : 'instant';
+    const el = sectionRefs[key].current;
+    if (!el) return;
+
+    const isDesktop = window.matchMedia('(min-width: 981px)').matches;
+    if (halfwayOnDesktop && isDesktop) {
+      const scrollMarginTop = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+      const currentY = fromY ?? window.scrollY;
+      const targetY = el.getBoundingClientRect().top + window.scrollY - scrollMarginTop;
+      window.scrollTo({ top: currentY + (targetY - currentY) / 2, behavior });
+      return;
+    }
+
+    el.scrollIntoView({ behavior, block: 'start' });
   }
 
-  // Selecting a value can reveal new content earlier on the page (a
-  // GiftAmountHint appearing, a locked section's hint text disappearing,
-  // SchoolSearch syncing its prefilled query and showing results) across
+  // Selecting a value can reveal new content earlier on the page (a locked
+  // section's hint text disappearing, SchoolSearch syncing its prefilled
+  // query and showing results) across
   // more than one cascading re-render — a single deferred frame can still
   // land short. Poll the target's absolute position each frame until it
   // stops moving between two consecutive frames, then scroll — robust to
@@ -116,9 +162,23 @@ export default function DonateScrollFlow() {
     // waves (e.g. this component resolving fund/state/school, then a child
     // like SchoolSearch syncing its own prefilled query a tick later).
     const REQUIRED_STREAK = 15;
-    if (!el || attemptsLeft <= 0) {
+    if (attemptsLeft <= 0) {
       scrollToSection(key, opts);
       onDone?.();
+      return;
+    }
+    if (!el) {
+      // The target can genuinely not exist yet at the moment this is first
+      // called — e.g. switching State away from "no preference" back to a
+      // real state remounts School (it's conditionally rendered out
+      // entirely while no-preference is active — see
+      // {!isNoPreference && <SchoolSection .../>} below), and React hasn't
+      // necessarily committed that remount by the time this synchronous
+      // call runs. Keep polling per frame until it exists instead of
+      // bailing out on the first (pre-render) check.
+      requestAnimationFrame(() => {
+        scrollToSectionWhenStable(key, opts, 0, attemptsLeft - 1, onDone);
+      });
       return;
     }
     const top = el.getBoundingClientRect().top + window.scrollY;
@@ -156,15 +216,14 @@ export default function DonateScrollFlow() {
 
   // Every State selection — first-time or a later re-selection — advances
   // to the next step. A real state scrolls to School; "no preference" (its
-  // own standalone button now, not a dropdown option — see StateSection.jsx)
-  // has no School step to land on, so it just re-settles on State itself —
-  // scrolling further down to its own "Select gift amount" CTA specifically
-  // overshoots past the State field/heading entirely (that CTA sits well
-  // below it), so this deliberately does NOT chase that CTA as a target.
+  // own standalone card now, not a dropdown option — see StateSection.jsx)
+  // has no School step to land on, so it scrolls to its own "Select gift
+  // amount" CTA instead — that's the donor's actual next action once
+  // they've opted out of picking a state.
   function handleStateChange(value) {
     setStateCode(value);
     if (value === 'no-preference') {
-      scrollToSectionWhenStable('state', { smooth: true });
+      scrollToSectionWhenStable('stateCta', { smooth: true });
     } else {
       scrollToSectionWhenStable('school', { smooth: true });
     }
@@ -177,10 +236,22 @@ export default function DonateScrollFlow() {
     setStateCode(null);
   }
 
-  // School is the last section and optional — no auto-scroll target, same
-  // as the old ChooseSchool page never auto-navigating either.
+  // Picking a real school still has no auto-scroll target — School is the
+  // last section and optional, same as the old ChooseSchool page never
+  // auto-navigating either. "No preference" is different: it's the donor
+  // explicitly finishing this (optional) step, so it scrolls straight to
+  // the Select Gift Amount CTA that choice just revealed.
   function handleSchoolChange(id) {
     setSchoolId(id);
+    if (id === 'no-preference') {
+      // Captured synchronously, right as the click happens — see the
+      // fromY comment on scrollToSection above for why.
+      scrollToSectionWhenStable('schoolCta', {
+        smooth: true,
+        halfwayOnDesktop: true,
+        fromY: window.scrollY,
+      });
+    }
   }
 
   // Lets a link into the flow pre-fill fund/state/school via GET params
@@ -334,6 +405,7 @@ export default function DonateScrollFlow() {
               onSelectState={handleStateChange}
               onClearState={handleStateClear}
               onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
+              ctaRef={stateCtaRef}
             />
             {!isNoPreference && (
               <SchoolSection
@@ -342,6 +414,7 @@ export default function DonateScrollFlow() {
                 isLocked={isSchoolLocked}
                 onSelectSchool={handleSchoolChange}
                 onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
+                ctaRef={schoolCtaRef}
               />
             )}
           </div>

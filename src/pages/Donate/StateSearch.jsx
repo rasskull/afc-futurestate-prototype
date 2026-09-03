@@ -17,8 +17,9 @@ import './StateSearch.css';
 // Searches the full `states` list (not STATE_OPTIONS) so a not-opted-in
 // state like California still surfaces here — it's just rendered as a
 // disabled row rather than a clickable option (see UNAVAILABLE_STATE_VALUES
-// in state-options.js).
-export default function StateSearch({ id, onChange, placeholder = 'Choose a state' }) {
+// in state-options.js). Plain informational text, no link — the donor picks
+// "no state preference" from the standalone card below the field instead.
+export default function StateSearch({ id, onChange, placeholder = 'Enter State name' }) {
   const [query, setQuery] = useState('');
 
   const results = useMemo(() => {
@@ -54,14 +55,8 @@ export default function StateSearch({ id, onChange, placeholder = 'Choose a stat
                 >
                   <p className="afc-state-search__unavailable-name">{option.label}</p>
                   <p className="afc-state-search__unavailable-note">
-                    Not opted in, choose another state or{' '}
-                    <button
-                      type="button"
-                      className="afc-state-search__unavailable-link"
-                      onClick={() => onChange('no-preference')}
-                    >
-                      Send my gift where it&rsquo;s most needed
-                    </button>
+                    State is not opted in. Choose another state, or select{' '}
+                    <strong>No State Preference</strong> below
                   </p>
                 </div>
               ) : (
