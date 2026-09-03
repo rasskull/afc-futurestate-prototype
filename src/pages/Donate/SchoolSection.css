@@ -14,41 +14,43 @@
   color: var(--color-ink);
 }
 
-/* The sidebar/drawer CTA already covers desktop — this is a mobile-only
-   duplicate so there's a quick "Select gift amount" button in the page
-   content itself, without needing to open the bottom drawer first. */
+/* The right-panel CTA is gone on desktop now — this inline button is the
+   only "Select gift amount" action left, at every breakpoint. This button
+   is a direct sibling of the School section inside
+   .afc-donate-scroll-flow__timeline (not nested inside the section itself,
+   so it can span the full width instead of the section's own
+   padded/indented content box) — that timeline's own gap (see
+   DonateScrollFlow.css) is sized for spacing BETWEEN steps, way more than
+   wanted directly above this button, so margin-top below cancels whatever
+   that gap currently is and re-adds a flat 4rem instead. */
 .afc-choose-school__cta {
-  display: none;
+  display: block;
+  position: relative;
+  width: 100%;
+  margin-top: calc(clamp(6.24rem, 12.48vw, 10.92rem) * -1 + 4rem);
+  padding: 1.1rem 1.5rem;
+  border: none;
+  border-radius: var(--button-radius);
+  background: var(--color-action);
+  color: var(--color-paper);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+}
+
+.afc-choose-school__cta:hover {
+  background: var(--color-link-hover);
+  color: var(--color-paper);
 }
 
 @media (max-width: 980px) {
   .afc-choose-school__cta {
-    display: block;
-    position: relative;
-    width: 100%;
-    /* This button is now a direct sibling of the School section inside
-       .afc-donate-scroll-flow__timeline (not nested inside the section
-       anymore, so it can span the full width instead of the section's own
-       padded/indented content box) — that timeline's gap (4.68rem on
-       mobile) is meant for spacing BETWEEN steps, way more than wanted
-       here, so this pulls it back down to a deliberate 4rem instead. */
+    /* Mobile's timeline gap is a fixed 4.68rem (not the desktop clamp()
+       above) — see DonateScrollFlow.css. */
     margin-top: calc(4rem - 4.68rem);
-    padding: 1.1rem 1.5rem;
-    border: none;
-    border-radius: var(--button-radius);
-    background: var(--color-action);
-    color: var(--color-paper);
-    font-family: var(--font-heading);
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: var(--button-letter-spacing);
-    text-transform: uppercase;
-    text-align: center;
-    cursor: pointer;
-  }
-
-  .afc-choose-school__cta:hover {
-    background: var(--color-link-hover);
-    color: var(--color-paper);
   }
 }

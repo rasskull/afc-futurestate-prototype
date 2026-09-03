@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDonationFlow } from './DonationFlowContext.jsx';
 import { FUNDS } from './funds-data.js';
-import { STATE_OPTIONS } from './state-options.js';
+import { STATE_OPTIONS, NO_PREFERENCE_LABEL } from './state-options.js';
 import { findSchool } from '../../data/schools.js';
 import FundSection from './FundSection.jsx';
 import StateSection from './StateSection.jsx';
@@ -12,6 +12,24 @@ import GiftAmountModal from './GiftAmountModal.jsx';
 import { LockIcon } from '../../components/icons/DonationIcons.jsx';
 import './DonationStep.css';
 import './DonateScrollFlow.css';
+
+// Rendered twice below (once inside .__main for desktop, once after the
+// sidebar for mobile) rather than once and reordered — the two spots are
+// different branches of the tree entirely (nested inside .__main's own
+// flex column on desktop vs a sibling of .__sidebar on mobile), so a single
+// element can't occupy both positions; each copy's own breakpoint class
+// picks which one actually renders (see DonateScrollFlow.css).
+function TrustRow({ className }) {
+  return (
+    <div className={`afc-donate-scroll-flow__trust ${className}`}>
+      <p className="afc-donate-scroll-flow__trust-item">
+        <LockIcon className="afc-donate-scroll-flow__trust-icon" />
+        Secure donation
+      </p>
+      <p className="afc-donate-scroll-flow__trust-item">501(c)(3) &middot; EIN 41-3421652</p>
+    </div>
+  );
+}
 
 export default function DonateScrollFlow() {
   const location = useLocation();
@@ -46,16 +64,24 @@ export default function DonateScrollFlow() {
     const stateParam = params.get('state');
     const hasFund = Boolean(fundParam) && FUNDS.some((fund) => fund.id === fundParam);
     if (!hasFund) return true;
-    const matchedState = stateParam
-      ? STATE_OPTIONS.find((option) => option.value.toLowerCase() === stateParam.toLowerCase())
+    // "no-preference" isn't a STATE_OPTIONS entry (see the init effect's own
+    // matching below for why), so it needs the same explicit check here too.
+    const normalizedStateParam = stateParam?.toLowerCase();
+    const matchedState = normalizedStateParam
+      ? STATE_OPTIONS.find((option) => option.value.toLowerCase() === normalizedStateParam)
       : null;
     // No-preference resolves the whole flow with no School step left to jump
     // to, same as the init effect's own target computation.
-    return matchedState?.value === 'no-preference';
+    return matchedState?.value === 'no-preference' || normalizedStateParam === 'no-preference';
   });
 
   const selectedFund = FUNDS.find((fund) => fund.id === fundId) || null;
-  const selectedState = STATE_OPTIONS.find((option) => option.value === stateCode) || null;
+  // "no-preference" isn't a STATE_OPTIONS entry (it's its own standalone
+  // button now — see StateSection.jsx), so it needs its own fallback here
+  // for the summary panel's State row to still show a label for it.
+  const selectedState =
+    STATE_OPTIONS.find((option) => option.value === stateCode) ||
+    (stateCode === 'no-preference' ? { value: stateCode, label: NO_PREFERENCE_LABEL } : null);
   const selectedSchool = findSchool(stateCode, schoolId);
   const isStateLocked = !fundId;
   const isSchoolLocked = !fundId || !stateCode;
@@ -128,12 +154,27 @@ export default function DonateScrollFlow() {
     }
   }
 
-  // Every State selection — first-time or a later re-selection — scrolls to
-  // School, since that's the only step left after it (no-preference being
-  // the one case with no School to scroll to).
+  // Every State selection — first-time or a later re-selection — advances
+  // to the next step. A real state scrolls to School; "no preference" (its
+  // own standalone button now, not a dropdown option — see StateSection.jsx)
+  // has no School step to land on, so it just re-settles on State itself —
+  // scrolling further down to its own "Select gift amount" CTA specifically
+  // overshoots past the State field/heading entirely (that CTA sits well
+  // below it), so this deliberately does NOT chase that CTA as a target.
   function handleStateChange(value) {
     setStateCode(value);
-    if (value !== 'no-preference') scrollToSectionWhenStable('school', { smooth: true });
+    if (value === 'no-preference') {
+      scrollToSectionWhenStable('state', { smooth: true });
+    } else {
+      scrollToSectionWhenStable('school', { smooth: true });
+    }
+  }
+
+  // Clears a selected state back to unset (the dropdown/no-preference
+  // button reappear) — no auto-scroll here, unlike handleStateChange, since
+  // clearing isn't "advancing" to anything.
+  function handleStateClear() {
+    setStateCode(null);
   }
 
   // School is the last section and optional — no auto-scroll target, same
@@ -170,16 +211,23 @@ export default function DonateScrollFlow() {
     }
 
     // Case-insensitive match rather than a blind uppercase: real state codes
-    // are uppercase ("TX") but the special "no-preference" option's value is
-    // lowercase, so uppercasing the param first would never match it.
+    // are uppercase ("TX") but "no-preference" is lowercase, so uppercasing
+    // the param first would never match it. "no-preference" is no longer a
+    // STATE_OPTIONS entry (it's its own standalone button now, not a
+    // dropdown option — see StateSection.jsx), so it needs its own explicit
+    // check here rather than relying on the STATE_OPTIONS lookup to find it.
     let resolvedStateCode = stateCode;
     if (stateParam) {
+      const normalizedParam = stateParam.toLowerCase();
       const matchedState = STATE_OPTIONS.find(
-        (option) => option.value.toLowerCase() === stateParam.toLowerCase()
+        (option) => option.value.toLowerCase() === normalizedParam
       );
       if (matchedState) {
         resolvedStateCode = matchedState.value;
         setStateCode(matchedState.value);
+      } else if (normalizedParam === 'no-preference') {
+        resolvedStateCode = 'no-preference';
+        setStateCode('no-preference');
       }
     }
 
@@ -284,6 +332,7 @@ export default function DonateScrollFlow() {
               headingRef={stateHeadingRef}
               isLocked={isStateLocked}
               onSelectState={handleStateChange}
+              onClearState={handleStateClear}
               onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
             />
             {!isNoPreference && (
@@ -298,13 +347,7 @@ export default function DonateScrollFlow() {
           </div>
         </div>
 
-        <div className="afc-donate-scroll-flow__trust">
-          <p className="afc-donate-scroll-flow__trust-item">
-            <LockIcon className="afc-donate-scroll-flow__trust-icon" />
-            Secure donation
-          </p>
-          <p className="afc-donate-scroll-flow__trust-item">501(c)(3) &middot; EIN 41-3421652</p>
-        </div>
+        <TrustRow className="afc-donate-scroll-flow__trust--desktop-only" />
       </div>
 
       <div className="afc-donate-scroll-flow__sidebar">
@@ -318,9 +361,10 @@ export default function DonateScrollFlow() {
           onFundRowClick={() => scrollToSection('fund')}
           onStateRowClick={() => scrollToSection('state')}
           onSchoolRowClick={() => scrollToSection('school')}
-          onOpenGiftAmountModal={() => setIsGiftAmountModalOpen(true)}
         />
       </div>
+
+      <TrustRow className="afc-donate-scroll-flow__trust--mobile-only" />
 
       <GiftAmountModal
         open={isGiftAmountModalOpen}

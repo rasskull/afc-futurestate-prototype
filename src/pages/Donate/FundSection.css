@@ -7,6 +7,9 @@
   padding: 1.25rem 1.5rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
+  /* Clips the default card's full-bleed badge banner to these rounded
+     corners instead of it squaring off past them. */
+  overflow: hidden;
   background: var(--color-paper);
   text-align: left;
   cursor: pointer;
@@ -20,10 +23,6 @@
 
 .afc-fund-card:hover .afc-fund-card__name {
   color: var(--color-structure);
-}
-
-.afc-fund-card--default {
-  background: #e9f6fb;
 }
 
 .afc-fund-card--selected,
@@ -47,6 +46,21 @@
 
 .afc-fund-card--selected .afc-fund-card__badge {
   color: var(--color-accent);
+}
+
+/* Full-bleed banner behind the "Most people choose this fund" badge on the
+   default card — negative margins matching the card's own padding pull it
+   flush to the card's top/left/right edges (flex items don't margin-collapse,
+   so this reliably cancels the padding rather than escaping the card). */
+.afc-fund-card--default .afc-fund-card__badge {
+  width: calc(100% + 3rem);
+  margin: -1.25rem -1.5rem 0;
+  padding: 0.75rem 1.5rem;
+  /* --color-accent (#BEE0ED) blended toward white in three passes (30%,
+     then 20%, then 20% again) — scoped here rather than changing the
+     shared token, which other components also use. */
+  background: #e2f1f7;
+  color: var(--color-structure);
 }
 
 .afc-fund-card__badge-icon {
@@ -117,13 +131,6 @@
   height: auto;
 }
 
-.afc-fund-card-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  width: 100%;
-}
-
 .afc-fund-card-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -144,10 +151,6 @@
 @media (max-width: 639px) {
   .afc-fund-card-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  .afc-fund-card-list {
     gap: 1rem;
   }
 }

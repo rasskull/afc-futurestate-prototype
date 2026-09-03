@@ -52,18 +52,11 @@ export default function SchoolSection({
           />
         </div>
 
-        <GiftAmountHint>
-          {selectedSchool ? (
-            <>
-              You can now <strong>Select a Gift Amount</strong> to change a child&rsquo;s life.
-            </>
-          ) : (
-            <>
-              If you&rsquo;re not choosing a school, you can <strong>Select Gift Amount</strong> to change a
-              child&rsquo;s life.
-            </>
-          )}
-        </GiftAmountHint>
+        {selectedSchool && (
+          <GiftAmountHint>
+            You can now <strong>Select a Gift Amount</strong> to change a child&rsquo;s life.
+          </GiftAmountHint>
+        )}
       </section>
 
       {/* Outside .afc-scroll-section on purpose — that element has its own

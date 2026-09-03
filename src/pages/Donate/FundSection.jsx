@@ -4,9 +4,6 @@ import { SparkleIcon, CheckIcon } from '../../components/icons/DonationIcons.jsx
 import './DonationStep.css';
 import './FundSection.css';
 
-const DEFAULT_FUND = FUNDS.find((fund) => fund.isDefault);
-const OTHER_FUNDS = FUNDS.filter((fund) => !fund.isDefault);
-
 export default function FundSection({ sectionRef, headingRef, onSelectFund }) {
   const { fundId } = useDonationFlow();
   const selectedFund = FUNDS.find((fund) => fund.id === fundId) || null;
@@ -22,23 +19,15 @@ export default function FundSection({ sectionRef, headingRef, onSelectFund }) {
         </p>
       </div>
 
-      <div className="afc-fund-card-list">
-        <FundCard
-          fund={DEFAULT_FUND}
-          isSelected={selectedFund?.id === DEFAULT_FUND.id}
-          onSelect={onSelectFund}
-        />
-
-        <div className="afc-fund-card-grid">
-          {OTHER_FUNDS.map((fund) => (
-            <FundCard
-              key={fund.id}
-              fund={fund}
-              isSelected={selectedFund?.id === fund.id}
-              onSelect={onSelectFund}
-            />
-          ))}
-        </div>
+      <div className="afc-fund-card-grid">
+        {FUNDS.map((fund) => (
+          <FundCard
+            key={fund.id}
+            fund={fund}
+            isSelected={selectedFund?.id === fund.id}
+            onSelect={onSelectFund}
+          />
+        ))}
       </div>
     </section>
   );

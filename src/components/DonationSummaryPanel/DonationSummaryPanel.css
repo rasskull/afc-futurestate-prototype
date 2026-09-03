@@ -12,9 +12,6 @@
   top: calc(var(--site-header-height, 120px) + 2rem);
 }
 
-.afc-donation-panel__toggle {
-  display: none;
-}
 
 .afc-donation-panel__banner {
   background: var(--color-structure);
@@ -42,17 +39,6 @@
   width: calc(100% + 3rem);
   max-width: none;
   margin: 0 -1.5rem;
-}
-
-.afc-donation-panel__rail-image--mobile {
-  display: none;
-}
-
-/* Mobile-only (see @media below) — hidden here the same way
-   .rail-image--mobile is, since this wrapper only exists for the
-   full-screen mobile drawer, not the desktop card. */
-.afc-donation-panel__mobile-header {
-  display: none;
 }
 
 .afc-donation-panel__banner-text-wrap {
@@ -135,6 +121,15 @@
   border-bottom: none;
 }
 
+/* Desktop only — .row--last also lands on the State row when School is
+   hidden (no-preference state), and this extra space is specific to the
+   School row itself, not "whichever row happens to be last". */
+@media (min-width: 981px) {
+  .afc-donation-panel__row--school {
+    padding-bottom: 12px;
+  }
+}
+
 .afc-donation-panel__row-label {
   margin: 0;
   flex-shrink: 0;
@@ -187,37 +182,10 @@
   font-weight: 400;
 }
 
-.afc-donation-panel__cta {
-  display: block;
-  width: calc(100% - 3rem);
-  margin: 1.5rem 1.5rem 1.5rem;
-  padding: 1.1rem 1.5rem;
-  border: none;
-  border-radius: var(--button-radius);
-  background: #d4d4d4;
-  color: var(--color-paper);
-  font-family: var(--font-heading);
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: var(--button-letter-spacing);
-  text-transform: uppercase;
-  text-align: center;
-  cursor: not-allowed;
-}
-
-.afc-donation-panel__cta.is-active {
-  background: var(--color-action);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.afc-donation-panel__cta.is-active:hover {
-  background: var(--color-link-hover);
-  color: var(--color-paper);
-  text-decoration: none;
-}
-
 @media (max-width: 980px) {
+  /* Default (gift amount not active yet): a small bar pinned to the bottom
+     of the screen showing just the progress banner — see
+     .afc-donation-panel__body below for the other, mutually exclusive view. */
   .afc-donation-panel {
     position: fixed;
     left: 0;
@@ -225,106 +193,36 @@
     bottom: 0;
     top: auto;
     width: 100%;
-    height: var(--donation-panel-peek, 11rem);
+    height: auto;
     border-radius: 0;
     border: none;
     z-index: 500;
-    overflow: visible;
     background: var(--color-paper);
-    transition: height 0.35s ease;
   }
 
-  .afc-donation-panel.is-expanded {
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  .afc-donation-panel__toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    position: absolute;
-    left: 50%;
-    /* Straddles the drawer's top edge — half the 3rem icon pokes up above
-       the blue background, half sits inside it — rather than sitting
-       fully inside it. This is purely an absolutely-positioned overlay, so
-       it doesn't add to the banner's own measured height (the collapsed
-       drawer's height/--donation-panel-peek stay exactly the same). */
-    top: -1.5rem;
-    transform: translateX(-50%);
-    width: auto;
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    color: var(--color-paper);
-  }
-
-  .afc-donation-panel__toggle-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 50%;
-    background: var(--color-action);
-    box-shadow: 0 0 0 6px rgba(0, 153, 206, 0.25);
-  }
-
-  .afc-donation-panel__toggle-icon svg {
-    width: 0.9rem;
-    color: var(--color-paper);
-    transition: transform 0.2s ease;
-  }
-
-  .afc-donation-panel__toggle-icon svg.is-flipped {
-    transform: rotate(180deg);
-  }
-
-  .afc-donation-panel__toggle-label {
-    position: absolute;
-    /* Same 3.5rem offset as before the icon started overlapping the edge —
-       relative to .toggle's own top, which moved up by 2.1rem, so keeping
-       this unchanged moves the label up by that same amount too, closing
-       the gap that opened up below the icon's now-smaller visible portion
-       instead of leaving the label pinned at its old on-screen spot. */
-    top: 3.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-  }
-
-  /* Pinned to the panel's own bottom edge at its natural height, independent
-     of the panel's current height — so as the panel animates between the
-     collapsed peek and full screen, the banner never has to jump or resize,
-     it just stays flush with the bottom the whole time. */
-  .afc-donation-panel__banner {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  /* Once gift amount is active, this stops being a fixed bar pinned to the
+     screen — it becomes normal scrolling content instead, wherever it falls
+     in the page's own layout, styled like a plain card again since it's no
+     longer a full-bleed bottom bar. */
+  .afc-donation-panel[data-gift-amount-active] {
+    position: static;
+    border-radius: 0.75rem;
+    border: 1px solid #ccc;
+    overflow: hidden;
   }
 
   .afc-donation-panel__banner-content {
-    /* Toggle label ("See donation details") is absolutely positioned above
-       this, so the gap below it comes from this top padding, not from any
-       margin on the label itself. Shrunk from 5.5rem+8px to match how much
-       higher the label now sits since the toggle icon started overlapping
-       the drawer's top edge — otherwise this padding stays put while the
-       label moves up, opening a bigger gap and making the whole collapsed
-       drawer taller than before. */
-    padding: 3.9rem 1.5rem 1.5rem;
-    /* One consistent gap for every stacked child here (text, track, label)
-       — previously the label pulled itself up with a negative margin,
-       leaving it visibly closer to the track than the track was to the
-       text above it. */
+    padding: 1.1rem 1.5rem;
+    /* One consistent gap for every stacked child here (text, track, label). */
     gap: 0.625rem;
     align-items: center;
     text-align: center;
+  }
+
+  /* Hidden once gift amount is active — the button+table view below takes
+     over as the only thing shown on mobile at that point. */
+  .afc-donation-panel[data-gift-amount-active] .afc-donation-panel__banner {
+    display: none;
   }
 
   .afc-donation-panel__banner-text-wrap {
@@ -332,12 +230,12 @@
        0.625rem (10px) gap between every stacked child — the gap alone
        already gives the same spacing here. */
     margin-bottom: 0;
-    /* Recomputed at this breakpoint's own font-size — the mobile drawer's
-       collapsed height is measured live off this banner (see the
-       ResizeObserver in DonationSummaryPanel.jsx), so it already adapts to
-       whatever height this reserves; it just needs to reserve the right
-       amount for two lines of *this* font-size rather than inheriting
-       desktop's larger one. */
+    /* Recomputed at this breakpoint's own font-size — this bar's own height
+       is measured live off it (see the ResizeObserver in
+       DonationSummaryPanel.jsx), so it already adapts to whatever height
+       this reserves; it just needs to reserve the right amount for two
+       lines of *this* font-size rather than inheriting desktop's larger
+       one. */
     min-height: calc(1.35 * 0.9rem * 2);
   }
 
@@ -359,72 +257,19 @@
     display: none;
   }
 
-  /* On mobile the image lives in the upper blue area of the body (the part
-     that scrolls into view at the top when the sheet expands), not inside
-     the bottom-pinned banner — matching where the original placeholder box
-     used to sit, above the "Your Donation" rows. Full-bleed within
-     .mobile-header: negative margins cancel that wrapper's own
-     padding-inline (var(--gutter)) so the image reaches its true edges
-     instead of just filling the padded content box — same technique as
-     .rail-image--desktop above, against this wrapper's own padding. */
-  .afc-donation-panel__rail-image--mobile {
-    display: block;
-    width: calc(100% + 2 * var(--gutter));
-    max-width: none;
-    margin: 1.5rem calc(-1 * var(--gutter)) 0;
-  }
-
-  /* Wraps the mobile logo + rail image in their own dark-blue band at the
-     top of the expanded drawer — the rest of the drawer is now white (see
-     .afc-donation-panel__body below), so this band needs its own explicit
-     background to stay blue instead of inheriting white.
-     Logo padding/sizing intentionally mirrors the real site header exactly
-     (same padding-top: 12px, same padding-inline: var(--gutter), same
-     width: clamp(220px, 22vw, 314px)) — confirmed via direct measurement
-     against .afc-site-logo img at 390px (x:20 y:12 w:220 h:39.2) — so that
-     when the drawer expands and covers the real header, this logo sits at
-     the exact same on-screen position/size the real one just occupied,
-     reading as one continuous logo rather than a jump-cut. */
-  .afc-donation-panel__mobile-header {
-    display: block;
-    padding: 12px var(--gutter) 20px;
-    background: var(--color-structure);
-  }
-
-  .afc-donation-panel__mobile-logo {
-    display: block;
-    width: clamp(220px, 22vw, 314px);
-    height: auto;
-  }
-
-  /* Fills the panel from the top down to exactly where the (independently
-     bottom-pinned) banner begins, via the same measured height used for the
-     collapsed peek — so its own box always shrinks/grows in lockstep with
-     the panel's height with no separate class-based size to snap between,
-     and its content is simply clipped by that box while collapsed. */
+  /* Hidden until gift amount is active — see the sibling rule above for why
+     these two views are mutually exclusive on mobile, unlike desktop where
+     the banner is always shown alongside the rows table. */
   .afc-donation-panel__body {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: var(--donation-panel-peek, 11rem);
-    overflow-y: auto;
-    background: var(--color-paper);
+    display: none;
+  }
+
+  .afc-donation-panel[data-gift-amount-active] .afc-donation-panel__body {
+    display: flex;
+    flex-direction: column;
   }
 
   .afc-donation-panel__rows {
-    padding: 2rem 1.25rem 0;
-  }
-
-  /* Rows/links below here now sit on the same white background as desktop
-     (.afc-donation-panel__body, above), so they just inherit the desktop
-     base rules unchanged — no dark-background color overrides needed. */
-
-  .afc-donation-panel__cta {
-    flex-shrink: 0;
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
-    margin-bottom: 0;
-    width: calc(100% - 2.5rem);
+    padding: 1.5rem 1.25rem 0;
   }
 }

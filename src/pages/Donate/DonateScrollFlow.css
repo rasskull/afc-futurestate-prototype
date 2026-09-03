@@ -140,6 +140,14 @@
   color: var(--color-emphasis);
 }
 
+/* Two copies render (see TrustRow in DonateScrollFlow.jsx) since their
+   desktop/mobile positions are structurally different spots in the tree,
+   not just a reordering of the same element — only one is ever shown per
+   breakpoint. */
+.afc-donate-scroll-flow__trust--mobile-only {
+  display: none;
+}
+
 .afc-donate-scroll-flow__sidebar {
   flex-shrink: 0;
 }
@@ -177,6 +185,16 @@
 
   .afc-timeline-dot.is-locked {
     background: radial-gradient(circle, #fff 0 0.3rem, #cfe7c6 0.3rem 100%);
+  }
+
+  /* Swap which TrustRow copy shows — mobile wants it after the donation
+     panel, not after the main content column like desktop. */
+  .afc-donate-scroll-flow__trust--desktop-only {
+    display: none;
+  }
+
+  .afc-donate-scroll-flow__trust--mobile-only {
+    display: flex;
   }
 }
 

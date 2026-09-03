@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { getSchoolsForState } from '../../data/schools.js';
+import { CloseIcon } from '../../components/icons/DonationIcons.jsx';
 import './SchoolSearch.css';
 
 const RESULTS_CAP = 40;
@@ -9,19 +10,6 @@ function SearchIcon({ className }) {
     <svg className={className} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="8.5" cy="8.5" r="6.5" stroke="currentColor" strokeWidth="1.8" />
       <path d="M17 17L13.4 13.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function CloseIcon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path
-        d="M1 1L15 15M15 1L1 15"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
     </svg>
   );
 }

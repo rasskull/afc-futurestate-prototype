@@ -7,7 +7,7 @@ import heroImage from '../../assets/photos/fundraiseup-modal-image.png';
 import afcLogo from '../../assets/logos/afc-primary-gradient.png';
 import './GiftAmountModal.css';
 
-const PRESET_AMOUNTS = [10000, 5000, 1700, 1000, 500, 250];
+const PRESET_AMOUNTS = [250, 500, 1000, 1700, 5000, 10000];
 const DEFAULT_AMOUNT = 1700;
 
 // Mirrors the 3-step flow (Amount → Your details → Payment) from the
