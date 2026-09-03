@@ -148,6 +148,16 @@
   }
 }
 
+/* Just above the mobile/tablet breakpoint, desktop's row layout (fund grid
+   + fixed-width sidebar side by side) leaves the grid too narrow for two
+   readable columns until the viewport grows past ~1170px — stack to one
+   column in that gap instead of letting cards get cramped. */
+@media (min-width: 981px) and (max-width: 1170px) {
+  .afc-fund-card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 639px) {
   .afc-fund-card-grid {
     grid-template-columns: 1fr;

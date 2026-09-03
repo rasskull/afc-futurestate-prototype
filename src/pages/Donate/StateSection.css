@@ -171,4 +171,10 @@
   .afc-choose-state__cta {
     margin-top: calc(4rem - 4.68rem);
   }
+
+  .afc-choose-state__no-preference {
+    padding-inline: 0.75rem;
+    letter-spacing: -0.5px;
+    line-height: 119%;
+  }
 }
