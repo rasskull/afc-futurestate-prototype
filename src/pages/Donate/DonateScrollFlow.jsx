@@ -223,7 +223,13 @@ export default function DonateScrollFlow() {
   function handleStateChange(value) {
     setStateCode(value);
     if (value === 'no-preference') {
-      scrollToSectionWhenStable('stateCta', { smooth: true });
+      // Captured synchronously, right as the click happens — see the
+      // fromY comment on scrollToSection above for why.
+      scrollToSectionWhenStable('stateCta', {
+        smooth: true,
+        halfwayOnDesktop: true,
+        fromY: window.scrollY,
+      });
     } else {
       scrollToSectionWhenStable('school', { smooth: true });
     }
