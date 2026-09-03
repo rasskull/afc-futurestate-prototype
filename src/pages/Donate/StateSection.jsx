@@ -1,6 +1,6 @@
 import { useDonationFlow } from './DonationFlowContext.jsx';
 import { STATE_OPTIONS, NO_PREFERENCE_LABEL } from './state-options.js';
-import Dropdown from '../../components/ui/Dropdown.jsx';
+import StateSearch from './StateSearch.jsx';
 import { CloseIcon } from '../../components/icons/DonationIcons.jsx';
 import './DonationStep.css';
 import './StateSection.css';
@@ -55,13 +55,7 @@ export default function StateSection({
             </div>
           ) : (
             <>
-              <Dropdown
-                id="donate-state"
-                options={STATE_OPTIONS}
-                value={stateCode}
-                onChange={onSelectState}
-                placeholder="Choose a state"
-              />
+              <StateSearch id="donate-state" onChange={onSelectState} />
               <p className="afc-choose-state__no-preference-label">No preference?</p>
               <button
                 type="button"

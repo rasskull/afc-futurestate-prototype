@@ -1,0 +1,133 @@
+.afc-state-search {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.afc-state-search__field {
+  position: relative;
+  width: 100%;
+}
+
+/* Matches .afc-dropdown__trigger's own box model exactly (font-size,
+   line-height, padding, border) so this renders at the same height as the
+   dropdown it replaces. */
+.afc-state-search__field input {
+  width: 100%;
+  padding: 1rem 2.75rem 1rem 1rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--color-ink);
+  background: var(--color-paper);
+}
+
+.afc-state-search__field input::placeholder {
+  color: #696969;
+}
+
+.afc-state-search__field input:focus-visible {
+  outline: 2px solid var(--color-action);
+  outline-offset: 2px;
+}
+
+.afc-state-search__icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-ink);
+  pointer-events: none;
+}
+
+.afc-state-search__results {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 26rem;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+/* Shared by both the clickable <button> (a real, selectable state) and the
+   plain <p> (a not-opted-in state — see the modifier below) so both line up
+   identically in the results list. */
+.afc-state-search__option {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 1.0625rem 1rem;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-action);
+  text-align: left;
+  cursor: pointer;
+}
+
+.afc-state-search__option:last-child {
+  border-bottom: none;
+}
+
+/* Still listed (so a donor can find their state and see why it's not
+   choosable) but not a real option — a two-line block (state name, then an
+   explanatory note) instead of the single-line clickable option above. */
+.afc-state-search__option--unavailable {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: default;
+}
+
+.afc-state-search__unavailable-name {
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.afc-state-search__unavailable-note {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  color: #696969;
+}
+
+/* The only actually-clickable part of an unavailable row — same "send my
+   gift where it's most needed" action as .afc-choose-state__no-preference,
+   just reachable inline from here too. */
+.afc-state-search__unavailable-link {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-action);
+  cursor: pointer;
+}
+
+.afc-state-search__unavailable-link:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
+.afc-state-search__option:not(.afc-state-search__option--unavailable):hover {
+  background: #f2f6fa;
+}
+
+.afc-state-search__empty {
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: #696969;
+}
